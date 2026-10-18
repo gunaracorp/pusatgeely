@@ -261,6 +261,11 @@ const ID = {
     developerSite: "digiman.id",
     hostingLabel: "Sistem dukungan hosting & domain",
     hostingPartner: "juraganwebsite.web.id",
+    holdingLabel: "Bagian dari grup",
+    holdingCompany: "PT Top Konsultan Internasional",
+    holdingSite: "topkonsultan.web.id",
+    leaderRole: "CEO digiman.id & topkonsultan.web.id",
+    leaderName: "Tn. H. Gugun Gunara",
   },
   gallery: {
     eyebrow: "Galeri",
@@ -539,6 +544,11 @@ const EN: Dictionary = {
     developerSite: "digiman.id",
     hostingLabel: "Hosting & domain support system",
     hostingPartner: "juraganwebsite.web.id",
+    holdingLabel: "Part of the group",
+    holdingCompany: "PT Top Konsultan Internasional",
+    holdingSite: "topkonsultan.web.id",
+    leaderRole: "CEO of digiman.id & topkonsultan.web.id",
+    leaderName: "Tn. H. Gugun Gunara",
   },
   gallery: {
     eyebrow: "Gallery",

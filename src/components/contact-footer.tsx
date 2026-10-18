@@ -2,6 +2,8 @@
 
 import {
   ArrowUpRight,
+  Award,
+  Building2,
   Clock,
   Code2,
   Instagram,
@@ -34,6 +36,7 @@ const NAV_LINKS = [
 const CREDITS = {
   developer: { name: "digiman.id", url: "https://digiman.id" },
   hosting: { name: "juraganwebsite.web.id", url: "https://juraganwebsite.web.id" },
+  holding: { name: "topkonsultan.web.id", url: "https://topkonsultan.web.id" },
 } as const;
 
 export function ContactFooter() {
@@ -287,6 +290,42 @@ export function ContactFooter() {
                 </span>
               </span>
             </a>
+
+            <div aria-hidden="true" className="hidden h-10 w-px bg-border xl:block" />
+
+            {/* Group — PT Top Konsultan Internasional */}
+            <a
+              href={CREDITS.holding.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3.5"
+            >
+              <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <Building2 className="size-5" aria-hidden="true" />
+              </span>
+              <span>
+                <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  {t.footer.holdingLabel}
+                </span>
+                <span className="inline-flex items-center gap-1 font-display text-sm font-bold tracking-tight">
+                  {t.footer.holdingCompany}
+                  <span className="text-primary">/ {t.footer.holdingSite}</span>
+                  <ArrowUpRight
+                    className="size-3.5 text-primary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </span>
+            </a>
+          </div>
+
+          {/* Leadership — CEO */}
+          <div className="mt-4 flex items-center justify-center gap-2 border-t pt-4 text-center text-xs text-muted-foreground">
+            <Award className="size-4 shrink-0 text-primary" aria-hidden="true" />
+            <span>
+              {t.footer.leaderRole}:{" "}
+              <span className="font-semibold text-foreground">{t.footer.leaderName}</span>
+            </span>
           </div>
         </section>
 

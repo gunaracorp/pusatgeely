@@ -28,7 +28,7 @@ Bilingual 🇮🇩/🇬🇧 · 22 halaman publik SSG · 10 pintu masuk pencarian
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Version](https://img.shields.io/badge/version-2.1.1-blue)
+![Version](https://img.shields.io/badge/version-2.1.2-blue)
 ![Status](https://img.shields.io/badge/status-production-brightgreen)
 
 **[🌐 Lihat Website](https://pusatgeely.web.id)** ·
@@ -40,7 +40,7 @@ Bilingual 🇮🇩/🇬🇧 · 22 halaman publik SSG · 10 pintu masuk pencarian
 
 ---
 
-> 🇬🇧 **English TL;DR** — Production **multi-page** website (22 public SEO-ready routes, all statically generated) for **Pusat Geely**, an independent Geely car-sales consulting service in Bogor & Jabodetabek, Indonesia. Bilingual (ID/EN), dark/light theme, **10 search-entry landing pages** (sales, prices, promos, financing, 4 model money pages, test drive, EV guide), 4 verified models with dedicated detail pages, original SEO articles, TikTok feed, interactive financing simulator, and a lead-capture form → SQLite → WhatsApp deep-link. Full technical SEO: 10+ JSON-LD schema types (AutoDealer, Service, ItemList, Product, AggregateOffer, Offer, OfferCatalog, FAQPage, Article, BreadcrumbList, ContactPage), 22-URL sitemap, robots, PWA manifest, hreflang, redirect permanen 308. Built with Next.js 16 + TypeScript + Tailwind 4 + Prisma. Developed by **PT Digital Bisnis Manajemen ([digiman.id](https://digiman.id))**, hosting & domain support system by **[juraganwebsite.web.id](https://juraganwebsite.web.id)**. Scroll to [English summary](#-english-summary).
+> 🇬🇧 **English TL;DR** — Production **multi-page** website (22 public SEO-ready routes, all statically generated) for **Pusat Geely**, an independent Geely car-sales consulting service in Bogor & Jabodetabek, Indonesia. Bilingual (ID/EN), dark/light theme, **10 search-entry landing pages** (sales, prices, promos, financing, 4 model money pages, test drive, EV guide), 4 verified models with dedicated detail pages, original SEO articles, TikTok feed, interactive financing simulator, and a lead-capture form → SQLite → WhatsApp deep-link. Full technical SEO: 10+ JSON-LD schema types (AutoDealer, Service, ItemList, Product, AggregateOffer, Offer, OfferCatalog, FAQPage, Article, BreadcrumbList, ContactPage, Organization), 22-URL sitemap, robots, PWA manifest, hreflang, redirect permanen 308. Built with Next.js 16 + TypeScript + Tailwind 4 + Prisma. Developed by **PT Digital Bisnis Manajemen ([digiman.id](https://digiman.id))** — part of **PT Top Konsultan Internasional ([topkonsultan.web.id](https://topkonsultan.web.id))**, CEO **Tn. H. Gugun Gunara** — hosting & domain support system by **[juraganwebsite.web.id](https://juraganwebsite.web.id)**. Scroll to [English summary](#-english-summary).
 
 ---
 
@@ -579,6 +579,7 @@ Arahkan domain `pusatgeely.web.id` ke server (A record) dan proxy reverse (Nginx
 
 | Versi | Ringkasan |
 | --- | --- |
+| **2.1.2** | **Kredit korporat & entitas Google**: blok kredit footer diperluas jadi tiga entitas (digiman.id, juraganwebsite.web.id, PT Top Konsultan Internasional — topkonsultan.web.id) + baris CEO **Tn. H. Gugun Gunara** (bilingual ID/EN); JSON-LD baru `@graph` Organization ×3 (PT Digital Bisnis Manajemen, PT Top Konsultan Internasional, Juragan Website) dengan `leader` Person H. Gugun Gunara (jobTitle CEO) — supaya Google mengenali entitas korporat di balik situs; README TL;DR + tabel Kredit diperbarui. |
 | **2.1.1** | **Audit & pemulihan**: repo dipulihkan dari snapshot setelah reset sandbox (riwayat git utuh); seluruh klaim QA diverifikasi ulang (22 route 200, redirect 308, sitemap 22, JSON-LD, API leads, anti-doorway 404); koreksi fakta "redirect 301" → "redirect permanen 308" di README; sinkronisasi worklog (gabungan riwayat pembangunan awal Task 0–14 + sesi lanjutan); commit final siap-push — push ke GitHub menunggu kredensial pemilik (sandbox tanpa PAT/SSH). |
 | **2.1** | **Strategi 10 pintu masuk pencarian**: 8 halaman landing SEO baru bilingual (sales-geely-bogor, kredit-cicilan, 4 halaman harga model Bogor, test-drive, mobil-listrik) via route dinamis `[landing]` + lapisan data `landing-pages.ts`; migrasi `/harga`→`/harga-mobil-geely-bogor` dan `/promo`→`/promo-geely-bogor` dengan redirect permanen (308); JSON-LD `Service` & `ItemList`; nav & POPULAR_SEARCHES menaut ke halaman nyata; GA4 opsional (`NEXT_PUBLIC_GA_ID`); sitemap 22 URL. |
 | **2.0** | Ekspansi multi-halaman (penggabungan riset konten 4 situs): 14+ route SSG, halaman detail 4 model, `/harga`, `/promo`, `/tentang`, `/kontak`, 4 artikel SEO orisinal bilingual, JSON-LD 8+ tipe per route, sitemap 14 URL, breadcrumb, nav multi-halaman, lapisan data `model-details.ts` + `articles.ts` + `promos.ts`. |
@@ -595,6 +596,8 @@ Arahkan domain `pusatgeely.web.id` ke server (A record) dan proxy reverse (Nginx
 | --- | --- |
 | 🛠️ **Dikembangkan oleh** | **PT Digital Bisnis Manajemen** — [digiman.id](https://digiman.id) |
 | 🖥️ **Sistem dukungan hosting & domain** | [juraganwebsite.web.id](https://juraganwebsite.web.id) |
+| 🏢 **Bagian dari grup** | **PT Top Konsultan Internasional** — [topkonsultan.web.id](https://topkonsultan.web.id) |
+| 👤 **CEO digiman.id & topkonsultan.web.id** | **Tn. H. Gugun Gunara** |
 
 *Dikembangkan & didukung oleh ekosistem digital Indonesia.* 🇮🇩
 

@@ -217,6 +217,53 @@ function StructuredData() {
     publisher: { "@id": `${SITE_URL}/#business` },
   };
 
+  // Entitas korporat yang mengembangkan & mendukung situs ini (kredit publik).
+  const organizations = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://digiman.id/#organization",
+        name: "PT Digital Bisnis Manajemen",
+        alternateName: "Digiman",
+        url: "https://digiman.id",
+        leader: {
+          "@type": "Person",
+          name: "H. Gugun Gunara",
+          honorificPrefix: "H.",
+          jobTitle: "Chief Executive Officer",
+        },
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://topkonsultan.web.id/#organization",
+        name: "PT Top Konsultan Internasional",
+        alternateName: "Top Konsultan",
+        url: "https://topkonsultan.web.id",
+        leader: {
+          "@type": "Person",
+          name: "H. Gugun Gunara",
+          honorificPrefix: "H.",
+          jobTitle: "Chief Executive Officer",
+        },
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://juraganwebsite.web.id/#organization",
+        name: "Juragan Website",
+        url: "https://juraganwebsite.web.id",
+        description: "Layanan hosting & domain — PT Digital Bisnis Manajemen",
+        parentOrganization: { "@id": "https://digiman.id/#organization" },
+        leader: {
+          "@type": "Person",
+          name: "H. Gugun Gunara",
+          honorificPrefix: "H.",
+          jobTitle: "Chief Executive Officer",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <script
@@ -230,6 +277,10 @@ function StructuredData() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(website) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizations) }}
       />
     </>
   );
