@@ -44,14 +44,17 @@ export function BrandMark({ className }: { className?: string }) {
 }
 
 const NAV = [
-  { href: "#model", key: "models" },
-  { href: "#layanan", key: "services" },
-  { href: "#promo", key: "promo" },
-  { href: "#galeri", key: "gallery" },
-  { href: "#simulasi", key: "simulator" },
-  { href: "#test-drive", key: "testDrive" },
-  { href: "#faq", key: "faq" },
-  { href: "#kontak", key: "contact" },
+  { href: "/sales-geely-bogor", key: "sales" },
+  { href: "/#model", key: "models" },
+  { href: "/#layanan", key: "services", xlOnly: true },
+  { href: "/harga-mobil-geely-bogor", key: "harga" },
+  { href: "/promo-geely-bogor", key: "promo" },
+  { href: "/#galeri", key: "gallery", xlOnly: true },
+  { href: "/kredit-cicilan-geely-bogor", key: "simulator" },
+  { href: "/artikel", key: "artikel", xlOnly: true },
+  { href: "/test-drive-geely-bogor", key: "testDrive" },
+  { href: "/#faq", key: "faq", xlOnly: true },
+  { href: "/kontak", key: "contact" },
 ] as const;
 
 export function SiteHeader() {
@@ -95,13 +98,16 @@ export function SiteHeader() {
           </span>
         </a>
 
-        {/* Desktop nav */}
-        <nav aria-label="Navigasi utama" className="hidden items-center gap-1 lg:flex">
+        {/* Desktop nav — subset di lg, lengkap di xl+ */}
+        <nav aria-label="Navigasi utama" className="hidden items-center gap-0.5 lg:flex">
           {NAV.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring"
+              className={cn(
+                "rounded-md px-2.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-2 focus-visible:outline-ring",
+                item.xlOnly && "hidden xl:inline-block"
+              )}
             >
               {t.nav[item.key]}
             </a>

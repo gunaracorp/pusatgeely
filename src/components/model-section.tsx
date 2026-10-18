@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -160,30 +161,39 @@ function ModelCard({ model, index }: { model: CarModel; index: number }) {
           </div>
 
           {/* CTAs */}
-          <div className="mt-auto grid grid-cols-2 gap-2 pt-5">
-            <Button
-              variant="outline"
-              className="h-10 rounded-full text-sm font-semibold"
-              onClick={() => {
-                setIntentModel(model.id);
-                document.getElementById("test-drive")?.scrollIntoView({ behavior: "smooth" });
-              }}
+          <div className="mt-auto pt-5">
+            <Link
+              href={`/model/${model.id}`}
+              className="group/d mb-2 inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-full border border-primary/40 bg-primary/5 text-sm font-semibold text-primary transition-colors hover:bg-primary/10"
             >
-              {t.models.ctaTestDrive}
-            </Button>
-            <Button
-              asChild
-              className="h-10 rounded-full text-sm font-semibold"
-            >
-              <a
-                href={waLink(t.models.waAskPrice(model.name))}
-                target="_blank"
-                rel="noopener noreferrer"
+              {t.models.detailCta}
+              <ArrowRight className="size-4 transition-transform group-hover/d:translate-x-0.5" aria-hidden="true" />
+            </Link>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                variant="outline"
+                className="h-10 rounded-full text-sm font-semibold"
+                onClick={() => {
+                  setIntentModel(model.id);
+                  document.getElementById("test-drive")?.scrollIntoView({ behavior: "smooth" });
+                }}
               >
-                <WhatsAppIcon className="size-4" aria-hidden="true" />
-                {t.models.ctaAskPrice}
-              </a>
-            </Button>
+                {t.models.ctaTestDrive}
+              </Button>
+              <Button
+                asChild
+                className="h-10 rounded-full text-sm font-semibold"
+              >
+                <a
+                  href={waLink(t.models.waAskPrice(model.name))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <WhatsAppIcon className="size-4" aria-hidden="true" />
+                  {t.models.ctaAskPrice}
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </article>

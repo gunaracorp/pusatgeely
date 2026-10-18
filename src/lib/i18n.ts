@@ -11,7 +11,10 @@ const ID = {
   nav: {
     models: "Model",
     services: "Layanan",
+    sales: "Sales",
+    harga: "Harga",
     promo: "Promo",
+    artikel: "Artikel",
     gallery: "Galeri",
     simulator: "Simulasi Kredit",
     testDrive: "Test Drive",
@@ -78,6 +81,7 @@ const ID = {
     colorLabel: "Warna",
     realPhoto: "Foto Unit Asli",
     illustrative: "Ilustrasi",
+    detailCta: "Lihat Detail",
     ctaTestDrive: "Test Drive",
     ctaAskPrice: "Tanya Harga",
     waAskPrice: (model: string) =>
@@ -285,7 +289,10 @@ const EN: Dictionary = {
   nav: {
     models: "Models",
     services: "Services",
+    sales: "Sales",
+    harga: "Prices",
     promo: "Deals",
+    artikel: "Articles",
     gallery: "Gallery",
     simulator: "Financing",
     testDrive: "Test Drive",
@@ -352,6 +359,7 @@ const EN: Dictionary = {
     colorLabel: "Color",
     realPhoto: "Real Unit Photo",
     illustrative: "Illustration",
+    detailCta: "View Details",
     ctaTestDrive: "Test Drive",
     ctaAskPrice: "Ask Price",
     waAskPrice: (model: string) =>

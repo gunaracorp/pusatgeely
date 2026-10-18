@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
+  async redirects() {
+    return [
+      // Route lama → URL kata kunci SEO (301 permanen)
+      { source: "/harga", destination: "/harga-mobil-geely-bogor", permanent: true },
+      { source: "/promo", destination: "/promo-geely-bogor", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

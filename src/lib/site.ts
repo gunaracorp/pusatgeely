@@ -147,8 +147,8 @@ export const MODELS: CarModel[] = [
       { label: "Flagship", price: 377_000_000 },
     ],
     specs: [
-      { id: "1.5L Turbo • 177 hp", en: "1.5L Turbo • 177 hp" },
-      { id: "255 Nm • Transmisi 7DCT", en: "255 Nm • 7DCT gearbox" },
+      { id: "1.5L Turbo • 174 PS", en: "1.5L Turbo • 174 PS" },
+      { id: "290 Nm • Transmisi 7DCT", en: "290 Nm • 7DCT gearbox" },
       { id: "Crossover sporty", en: "Sporty crossover" },
     ],
     blurb: {
@@ -271,16 +271,17 @@ export const SEO_TAGS = [
  * each pointing to its most relevant section.
  */
 export const POPULAR_SEARCHES: { label: string; href: string }[] = [
-  { label: "showroom geely bogor", href: "#model" },
-  { label: "dealer geely bogor", href: "#layanan" },
-  { label: "promo geely bogor", href: "#model" },
-  { label: "harga geely bogor", href: "#model" },
-  { label: "dealer mobil geely", href: "#layanan" },
-  { label: "showroom mobil geely", href: "#model" },
-  { label: "info geely", href: "#faq" },
-  { label: "geely jabodetabek", href: "#wilayah" },
-  { label: "test drive geely bogor", href: "#test-drive" },
-  { label: "kredit mobil geely", href: "#simulasi" },
+  { label: "sales geely bogor", href: "/sales-geely-bogor" },
+  { label: "showroom geely bogor", href: "/sales-geely-bogor" },
+  { label: "dealer geely bogor", href: "/harga-mobil-geely-bogor" },
+  { label: "promo geely bogor", href: "/promo-geely-bogor" },
+  { label: "harga geely bogor", href: "/harga-mobil-geely-bogor" },
+  { label: "kredit mobil geely", href: "/kredit-cicilan-geely-bogor" },
+  { label: "test drive geely bogor", href: "/test-drive-geely-bogor" },
+  { label: "mobil listrik geely", href: "/mobil-listrik-geely-bogor" },
+  { label: "showroom mobil geely", href: "/model/ex5" },
+  { label: "info geely", href: "/artikel" },
+  { label: "geely jabodetabek", href: "/#wilayah" },
 ];
 
 export interface GalleryItem {

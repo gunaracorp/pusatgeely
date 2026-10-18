@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
@@ -254,6 +255,26 @@ export default function RootLayout({
           </LanguageProvider>
         </ThemeProvider>
         <StructuredData />
+        {/*
+          Google Analytics 4 — opsional. Set NEXT_PUBLIC_GA_ID (mis. G-XXXXXXX)
+          di environment untuk mengaktifkan. Tanpa env = nol script = nol beban.
+        */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', { anonymize_ip: true });
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
