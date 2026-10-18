@@ -218,3 +218,20 @@ Work Log:
 Stage Summary:
 - Nama perusahaan + CEO kini tertanam di dua lapis: (1) footer sitewide bilingual — terlihat pengunjung & crawler; (2) structured data Organization — mesin pencari dapat membangun knowledge entity. Konsisten dengan kebijakan anti-fabrication (hanya fakta dari pemilik).
 - Sisa langkah pemilik: push ke GitHub (butuh kredensial), lalu untuk memperkuat entitas: pastikan situs digiman.id & topkonsultan.web.id hidup dan saling menaut (link balik ke pusatgeely.web.id).
+
+---
+Task ID: 10
+Agent: main (Z.ai)
+Task: Permintaan pemilik — jangan tampilkan nama perusahaan/CEO di footer; sembunyikan "di belakang layar".
+
+Work Log:
+- Footer: blok kredit (3 entitas + baris CEO) DIHAPUS dari tampilan; CREDITS const + impor ikon tak terpakai (Code2, Server, Building2, Award) dibersihkan; 11 i18n keys footer kredit (creditsTitle…leaderName, ID+EN) dihapus (dead code).
+- Lapisan tersembunyi DIPERTAHANKAN: JSON-LD @graph Organization ×3 + leader Person CEO tetap di layout.tsx — dibaca mesin pencari, tidak dirender UI. Komentar kode diperbarui: "Jangan render entitas ini sebagai teks/tautan terlihat".
+- Kepatuhan SEO: TIDAK memakai teks tersembunyi CSS (display:none/font 0px/warna samar) — pelanggaran pedoman Google (hidden text), berisiko penalti; structured data = mekanisme "tersembunyi" yang benar & legal.
+- README v2.1.3: changelog + badge.
+- Verifikasi kunci (home + /sales-geely-bogor): teks VISIBLE = 0 kemunculan semua nama (Gugun/Top Konsultan/topkonsultan/digiman/juraganwebsite/Digital Bisnis Manajemen); JSON-LD = semua nama tetap ada (Gugun ×3). Lint bersih; build 29/29; 6 route dicek = 200.
+- Lesson (terulang): pkill -f "bun run start" tidak mematikan child .next/standalone/server.js — selalu pkill -9 -f "standalone/server.js" sebelum verifikasi build baru.
+- Commit a29eecd (+ sync worklog); ZIP regenerasi.
+
+Stage Summary:
+- Nama perusahaan + CEO kini murni sinyal mesin pencari (structured data), nol jejak di UI pengunjung. Footer kembali bersih seperti v2.1.1, entitas Google tetap lengkap.
