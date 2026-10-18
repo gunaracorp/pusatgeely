@@ -28,7 +28,7 @@ Bilingual 🇮🇩/🇬🇧 · 22 halaman publik SSG · 10 pintu masuk pencarian
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Version](https://img.shields.io/badge/version-2.1-blue)
+![Version](https://img.shields.io/badge/version-2.1.1-blue)
 ![Status](https://img.shields.io/badge/status-production-brightgreen)
 
 **[🌐 Lihat Website](https://pusatgeely.web.id)** ·
@@ -40,7 +40,7 @@ Bilingual 🇮🇩/🇬🇧 · 22 halaman publik SSG · 10 pintu masuk pencarian
 
 ---
 
-> 🇬🇧 **English TL;DR** — Production **multi-page** website (22 public SEO-ready routes, all statically generated) for **Pusat Geely**, an independent Geely car-sales consulting service in Bogor & Jabodetabek, Indonesia. Bilingual (ID/EN), dark/light theme, **10 search-entry landing pages** (sales, prices, promos, financing, 4 model money pages, test drive, EV guide), 4 verified models with dedicated detail pages, original SEO articles, TikTok feed, interactive financing simulator, and a lead-capture form → SQLite → WhatsApp deep-link. Full technical SEO: 10+ JSON-LD schema types (AutoDealer, Service, ItemList, Product, AggregateOffer, Offer, OfferCatalog, FAQPage, Article, BreadcrumbList, ContactPage), 22-URL sitemap, robots, PWA manifest, hreflang, 301 redirects. Built with Next.js 16 + TypeScript + Tailwind 4 + Prisma. Developed by **PT Digital Bisnis Manajemen ([digiman.id](https://digiman.id))**, hosting & domain support system by **[juraganwebsite.web.id](https://juraganwebsite.web.id)**. Scroll to [English summary](#-english-summary).
+> 🇬🇧 **English TL;DR** — Production **multi-page** website (22 public SEO-ready routes, all statically generated) for **Pusat Geely**, an independent Geely car-sales consulting service in Bogor & Jabodetabek, Indonesia. Bilingual (ID/EN), dark/light theme, **10 search-entry landing pages** (sales, prices, promos, financing, 4 model money pages, test drive, EV guide), 4 verified models with dedicated detail pages, original SEO articles, TikTok feed, interactive financing simulator, and a lead-capture form → SQLite → WhatsApp deep-link. Full technical SEO: 10+ JSON-LD schema types (AutoDealer, Service, ItemList, Product, AggregateOffer, Offer, OfferCatalog, FAQPage, Article, BreadcrumbList, ContactPage), 22-URL sitemap, robots, PWA manifest, hreflang, redirect permanen 308. Built with Next.js 16 + TypeScript + Tailwind 4 + Prisma. Developed by **PT Digital Bisnis Manajemen ([digiman.id](https://digiman.id))**, hosting & domain support system by **[juraganwebsite.web.id](https://juraganwebsite.web.id)**. Scroll to [English summary](#-english-summary).
 
 ---
 
@@ -216,8 +216,8 @@ src/
 ├── app/
 │   ├── page.tsx               # Beranda (anchor-based)
 │   ├── layout.tsx             # Metadata global, JSON-LD sitewide (AutoDealer+WebSite+FAQPage), fonts, providers
-│   ├── harga-mobil-geely-bogor/page.tsx  # Katalog harga (OfferCatalog) — redirect 301 dari /harga
-│   ├── promo-geely-bogor/page.tsx        # Promo & simulasi angsuran — redirect 301 dari /promo
+│   ├── harga-mobil-geely-bogor/page.tsx  # Katalog harga (OfferCatalog) — redirect permanen 308 dari /harga
+│   ├── promo-geely-bogor/page.tsx        # Promo & simulasi angsuran — redirect permanen 308 dari /promo
 │   ├── [landing]/page.tsx      # 8 halaman pintu masuk SEO (SSG, dynamicParams=false)
 │   ├── model/[slug]/page.tsx  # Detail model ×4 (generateStaticParams, Product+Offer JSON-LD)
 │   ├── artikel/page.tsx       # Indeks artikel
@@ -344,8 +344,8 @@ Setiap kelompok kata kunci punya halaman sendiri — bukan menumpuk semua pada s
 | # | Kata kunci | Halaman | Niat pembeli |
 | --- | --- | --- | --- |
 | 1 | **Sales Geely Bogor** | `/sales-geely-bogor` | Sudah ingin menghubungi tenaga penjualan — prioritas utama |
-| 2 | Harga Mobil Geely Bogor | `/harga-mobil-geely-bogor` | Membandingkan harga & varian (redirect 301 dari `/harga`) |
-| 3 | Promo Geely Bogor Terbaru | `/promo-geely-bogor` | Mencari penawaran berlaku (redirect 301 dari `/promo`) |
+| 2 | Harga Mobil Geely Bogor | `/harga-mobil-geely-bogor` | Membandingkan harga & varian (redirect permanen 308 dari `/harga`) |
+| 3 | Promo Geely Bogor Terbaru | `/promo-geely-bogor` | Mencari penawaran berlaku (redirect permanen 308 dari `/promo`) |
 | 4 | Cicilan Kredit Mobil Geely Bogor | `/kredit-cicilan-geely-bogor` | Menghitung DP/tenor sebelum menghubungi |
 | 5 | Harga Geely EX2 Bogor | `/geely-ex2-bogor` | Kelayakan hatchback listrik termurah |
 | 6 | Harga Geely EX5 Bogor | `/geely-ex5-bogor` | SUV listrik keluarga + biaya kepemilikan |
@@ -540,12 +540,13 @@ Arahkan domain `pusatgeely.web.id` ke server (A record) dan proxy reverse (Nginx
 ## 🧪 QA — Sudah Diverifikasi
 
 - [x] **Build produksi**: 29 route ter-prerender, semua halaman publik SSG sukses; `bun run lint` PASS.
-- [x] **15 route HTTP 200** terverifikasi via curl, termasuk 8 halaman landing baru.
-- [x] **Redirect 301/308** `/harga` → `/harga-mobil-geely-bogor` dan `/promo` → `/promo-geely-bogor` berfungsi.
+- [x] **22 route HTTP 200** terverifikasi via curl (6 statis + 8 landing + 4 model + 4 artikel); slug landing tak dikenal → **404** (anti-doorway aktif); redirect permanen 308 `/harga` & `/promo` → tujuan benar.
+- [x] **Redirect permanen 308** `/harga` → `/harga-mobil-geely-bogor` dan `/promo` → `/promo-geely-bogor` berfungsi.
 - [x] **JSON-LD per route** diverifikasi via curl: `Service`+`Person`+`Place` di sales; `ItemList` di halaman model landing; `Product`+`AggregateOffer`+`Offer`+`FAQPage`+`BreadcrumbList` di halaman detail model; `OfferCatalog` di harga; `Article` di artikel; `ContactPage` di kontak.
 - [x] **Sitemap**: 22 URL benar semua (6 statis + 8 landing + 4 model + 4 artikel); robots.txt menunjuk sitemap.
 - [x] **Browser end-to-end** (desktop 1440 & mobile 390, dark & light, ID & EN) — render, interaksi, data mengalir; konsol bersih tanpa error hydration.
 - [x] **Form lead** — submit sukses `201`, tersimpan di DB, nomor `0812…` dinormalisasi `628…`, tombol WhatsApp membawa konteks lengkap + ref ID.
+- [x] **Audit ulang penuh (v2.1.1)** — restorasi dari snapshot setelah reset sandbox, lalu verifikasi ulang: build 29 halaman, 22 route 200, redirect 308, sitemap 22 URL, JSON-LD per route, API `/api/leads` (id + waUrl), canonical/hreflang, robots, manifest, 4 sosial + WA, GA4 nonaktif tanpa env. Semua PASS.
 - [x] **Simulator kredit** — matematika bunga flat benar (angsuran recompute live), parameter terbawa ke WA.
 - [x] **Preselect model** — klik CTA kartu model → form test drive terisi otomatis.
 - [x] **Anti-spam** — honeypot tertutup, rate-limit request ke-6 → `429`.
@@ -578,7 +579,8 @@ Arahkan domain `pusatgeely.web.id` ke server (A record) dan proxy reverse (Nginx
 
 | Versi | Ringkasan |
 | --- | --- |
-| **2.1** | **Strategi 10 pintu masuk pencarian**: 8 halaman landing SEO baru bilingual (sales-geely-bogor, kredit-cicilan, 4 halaman harga model Bogor, test-drive, mobil-listrik) via route dinamis `[landing]` + lapisan data `landing-pages.ts`; migrasi `/harga`→`/harga-mobil-geely-bogor` dan `/promo`→`/promo-geely-bogor` dengan redirect 301; JSON-LD `Service` & `ItemList`; nav & POPULAR_SEARCHES menaut ke halaman nyata; GA4 opsional (`NEXT_PUBLIC_GA_ID`); sitemap 22 URL. |
+| **2.1.1** | **Audit & pemulihan**: repo dipulihkan dari snapshot setelah reset sandbox (riwayat git utuh); seluruh klaim QA diverifikasi ulang (22 route 200, redirect 308, sitemap 22, JSON-LD, API leads, anti-doorway 404); koreksi fakta "redirect 301" → "redirect permanen 308" di README; sinkronisasi worklog (gabungan riwayat pembangunan awal Task 0–14 + sesi lanjutan); commit final siap-push — push ke GitHub menunggu kredensial pemilik (sandbox tanpa PAT/SSH). |
+| **2.1** | **Strategi 10 pintu masuk pencarian**: 8 halaman landing SEO baru bilingual (sales-geely-bogor, kredit-cicilan, 4 halaman harga model Bogor, test-drive, mobil-listrik) via route dinamis `[landing]` + lapisan data `landing-pages.ts`; migrasi `/harga`→`/harga-mobil-geely-bogor` dan `/promo`→`/promo-geely-bogor` dengan redirect permanen (308); JSON-LD `Service` & `ItemList`; nav & POPULAR_SEARCHES menaut ke halaman nyata; GA4 opsional (`NEXT_PUBLIC_GA_ID`); sitemap 22 URL. |
 | **2.0** | Ekspansi multi-halaman (penggabungan riset konten 4 situs): 14+ route SSG, halaman detail 4 model, `/harga`, `/promo`, `/tentang`, `/kontak`, 4 artikel SEO orisinal bilingual, JSON-LD 8+ tipe per route, sitemap 14 URL, breadcrumb, nav multi-halaman, lapisan data `model-details.ts` + `articles.ts` + `promos.ts`. |
 | **1.1** | Integrasi 4 media sosial (header, FAB, footer, JSON-LD `sameAs`) + galeri dengan feed TikTok ter-embed (hydration-safe + fallback). |
 | **1.0** | Peluncuran: beranda anchor-based, 4 model terverifikasi, simulator kredit, lead capture → SQLite → WhatsApp, SEO teknis dasar (3 JSON-LD, sitemap, robots, manifest), dwibahasa, dark/light. |
