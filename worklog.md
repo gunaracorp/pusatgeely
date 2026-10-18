@@ -201,3 +201,20 @@ Work Log:
 Stage Summary:
 - Semua deliverable Task 5/6/7 terverifikasi hidup; commit final siap-push. Tidak ada yang terlewat dari sisi kode.
 - Sisa langkah pemilik: (1) push commit ke GitHub — butuh kredensial; (2) submit sitemap ke GSC & Bing; (3) isi NEXT_PUBLIC_GA_ID bila ingin analytics; (4) konfirmasi kepemilikan akun FB /100008079428678.
+
+---
+Task ID: 9
+Agent: main (Z.ai)
+Task: Titip nama korporat di Google — sisipkan kredit PT Digital Bisnis Manajemen (digiman.id, juraganwebsite.web.id), PT Top Konsultan Internasional (topkonsultan.web.id), dan CEO Tn. H. Gugun Gunara.
+
+Work Log:
+- Footer (contact-footer.tsx): blok kredit diperluas 2 → 3 entitas (tambah kolom "Bagian dari grup" → PT Top Konsultan Internasional / topkonsultan.web.id, ikon Building2) + baris CEO di bawahnya (ikon Award): "CEO digiman.id & topkonsultan.web.id: Tn. H. Gugun Gunara". Bilingual ID/EN via i18n.ts (keys baru: holdingLabel/holdingCompany/holdingSite/leaderRole/leaderName).
+- JSON-LD baru di layout.tsx: @graph Organization ×3 — PT Digital Bisnis Manajemen (digiman.id), PT Top Konsultan Internasional (topkonsultan.web.id), Juragan Website (juraganwebsite.web.id, parentOrganization → digiman, deskripsi "Layanan hosting & domain — PT Digital Bisnis Manajemen"). Semua dengan leader Person "H. Gugun Gunara" (honorificPrefix "H.", jobTitle "Chief Executive Officer") — Google kini mengenali entitas korporat di balik situs. Hierarki korporat TIDAK direkayasa (anti-fabrication): hanya relasi yang dinyatakan pemilik.
+- README v2.1.2: TL;DR + tabel Kredit + changelog 2.1.2 + badge.
+- Debug penting: verifikasi pertama FALSE NEGATIVE — server standalone LAMA (pid 1407, dari sesi QA Task 8) masih memegang port 3000; pkill -f "bun run start" hanya membunuh wrapper, child "bun .next/standalone/server.js" tetap hidup melayani build lama. Fix: pkill -9 -f "standalone/server.js" → restart → verifikasi ulang.
+- Verifikasi PASS: lint bersih; build 29/29; footer HTML berisi PT Top Konsultan Internasional + topkonsultan.web.id + Tn. H. Gugun Gunara; JSON-LD @graph 3 Organization dgn leader benar (parse python); routes /, /sales-geely-bogor, /harga-mobil-geely-bogor, /promo-geely-bogor, /geely-ex5-bogor, /kontak = 200.
+- Commit 325acb2; ZIP regenerasi (412 file).
+
+Stage Summary:
+- Nama perusahaan + CEO kini tertanam di dua lapis: (1) footer sitewide bilingual — terlihat pengunjung & crawler; (2) structured data Organization — mesin pencari dapat membangun knowledge entity. Konsisten dengan kebijakan anti-fabrication (hanya fakta dari pemilik).
+- Sisa langkah pemilik: push ke GitHub (butuh kredensial), lalu untuk memperkuat entitas: pastikan situs digiman.id & topkonsultan.web.id hidup dan saling menaut (link balik ke pusatgeely.web.id).
