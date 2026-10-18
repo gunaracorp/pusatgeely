@@ -28,7 +28,7 @@ Bilingual 🇮🇩/🇬🇧 · 22 halaman publik SSG · 10 pintu masuk pencarian
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Version](https://img.shields.io/badge/version-2.1.2-blue)
+![Version](https://img.shields.io/badge/version-2.1.3-blue)
 ![Status](https://img.shields.io/badge/status-production-brightgreen)
 
 **[🌐 Lihat Website](https://pusatgeely.web.id)** ·
@@ -579,6 +579,7 @@ Arahkan domain `pusatgeely.web.id` ke server (A record) dan proxy reverse (Nginx
 
 | Versi | Ringkasan |
 | --- | --- |
+| **2.1.3** | **Kredit pindah ke belakang layar**: sesuai permintaan pemilik, blok kredit dihapus dari tampilan footer (tidak ada nama perusahaan/CEO yang terlihat pengunjung). Entitas + CEO tetap tertanam penuh di lapisan tersembunyi yang legal: JSON-LD `@graph` Organization ×3 dengan `leader` Person (dibaca mesin pencari, tidak dirender di UI). Catatan kepatuhan: TIDAK menggunakan teks tersembunyi CSS (display:none/font 0px/warna samar) — itu pelanggaran pedoman Google; structured data adalah mekanisme "tersembunyi" yang benar. |
 | **2.1.2** | **Kredit korporat & entitas Google**: blok kredit footer diperluas jadi tiga entitas (digiman.id, juraganwebsite.web.id, PT Top Konsultan Internasional — topkonsultan.web.id) + baris CEO **Tn. H. Gugun Gunara** (bilingual ID/EN); JSON-LD baru `@graph` Organization ×3 (PT Digital Bisnis Manajemen, PT Top Konsultan Internasional, Juragan Website) dengan `leader` Person H. Gugun Gunara (jobTitle CEO) — supaya Google mengenali entitas korporat di balik situs; README TL;DR + tabel Kredit diperbarui. |
 | **2.1.1** | **Audit & pemulihan**: repo dipulihkan dari snapshot setelah reset sandbox (riwayat git utuh); seluruh klaim QA diverifikasi ulang (22 route 200, redirect 308, sitemap 22, JSON-LD, API leads, anti-doorway 404); koreksi fakta "redirect 301" → "redirect permanen 308" di README; sinkronisasi worklog (gabungan riwayat pembangunan awal Task 0–14 + sesi lanjutan); commit final siap-push — push ke GitHub menunggu kredensial pemilik (sandbox tanpa PAT/SSH). |
 | **2.1** | **Strategi 10 pintu masuk pencarian**: 8 halaman landing SEO baru bilingual (sales-geely-bogor, kredit-cicilan, 4 halaman harga model Bogor, test-drive, mobil-listrik) via route dinamis `[landing]` + lapisan data `landing-pages.ts`; migrasi `/harga`→`/harga-mobil-geely-bogor` dan `/promo`→`/promo-geely-bogor` dengan redirect permanen (308); JSON-LD `Service` & `ItemList`; nav & POPULAR_SEARCHES menaut ke halaman nyata; GA4 opsional (`NEXT_PUBLIC_GA_ID`); sitemap 22 URL. |

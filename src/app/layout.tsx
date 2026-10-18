@@ -217,7 +217,9 @@ function StructuredData() {
     publisher: { "@id": `${SITE_URL}/#business` },
   };
 
-  // Entitas korporat yang mengembangkan & mendukung situs ini (kredit publik).
+  // LAPISAN TERSEMBUNYI (belakang layar): entitas korporat pengembang & pendukung
+  // situs ini HANYA di structured data — dibaca mesin pencari, tidak ditampilkan di UI
+  // sesuai permintaan pemilik. Jangan render entitas ini sebagai teks/tautan terlihat.
   const organizations = {
     "@context": "https://schema.org",
     "@graph": [
