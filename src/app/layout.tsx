@@ -4,6 +4,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/components/language-provider";
+import { Analytics } from "@vercel/analytics/next";
 import {
   BUSINESS,
   INDEPENDENCE_DISCLAIMER,
@@ -438,6 +439,7 @@ export default function RootLayout({
             </Script>
           </>
         )}
+        <Analytics />
       </body>
     </html>
   );
