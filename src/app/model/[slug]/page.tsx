@@ -4,6 +4,7 @@ import { PageShell } from "@/components/page-shell";
 import { ModelDetail } from "@/components/model-detail";
 import { getModelBundle } from "@/lib/model-details";
 import { MODELS, POWERTRAIN_LABEL, SITE_URL, formatIDR, waLink } from "@/lib/site";
+import { keywordsForPage } from "@/lib/seo-keywords";
 
 export function generateStaticParams() {
   return MODELS.map((m) => ({ slug: m.id }));
@@ -21,9 +22,21 @@ export async function generateMetadata({
   const title = `${model.name} — Harga, Spesifikasi & Test Drive Bogor`;
   const description = `${model.blurb.id} Harga mulai ${formatIDR(model.priceFrom)}. Test drive, simulasi kredit, dan trade-in untuk ${model.name} di Bogor & Jabodetabek via WhatsApp.`;
 
+  // Kata kunci terdistribusi: brand inti + seluruh frasa model × niat × area
+  // yang relevan untuk model ini (harga, kredit, test drive, warna, dsb).
+  const kw = keywordsForPage({ modelId: model.id, cap: 90 });
+
   return {
     title,
     description,
+    keywords: [
+      model.name.toLowerCase(),
+      `harga ${model.name.toLowerCase()}`,
+      `${model.name.toLowerCase()} bogor`,
+      `kredit ${model.name.toLowerCase()}`,
+      `test drive ${model.name.toLowerCase()}`,
+      ...kw,
+    ],
     alternates: {
       canonical: `${SITE_URL}/model/${model.id}`,
       languages: {

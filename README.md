@@ -1,648 +1,361 @@
 <div align="center">
 
-```
-╭──────────────────────────────────────────────────────────────────╮
-│                                                                  │
-│      ██████╗ ██╗   ██╗███████╗ █████╗ ████████╗                  │
-│      ██╔══██╗██║   ██║██╔════╝██╔══██╗╚══██╔══╝                  │
-│      ██████╔╝██║   ██║███████╗███████║   ██║                     │
-│      ██╔═══╝ ██║   ██║╚════██║██╔══██║   ██║                     │
-│      ██║     ╚██████╔╝███████║██║  ██║   ██║                     │
-│      ╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝                     │
-│                                                                  │
-│              G  E  E  L  Y                                       │
-│                                                                  │
-│        Partner Pembelian Geely — Bogor & Jabodetabek             │
-│                     pusatgeely.web.id                            │
-│                                                                  │
-╰──────────────────────────────────────────────────────────────────╯
-```
+# 🚗 PUSAT GEELY
 
-# 🚗 Pusat Geely — Multi-Halaman, SEO-Ready & Conversion-Focused
+### *Website Konsultan Penjualan Geely №1 untuk Bogor & Jabodetabek*
 
-**Website produksi untuk layanan konsultan penjualan independen kendaraan Geely.**
-Bilingual 🇮🇩/🇬🇧 · 22 halaman publik SSG · 10 pintu masuk pencarian · Mobile-first · SEO teknis menyeluruh · Anti-fabrication data.
+**EX5 · EX2 · Starray EM-i · Coolray** — Test Drive Fleksibel · Harga Transparan · Simulasi Kredit · Trade-in
 
-![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
-![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?logo=prisma&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Version](https://img.shields.io/badge/version-2.1.3-blue)
-![Status](https://img.shields.io/badge/status-production-brightgreen)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.1-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![React 19](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Prisma](https://img.shields.io/badge/Prisma-6-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://prisma.io)
+[![Bun](https://img.shields.io/badge/Bun-1.3-FBF0DF?style=for-the-badge&logo=bun&logoColor=black)](https://bun.sh)
 
-**[🌐 Lihat Website](https://pusatgeely.web.id)** ·
-**[💬 Chat WhatsApp](https://wa.me/62816611142)** ·
-**[📸 Instagram](https://instagram.com/salesconsultant1972)** ·
-**[🎵 TikTok](https://www.tiktok.com/@eman.sulaeman0839)**
+[![SEO Score](https://img.shields.io/badge/SEO-FULL%20POWER-00C853?style=for-the-badge&logo=google&logoColor=white)](#-seo-full-power-arsitektur)
+[![Keywords](https://img.shields.io/badge/Kata%20Kunci-2.600%2B-FF6D00?style=for-the-badge)](#-seo-full-power-arsitektur)
+[![Landing Pages](https://img.shields.io/badge/Landing%20Pages-44-7C4DFF?style=for-the-badge)](#-seo-full-power-arsitektur)
+[![JSON-LD](https://img.shields.io/badge/JSON--LD-9%20Tipe-00B8D4?style=for-the-badge)](#-seo-full-power-arsitektur)
+
+*44 pintu masuk pencarian · 2.655 frasa kata kunci · IndexNow instan · Knowledge Graph terhubung*
 
 </div>
 
 ---
 
-> 🇬🇧 **English TL;DR** — Production **multi-page** website (22 public SEO-ready routes, all statically generated) for **Pusat Geely**, an independent Geely car-sales consulting service in Bogor & Jabodetabek, Indonesia. Bilingual (ID/EN), dark/light theme, **10 search-entry landing pages** (sales, prices, promos, financing, 4 model money pages, test drive, EV guide), 4 verified models with dedicated detail pages, original SEO articles, TikTok feed, interactive financing simulator, and a lead-capture form → SQLite → WhatsApp deep-link. Full technical SEO: 10+ JSON-LD schema types (AutoDealer, Service, ItemList, Product, AggregateOffer, Offer, OfferCatalog, FAQPage, Article, BreadcrumbList, ContactPage, Organization), 22-URL sitemap, robots, PWA manifest, hreflang, redirect permanen 308. Built with Next.js 16 + TypeScript + Tailwind 4 + Prisma. Developed by **PT Digital Bisnis Manajemen ([digiman.id](https://digiman.id))** — part of **PT Top Konsultan Internasional ([topkonsultan.web.id](https://topkonsultan.web.id))**, CEO **Tn. H. Gugun Gunara** — hosting & domain support system by **[juraganwebsite.web.id](https://juraganwebsite.web.id)**. Scroll to [English summary](#-english-summary).
+<div align="center">
+
+**🌐 Live** — [pusatgeely.web.id](https://pusatgeely.web.id) · **💬 WhatsApp** — [+62 816-6111-42](https://wa.me/62816611142) · **📄 Indeks Keyword** — [/indeks-kata-kunci](https://pusatgeely.web.id/indeks-kata-kunci)
+
+</div>
 
 ---
 
-## 📑 Daftar Isi
+## ✨ Tentang Proyek Ini
 
-- [🎯 Ringkasan Eksekutif](#-ringkasan-eksekutif)
-- [🗺️ Peta Situs & Arsitektur Informasi](#️-peta-situs--arsitektur-informasi)
-- [✨ Fitur Unggulan](#-fitur-unggulan)
-- [🧱 Teknologi](#-teknologi)
-- [🏗️ Arsitektur](#️-arsitektur)
-- [📂 Struktur Proyek](#-struktur-proyek)
-- [📦 Lapisan Data & Konten](#-lapisan-data--konten)
-- [🔍 SEO Playbook](#-seo-playbook)
-- [🚪 Strategi 10 Pintu Masuk Pencarian](#-strategi-10-pintu-masuk-pencarian)
-- [📣 Integrasi Media Sosial & TikTok Feed](#-integrasi-media-sosial--tiktok-feed)
-- [🔌 API: `/api/leads`](#-api-apileads)
-- [🌐 Dwibahasa (ID/EN)](#-dwibahasa-iden)
-- [🛡️ Kebijakan Data Anti-Fabrication](#️-kebijakan-data-anti-fabrication)
-- [🚀 Mulai Cepat](#-mulai-cepat)
-- [🛠️ Skrip](#️-skrip)
-- [☁️ Deployment](#️-deployment)
-- [🧪 QA — Sudah Diverifikasi](#-qa--sudah-diverifikasi)
-- [🔧 Panduan Pemeliharaan](#-panduan-pemeliharaan)
-- [📜 Riwayat Versi](#-riwayat-versi)
-- [🏆 Kredit](#-kredit)
-- [⚖️ Legal & Merek Dagang](#️-legal--merek-dagang)
-- [📄 Lisensi](#-lisensi)
-- [📞 Kontak](#-kontak)
+**Pusat Geely** bukan sekadar website dealer — ini adalah **mesin pencarian-assisted selling** yang dibangun dengan satu filosofi: *setiap pertanyaan yang orang Indonesia ketik di Google tentang Geely harus punya pintu masuk ke halaman ini*.
+
+Website ini melayani **Konsultan Penjualan Independen** (bukan dealer resmi — dan jujur soal itu) untuk seluruh lineup Geely Indonesia: **Geely EX5** (SUV listrik), **Geely EX2** (hatchback listrik), **Geely Starray EM-i** (SUV super hybrid), dan **Geely Coolray** (crossover turbo) di wilayah **Bogor, Depok, Jakarta, Tangerang, Bekasi, dan sekitarnya**.
+
+Yang membuatnya berbeda dari website mobil pada umumnya:
+
+| 🔍 Yang Dibangun | 🎯 Hasilnya |
+|---|---|
+| Arsitektur keyword engine 2.655 frasa | Cakupan long-tail dari *"harga geely ex5 bogor"* hingga *"cara kredit geely coolray jakarta"* |
+| 44 halaman landing programatik | Setiap kombinasi **model × area** punya halaman bermutu dengan konten unik per-area |
+| JSON-LD Knowledge Graph 9 tipe | Google memahami bisnis, produk, harga, FAQ, orang, dan organisasi di baliknya |
+| IndexNow bridge | Bing, Yandex & Seznam tahu konten baru **dalam hitungan detik**, bukan hari |
+| Prinsip *honesty-first* | Semua harga indikatif + disclaimer — membangun trust dan aman dari penalti |
 
 ---
 
-## 🎯 Ringkasan Eksekutif
+## 📖 Daftar Isi
 
-Pusat Geely adalah **konsultan penjualan independen** yang membantu calon pembeli di Bogor & Jabodetabek memilih, membiayai, dan mengurus pembelian kendaraan Geely — tanpa biaya tambahan bagi pembeli. Website ini adalah mesin konversi sekaligus aset SEO jangka panjang yang dirancang mengikuti praktik terbaik lintas disiplin:
-
-1. **Arsitektur informasi multi-halaman** — setiap model, harga, promo, artikel, dan kontak memiliki URL sendiri yang dapat diindeks, dibagikan, dan diiklankan. Bukan lagi satu halaman panjang: crawler memahami topik per-halaman, pengguna membagikan tautan spesifik.
-2. **SEO teknis menyeluruh** — 8+ tipe JSON-LD, sitemap 14 URL, canonical + hreflang, Open Graph/Twitter Card per halaman, breadcrumb yang terbaca mesin pencari, dan struktur heading semantik. Siap dihubungkan ke Google Search Console & Bing Webmaster.
-3. **Konversi 9+ titik sentuh WhatsApp** — deep-link berkonteks dari hero, kartu model, simulator kredit, halaman harga, footer, FAB desktop, sticky bar mobile, hingga tombol pasca-submit form. Setiap klik membawa konteks (model, bunga, tenor) sehingga percakapan langsung produktif.
-4. **Integritas data sebagai pembeda** — kebijakan anti-fabrication ketat: harga indikatif bertanda sumber & tanggal, tanpa testimoni fiktif, tanpa klaim dealer resmi, foto unit asli diberi badge jujur. Kepercayaan adalah aset jangka panjang yang tidak bisa dibeli dengan iklan.
-5. **Skalabilitas konten** — menambah model baru atau artikel SEO = menambah **satu entri data**; halaman detail, sitemap, JSON-LD, dan navigasi mengikuti secara otomatis. Tidak ada halaman yang perlu diedit manual satu per satu.
-
-**Hasil penggabungan riset 4 sumber konten** (geelybogorofficial.com, geelyauto.id, dealergeelybogor.com, geelybogorr.com): spesifikasi resmi, harga indikatif, tema promo, topik layanan, dan topik edukasi digabung, lalu **ditulis ulang 100% orisinal** — bukan salin-tempel — dengan disclaimer indikatif di semua halaman.
-
----
-
-## 🗺️ Peta Situs & Arsitektur Informasi
-
-Semua halaman **statis (SSG)** kecuali API route → TTFB cepat, hemat resource, ramah crawler.
-
-| Route | Halaman | Prioritas SEO | Skema JSON-LD |
-| --- | --- | --- | --- |
-| `/` | Beranda (anchor: Model, Layanan, Simulasi, Galeri, Test Drive, FAQ, Wilayah) | 1.0 | AutoDealer + WebSite + FAQPage |
-| `/harga` | Katalog harga semua model + varian | 0.9 | OfferCatalog |
-| `/promo` | Program promo & simulasi angsuran | 0.9 | AutoDealer (inherit) |
-| `/model/ex5` | Detail GEELY EX5 (BEV) | 0.9 | Product + AggregateOffer + Offer×varian + FAQPage + BreadcrumbList |
-| `/model/starray` | Detail STARRAY EM-i (PHEV super hybrid) | 0.9 | idem |
-| `/model/coolray` | Detail COOLRAY (turbo) | 0.9 | idem |
-| `/model/ex2` | Detail EX2 (hatchback BEV) | 0.9 | idem |
-| `/artikel` | Indeks artikel SEO | 0.7 | — |
-| `/artikel/harga-geely-bogor-2026` | Artikel: harga & panduan beli | 0.7 | Article + BreadcrumbList |
-| `/artikel/ex5-vs-starray-emi` | Artikel: BEV vs super hybrid | 0.7 | idem |
-| `/artikel/tips-merawat-baterai-mobil-listrik` | Artikel: perawatan baterai | 0.7 | idem |
-| `/artikel/panduan-trade-in-mobil-geely` | Artikel: panduan trade-in | 0.7 | idem |
-| `/tentang` | Profil, cara kerja, nilai layanan (E-E-A-T) | 0.6 | — |
-| `/kontak` | Kontak + area layanan + sosial media | 0.8 | ContactPage |
-
-**14 URL total di `sitemap.xml`** · `robots.txt` mengizinkan semua, menunjuk sitemap · navigasi header lintas halaman dengan dropdown kategori di layar besar.
+- [🛠️ Tech Stack](#️-tech-stack)
+- [🚀 Quick Start](#-quick-start)
+- [⚡ SEO Full Power (Arsitektur)](#-seo-full-power-arsitektur)
+- [🗺️ Arsitektur Halaman](#️-arsitektur-halaman)
+- [📊 Struktur Data (JSON-LD Matrix)](#-struktur-data-json-ld-matrix)
+- [🗂️ Struktur Proyek](#️-struktur-proyek)
+- [📡 IndexNow — Indeks Instan](#-indexnow--indeks-instan)
+- [🚢 Deployment](#-deployment)
+- [✅ Checklist Go-Live SEO](#-checklist-go-live-seo)
+- [🧭 Prinsip Desain](#-prinsip-desain)
+- [👤 Kredit & Support System](#-kredit--support-system)
+- [📜 Lisensi](#-lisensi)
 
 ---
 
-## ✨ Fitur Unggulan
+## 🛠️ Tech Stack
 
-| Fitur | Detail |
-| --- | --- |
-| 🗺️ **15+ Halaman SEO-Ready** | Semua route SSG: beranda + harga + promo + 4 halaman model + indeks artikel + 4 artikel + tentang + kontak. Metadata (title, description, canonical, hreflang, OG, Twitter) unik per halaman. |
-| 🌐 **Dwibahasa ID/EN** | Dictionary typed penuh di `src/lib/i18n.ts`, persist di `localStorage`, `<html lang>` ikut berganti (default **id** untuk SEO). |
-| 🌗 **Dark / Light Mode** | Default dark emerald-charcoal premium; light mode "warm paper". Via `next-themes`. |
-| 🚗 **4 Model + Halaman Detail** | EX5 (BEV), Starray EM-i (PHEV), Coolray (ICE), EX2 (BEV) — tiap model punya halaman detail: tagline, overview 3 paragraf, 7 baris spesifikasi resmi, 4 highlight, 3 FAQ, harga per varian. |
-| 📋 **Katalog Harga Terstruktur** | `/harga` memakai schema OfferCatalog — setiap varian jadi `Offer` yang terbaca mesin pencari. |
-| 📰 **Artikel SEO Orisinal** | 4 artikel bilingual ditulis dari nol (bukan spin): panduan harga 2026, perbandingan EX5 vs Starray EM-i, perawatan baterai EV, panduan trade-in. Schema `Article` + tanggal publikasi. |
-| 🎨 **Color Switcher Foto Asli** | Kartu EX5 & EX2 punya pemilih warna interaktif dengan foto unit nyata — EX5: Snowy White / Carbon Black / Frost Grey; EX2: Putih / Krem / Hijau. |
-| 🖼️ **Galeri 3 Tab** | Foto unit asli · Dokumentasi serah terima · **Feed TikTok ter-embed** (client-side, hydration-safe, dengan tautan fallback bila embed diblokir jaringan). |
-| 💰 **Simulator Kredit Interaktif** | Slider DP 10–50%, tenor 12–72 bulan, bunga flat 3–12% → angsuran dihitung live, hasil terbawa ke WhatsApp. |
-| 📋 **Lead Capture End-to-End** | Form test drive → validasi zod → simpan Prisma (dengan kolom `source`) → tombol "Lanjutkan ke WhatsApp" membawa konteks lead + ref ID. |
-| 🧲 **9+ Titik Konversi WA** | Deep-link `wa.me` di hero, kartu model, halaman model, simulator, halaman harga, footer, FAB desktop, sticky bar mobile, dan tombol pasca-submit. |
-| 📣 **4 Media Sosial Terintegrasi** | Instagram, Facebook, TikTok, X — ikon di header, floating CTA, footer; profil `sameAs` JSON-LD; `twitter:creator` meta. |
-| 🛡️ **Anti-Spam** | Honeypot invisible + rate-limit 5 request/menit/IP + normalisasi nomor `08xx` → `628xx`. |
-| 🔍 **SEO Teknis Lengkap** | 8+ tipe JSON-LD (lihat [SEO Playbook](#-seo-playbook)), `sitemap.xml` 14 URL, `robots.txt`, manifest PWA, Open Graph, canonical, hreflang, breadcrumb. |
-| 📱 **Mobile-First** | Sticky bottom bar (Test Drive + WA) di mobile, FAB WhatsApp + sosial di desktop, Sheet menu, target sentuh ≥44px. |
-| ♿ **Aksesibel** | HTML semantik, ARIA label, `sr-only`, kontras aman, navigasi keyboard. |
-| 🖼️ **Aset Visual Asli + Original** | 9 foto unit asli owner + 9 foto dokumentasi serah terima + ilustrasi AI original — total WebP < 1,5 MB. Badge "Foto Unit Asli" vs "Ilustrasi" jujur di setiap kartu. |
+| Layer | Teknologi | Kenapa Dipilih |
+|---|---|---|
+| **Framework** | Next.js 16 (App Router, Turbopack) | SSG + metadata streaming + Image Optimization native |
+| **UI** | React 19 + shadcn/ui + Radix | Aksesibel, composable, production-grade |
+| **Styling** | Tailwind CSS 4 + tw-animate | Utility-first, zero-runtime CSS |
+| **Bahasa** | TypeScript 5 (strict) | Tipe data produk & SEO jadi kontrak, bukan harapan |
+| **Database** | Prisma 6 + SQLite | Lead capture berbasis database, zero-config |
+| **Animasi** | Framer Motion | Reveal on scroll yang halus tanpa jank |
+| **Runtime** | Bun 1.3 | Install & start secepat kilat (827 paket < 10 detik) |
+| **Bilingual** | Custom i18n (ID/EN) | Seluruh konten dua bahasa tanpa dependensi eksternal |
 
 ---
 
-## 🧱 Teknologi
-
-| Lapisan | Teknologi |
-| --- | --- |
-| Framework | **Next.js 16** (App Router, RSC, SSG) + **TypeScript 5** |
-| UI | **Tailwind CSS 4** + shadcn/ui (New York) + Lucide Icons + Framer Motion |
-| State | **Zustand** (intent lead) + React Context (bahasa) + `next-themes` |
-| Form | **react-hook-form** + **zod v4** |
-| Database | **SQLite** via **Prisma ORM** (`db/custom.db`) |
-| Konten | Data layer TypeScript terpusat (`site.ts`, `model-details.ts`, `articles.ts`, `promos.ts`, `faq-data.ts`) |
-| Icon Sistem | lucide-react + SVG inline kustom (Facebook/TikTok/X), sonner (toast), vaul (sheet) |
-
-**Keputusan arsitektur (dan alasannya):**
-
-- **Konten sebagai kode** (bukan CMS eksternal) → nol dependensi runtime, halaman statis maksimal cepat, versioning ikut git. Untuk skala bisnis ini, CMS adalah kompleksitas tanpa manfaat.
-- **SSG penuh** untuk semua halaman publik → TTFB terbaik di hosting mana pun, aman terhadap traffic spike, crawler tidak pernah menunggu render.
-- **SQLite + Prisma** untuk lead → cukup untuk volume lead konsultan; jalur migrasi ke Postgres hanya mengganti `provider` di `prisma/schema.prisma`.
-
----
-
-## 🏗️ Arsitektur
-
-```
-┌────────────────────────────────────────────────────────────────────┐
-│                           BROWSER                                  │
-│                                                                    │
-│  site-header ──► halaman apa pun (14 route SSG) ──► breadcrumbs    │
-│      │                        │                                    │
-│      │   ┌────────────────────┴──────────────────────┐             │
-│      │   │  BERANDA (anchor flow)                    │             │
-│      │   │  hero ─► model-section ─► services        │             │
-│      │   │        ─► financing-simulator             │             │
-│      │   │        ─► gallery (unit/dokumentasi/      │             │
-│      │   │            TikTok feed)                   │             │
-│      │   │        ─► test-drive-form ─► FAQ ─► cta   │             │
-│      │   └───────────────────────────────────────────┘             │
-│      ▼                        ▼                                    │
-│  language-provider      POST /api/leads                            │
-│  (ID/EN persist)             │                                    │
-│  zustand (lead-intent)       ▼                                    │
-│      │              zod ─► honeypot ─► rate-limit (5/menit/IP)     │
-│      ▼                        ▼                                    │
-│  floating-cta              Prisma → SQLite (kolom source)          │
-│  (WA + 4 sosial)                 │                                 │
-│      ▼                           ▼                                 │
-│  wa.me deep-link        Response { id, waUrl } ──► tombol WhatsApp  │
-│  (9+ titik konversi)                                               │
-└────────────────────────────────────────────────────────────────────┘
-        ▲
-        │  build-time
-┌───────┴────────────────────────────────────────────────────────────┐
-│  DATA LAYER (single source of truth)                               │
-│  site.ts ──► MODELS, BUSINESS, AREAS, SOCIALS, SITE_URL            │
-│  model-details.ts ──► overview/spec/highlight/FAQ per model        │
-│  articles.ts ──► 4 artikel bilingual (judul, body, tanggal)        │
-│  promos.ts ──► program angsuran (tenor, TDP, cicilan)              │
-│  faq-data.ts ──► FAQ bersama (accordion client + JSON-LD server)   │
-│         │                                                          │
-│         ▼ pada saat build                                          │
-│  generateStaticParams() ─► semua route SSG                         │
-│  sitemap.ts ─► 14 URL otomatis dari MODELS + ARTICLES              │
-│  metadata per route ─► title/canonical/OG/hreflang unik            │
-│  JSON-LD per route ─► Product/Offer/FAQ/Article/Breadcrumb dsb.    │
-└────────────────────────────────────────────────────────────────────┘
-```
-
-**Prinsip desain:**
-
-1. **Satu *source of truth*** (`src/lib/site.ts`) untuk semua data bisnis, produk, harga, area, dan sosial media. Ganti harga sekali → beranda, halaman model, `/harga`, sitemap, dan JSON-LD ikut.
-2. **Data menurun, UI mengikuti** — menambah entri di data layer otomatis menghasilkan route baru (via `generateStaticParams`), entri sitemap baru, dan metadata baru. Tidak ada halaman yang "tertinggal".
-3. **Server-first** — semua konten teks dirender di server (indexable), interaktivitas (slider, form, toggle) hidro di client. Tidak ada konten penting yang hanya ada di client.
-
----
-
-## 📂 Struktur Proyek
-
-```
-src/
-├── app/
-│   ├── page.tsx               # Beranda (anchor-based)
-│   ├── layout.tsx             # Metadata global, JSON-LD sitewide (AutoDealer+WebSite+FAQPage), fonts, providers
-│   ├── harga-mobil-geely-bogor/page.tsx  # Katalog harga (OfferCatalog) — redirect permanen 308 dari /harga
-│   ├── promo-geely-bogor/page.tsx        # Promo & simulasi angsuran — redirect permanen 308 dari /promo
-│   ├── [landing]/page.tsx      # 8 halaman pintu masuk SEO (SSG, dynamicParams=false)
-│   ├── model/[slug]/page.tsx  # Detail model ×4 (generateStaticParams, Product+Offer JSON-LD)
-│   ├── artikel/page.tsx       # Indeks artikel
-│   ├── artikel/[slug]/page.tsx# Artikel ×4 (Article JSON-LD)
-│   ├── tentang/page.tsx       # Profil & cara kerja (E-E-A-T)
-│   ├── kontak/page.tsx        # Kontak + area + sosial (ContactPage)
-│   ├── api/leads/route.ts     # POST — validasi, anti-spam, simpan, waUrl
-│   ├── sitemap.ts             # /sitemap.xml — 14 URL otomatis
-│   ├── robots.ts              # /robots.txt
-│   ├── manifest.ts            # PWA manifest
-│   └── icon.svg               # Favicon heksagon-G original
-├── components/
-│   ├── site-header.tsx        # Sticky glass nav multi-halaman + BrandMark + toggle bahasa/tema + ikon sosial
-│   ├── site-hero.tsx          # Full-viewport hero + grid background
-│   ├── model-section.tsx      # 4 kartu model + tombol "Lihat Detail" + CTA preselect
-│   ├── model-detail.tsx       # Halaman detail model (spec table, highlight, FAQ, varian)
-│   ├── harga-page.tsx         # Tabel harga semua varian
-│   ├── promo-section.tsx      # Program promo dari promos.ts
-│   ├── services-section.tsx   # 6 layanan
-│   ├── gallery-section.tsx    # Galeri 3 tab (unit asli / serah terima / TikTok)
-│   ├── tiktok-feed.tsx        # Embed TikTok hydration-safe + fallback
-│   ├── article-list.tsx       # Indeks artikel
-│   ├── article-view.tsx       # Render artikel + breadcrumb
-│   ├── financing-simulator.tsx
-│   ├── test-drive-section.tsx
-│   ├── coverage-section.tsx   # 10 area Jabodetabek
-│   ├── faq-section.tsx
-│   ├── cta-band.tsx
-│   ├── breadcrumbs.tsx        # Breadcrumb visual (halaman dalam)
-│   ├── page-shell.tsx         # Kerangka halaman dalam (hero + konten)
-│   ├── tentang-page.tsx / kontak-page.tsx
-│   ├── social-icons.tsx       # SVG Facebook/TikTok/X (lucide tidak menyediakan)
-│   ├── social-icons-row.tsx
-│   ├── contact-footer.tsx     # Footer premium + POPULAR_SEARCHES + kredit
-│   ├── floating-cta.tsx       # FAB desktop (WA + 4 sosial) + sticky bar mobile
-│   └── language-provider.tsx  # Konteks ID/EN + persist
-├── lib/
-│   ├── site.ts                # ⭐ SOURCE OF TRUTH — bisnis, model, harga, area, sosial, SITE_URL
-│   ├── model-details.ts       # Detail per model (tagline, overview, spec, highlight, FAQ) — bilingual
-│   ├── articles.ts            # 4 artikel SEO — bilingual
-│   ├── promos.ts              # Program angsuran (tenor, TDP, cicilan)
-│   ├── landing-pages.ts       # ⭐ 8 halaman pintu masuk pencarian — bilingual
-│   ├── i18n.ts                # Dictionary ID/EN typed
-│   ├── faq-data.ts            # FAQ bersama (accordion + JSON-LD)
-│   ├── db.ts                  # Prisma client
-│   └── lead-store.ts          # Zustand lead-intent
-prisma/schema.prisma           # Model Lead (+ kolom source)
-db/custom.db                   # Database SQLite
-public/images/                 # Aset WebP (hero, galeri serah terima, foto unit asli)
-```
-
----
-
-## 📦 Lapisan Data & Konten
-
-Inti skalabilitas website ini: **konten adalah data TypeScript, bukan halaman hard-code.**
-
-| File | Isi | Efek bila ditambah entri |
-| --- | --- | --- |
-| `src/lib/site.ts` | Bisnis, kontak, sosial media, `MODELS` (id, nama, harga, varian, spec ringkas, warna, foto), `AREAS` | Kartu model baru di beranda + tombol "Lihat Detail" |
-| `src/lib/model-details.ts` | Detail per model: tagline, overview 3 paragraf, 7 baris spec, 4 highlight, 3 FAQ — **wajib bilingual** | Halaman `/model/[id]` baru + entri sitemap + JSON-LD Product otomatis |
-| `src/lib/articles.ts` | Artikel: slug, judul, tanggal, excerpt, body per bagian — **wajib bilingual** | Halaman `/artikel/[slug]` baru + entri sitemap + JSON-LD Article otomatis |
-| `src/lib/promos.ts` | Program angsuran: bank, tenor, TDP, cicilan | Muncul di `/promo-geely-bogor` |
-| `src/lib/faq-data.ts` | FAQ bilingual (dipakai accordion **dan** JSON-LD FAQPage — tetap sinkron) | Item baru muncul di UI + rich snippet FAQ |
-| `src/lib/landing-pages.ts` | 8 halaman pintu masuk pencarian: sales, kredit, 4 model, test drive, mobil listrik — **wajib bilingual** | Halaman `/[slug]` baru + entri sitemap + JSON-LD FAQ/Breadcrumb (+`Service`/`ItemList` otomatis) |
-
-**Contoh — menambah model baru (mis. Geely "GX") end-to-end:**
-
-1. Tambah objek model di `MODELS` (`site.ts`) — id, nama, harga indikatif, varian, spec ringkas.
-2. Tambah entri detail di `model-details.ts` (tagline/overview/spec/highlight/FAQ, ID + EN).
-3. Selesai. *Tanpa menyentuh satu pun file halaman:* route `/model/gx` lahir via `generateStaticParams`, masuk sitemap, dapat JSON-LD, tombol "Lihat Detail" muncul di beranda dan `/harga` ikut.
-
-**Contoh — menambah artikel baru:** tambah 1 objek di `articles.ts` (slug unik + tanggal) → halaman, sitemap, dan indeks artikel terisi otomatis. Itu saja.
-
----
-
-## 🔍 SEO Playbook
-
-### Yang sudah terpasang
-
-| Lapisan | Implementasi |
-| --- | --- |
-| **Structured Data (JSON-LD)** | Sitewide: `AutoDealer` (dengan `sameAs` 4 sosial media), `WebSite`, `FAQPage`. Halaman model: `Product` + `AggregateOffer` + `Offer` per varian + `FAQPage` + `BreadcrumbList`. `/harga`: `OfferCatalog`. Artikel: `Article`. `/kontak`: `ContactPage`. |
-| **Metadata per halaman** | `title`, `description`, `canonical`, `hreflang` (id/en/x-default), Open Graph, Twitter Card — unik per route via `generateMetadata`. |
-| **Sitemap** | `src/app/sitemap.ts` menghasilkan **22 URL** otomatis dari `MODELS` + `ARTICLES` + `LANDING_PAGES` — tidak pernah basi karena digenerate saat build. |
-| **Robots** | `robots.txt` mengizinkan semua crawler + menunjuk sitemap. |
-| **URL & IA** | URL deskriptif (`/model/ex5`, `/artikel/tips-merawat-baterai-mobil-listrik`), breadcrumb visual + `BreadcrumbList`, heading hierarkis satu H1 per halaman. |
-| **Performa** | SSG penuh, gambar WebP < 1,5 MB total, font optimal, tanpa blocking JS berlebih — inti Core Web Vitals. |
-| **PWA** | `manifest.webmanifest` + ikon — memenuhi sinyal kualitas mobile. |
-
-### Checklist peluncuran SEO (lakukan sekali setelah deploy)
+## 🚀 Quick Start
 
 ```bash
-# 1. Pastikan semua route hidup (ganti domain bila perlu)
-for p in "" harga promo artikel tentang kontak model/ex5 model/starray \
-         model/coolray model/ex2; do
-  curl -s -o /dev/null -w "%{http_code} /$p\n" "https://pusatgeely.web.id/$p"
-done
+# 1️⃣ Clone
+git clone https://github.com/prabudanling/pusatgeely.git
+cd pusatgeely
 
-# 2. Verifikasi sitemap & robots
-curl -s https://pusatgeely.web.id/sitemap.xml | head -5
-curl -s https://pusatgeely.web.id/robots.txt
+# 2️⃣ Install (Bun — disarankan)
+bun install
+
+# 3️⃣ Database (SQLite — otomatis)
+bun run db:push && bun run db:generate
+
+# 4️⃣ Development
+bun run dev          # → http://localhost:3000
+
+# 5️⃣ Production
+bun run build        # SSG semua 50+ halaman
+bun run start        # Standalone server
 ```
 
-- [ ] **Google Search Console**: verifikasi properti `pusatgeely.web.id` → submit `https://pusatgeely.web.id/sitemap.xml` → minta pengindeksan untuk 6 halaman prioritas (beranda, harga, promo, 4 model).
-- [ ] **Bing Webmaster Tools**: import dari GSC (satu klik) → submit sitemap.
-- [ ] **Google Business Profile**: buat/kaitkan profil bisnis Bogor — tautkan situs; kecocokan NAP (nama-alamat-telepon) memperkuat Local SEO.
-- [ ] **Rich Results Test** (search.google.com/test/rich-results) pada `/model/ex5` dan `/harga` — pastikan Product & Offer terbaca.
-- [ ] **Uji PageSpeed Insights** (desktop & mobile) — target Core Web Vitals hijau.
-- [ ] **Rutinitas bulanan**: tambah 1–2 artikel baru (edit `articles.ts` saja), cek GSC untuk error coverage.
+> 💡 **Tanpa Bun?** `npm install && npm run dev:next dev` juga jalan — hanya lebih lambat.
 
-### Prinsip konten SEO yang dipakai
-
-- **Niat pencari dulu, kata kunci kemudian** — artikel dijawab sebagai pertanyaan nyata ("berapa harga Geely di Bogor 2026?"), bukan tumpukan kata kunci.
-- **Bilingual = dua pasar** — ID menarget pencari lokal; EN menarget ekspat/internasional; `hreflang` mencegah kanibalisasi.
-- **Data terkini + tanggal** — artikel harga memuat tahun & stamp riset; Google menyukai kesegaran yang jujur, bukan manipulasi tanggal.
-
----
-
-## 🚪 Strategi 10 Pintu Masuk Pencarian
-
-Setiap kelompok kata kunci punya halaman sendiri — bukan menumpuk semua pada satu halaman. Sepuluh pintu masuk, semuanya mengarahkan calon pembeli ke layanan konsultasi Geely:
-
-| # | Kata kunci | Halaman | Niat pembeli |
-| --- | --- | --- | --- |
-| 1 | **Sales Geely Bogor** | `/sales-geely-bogor` | Sudah ingin menghubungi tenaga penjualan — prioritas utama |
-| 2 | Harga Mobil Geely Bogor | `/harga-mobil-geely-bogor` | Membandingkan harga & varian (redirect permanen 308 dari `/harga`) |
-| 3 | Promo Geely Bogor Terbaru | `/promo-geely-bogor` | Mencari penawaran berlaku (redirect permanen 308 dari `/promo`) |
-| 4 | Cicilan Kredit Mobil Geely Bogor | `/kredit-cicilan-geely-bogor` | Menghitung DP/tenor sebelum menghubungi |
-| 5 | Harga Geely EX2 Bogor | `/geely-ex2-bogor` | Kelayakan hatchback listrik termurah |
-| 6 | Harga Geely EX5 Bogor | `/geely-ex5-bogor` | SUV listrik keluarga + biaya kepemilikan |
-| 7 | Harga Geely Starray EM-i Bogor | `/geely-starray-emi-bogor` | PHEV: listrik harian + bensin jarak jauh |
-| 8 | Harga Geely Coolray Bogor | `/geely-coolray-bogor` | Crossover turbo + karakter 7DCT |
-| 9 | Test Drive Geely Bogor | `/test-drive-geely-bogor` | Ingin mencoba unit (tanpa janji stok palsu) |
-| 10 | Mobil Listrik Geely Bogor | `/mobil-listrik-geely-bogor` | Edukasi EV vs PHEV sebelum memilih |
-
-**Disiplin yang dijaga** (melawan doorway abuse & keyword stuffing): setiap halaman berdiri sendiri dengan konten orisinal yang menjawab satu kebutuhan — bukan halaman Bogor/Depok/Bekasi berisi hampir sama. Halaman model (money page) fokus harga-cicilan-biaya kepemilikan; halaman `/model/[slug]` fokus spesifikasi-galeri — dua niat berbeda, saling tertaut, tanpa duplikasi. FAQ tiap halaman diambil dari pertanyaan nyata, bukan hasil generasi massal. Ukuran keberhasilan: impresi & kualitas lalu lintas (GSC), konversi WhatsApp/form, dan kepercayaan (data terverifikasi) — bukan sekadar posisi kata kunci.
-
-**Komponen pendukung strategi:** `/[landing]` route dinamis dengan `dynamicParams = false` (slug tak terdaftar → 404, mencegah halaman tipis tak sengaja terindeks) · skema `Service` di halaman sales · `ItemList` varian di halaman model · nav header memuat Sales/Harga/Promo/Simulasi/Test Drive ke halaman nyata · footer `POPULAR_SEARCHES` tertaut ke pintu masuk · **GA4 opsional** via env `NEXT_PUBLIC_GA_ID` (tanpa env = nol script).
-
----
-
-## 📣 Integrasi Media Sosial & TikTok Feed
-
-Empat kanal sosial dikonfigurasi **satu tempat** di `src/lib/site.ts` dan mengalir ke seluruh situs:
-
-| Kanal | Akun | URL |
-| --- | --- | --- |
-| 📸 Instagram | `@salesconsultant1972` | `https://instagram.com/salesconsultant1972` |
-| 👍 Facebook | Eman Sulaeman | `https://www.facebook.com/100008079428678` |
-| 🎵 TikTok | `@eman.sulaeman0839` | `https://www.tiktok.com/@eman.sulaeman0839` |
-| ✖️ X (Twitter) | `@EmanSulaem79261` | `https://x.com/EmanSulaem79261` |
-
-**Titik pemasangan:**
-
-- **Header** (desktop & mobile Sheet menu) — 4 ikon sosial selalu terjangkau.
-- **Floating CTA** (desktop) — kolom ikon WA + 4 sosial di sisi kanan layar.
-- **Footer** — baris "Ikuti kami" 4 ikon bulat + tautan teks di `/kontak`.
-- **JSON-LD** — keempat URL masuk `sameAs` pada skema `AutoDealer` → membantu Google mengaitkan entitas situs dengan profil sosial (Knowledge Graph).
-- **Meta** — `twitter:creator: "@EmanSulaem79261"`.
-
-**Teknis ikon:** Facebook, TikTok, dan X tidak tersedia di lucide-react, jadi dirender sebagai **SVG inline kustom** (`src/components/social-icons.tsx`) dengan `fill="currentColor"` — ikut warna tema, tanpa dependensi eksternal, tanpa request jaringan tambahan.
-
-**Feed TikTok di galeri** (`src/components/tiktok-feed.tsx`):
-
-- Embed dimuat **client-side setelah mount** → nol risiko hydration mismatch, tidak memblokir render server.
-- Jaringan yang memblokir TikTok (mis. sandbox/corporate proxy) otomatis menampilkan **tautan fallback** "Buka di TikTok" — pengunjung tetap bisa sampai ke konten.
-- Menambah video: ganti parameter embed di `tiktok-feed.tsx` (atau tukar ke blok embed video spesifik) — tidak menyentuh komponen lain.
-
----
-
-## 🔌 API: `/api/leads`
-
-`POST /api/leads` — simpan lead + hasilkan WhatsApp deep-link berkonteks.
-
-**Request**
-
-```jsonc
-{
-  "name": "Budi Santoso",
-  "phone": "081234567890",          // dinormalisasi → 6281234567890
-  "model": "GEELY EX5",             // opsional
-  "interest": "test-drive",         // test-drive | price | financing | trade-in | general
-  "area": "Bogor Kota",             // opsional
-  "preferredDate": "2026-10-01",    // opsional
-  "message": "Saya mau tanya EX5",  // opsional
-  "lang": "id",                     // id | en
-  "website": ""                     // 🍯 honeypot — HARUS kosong
-}
-```
-
-**Response `201`**
-
-```jsonc
-{
-  "ok": true,
-  "id": "clx…",                     // ref ID lead di database
-  "waUrl": "https://wa.me/62816611142?text=…"  // deep-link + seluruh konteks lead
-}
-```
-
-**Error:** `422` validasi gagal (zod) · `429` melebihi 5 request/menit/IP.
+### Environment Variables (opsional)
 
 ```bash
-# Uji cepat
-curl -X POST http://localhost:3000/api/leads \
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                        # Aktifkan Google Analytics 4
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=xxx              # Google Search Console
+NEXT_PUBLIC_BING_VERIFICATION=xxx                     # Bing Webmaster Tools
+NEXT_PUBLIC_YANDEX_VERIFICATION=xxx                   # Yandex Webmaster
+```
+
+Tanpa env apa pun → website tetap berjalan penuh, **nol script analitik, nol beban**.
+
+---
+
+## ⚡ SEO FULL POWER (Arsitektur)
+
+Bagian ini yang membuat setiap pencarian Geely punya peluang besar mendarat di website kita:
+
+### 1. 🧠 Keyword Engine — `src/lib/seo-keywords.ts`
+
+```mermaid
+flowchart LR
+    A[4 Model<br/>EX5·EX2·Starray·Coolray] --> D{Kombinatorik<br/>Deterministik}
+    B[25 Area<br/>Bogor→BSD] --> D
+    C[20 Intent<br/>harga·kredit·test drive] --> D
+    D --> E[Grid A: Model × Intent × Area<br/>2.000 frasa]
+    D --> F[Grid B: Intent × Area<br/>300 frasa]
+    D --> G[Grid C: EV & Hybrid<br/>108 frasa]
+    D --> H[Pertanyaan Alami<br/>107 frasa]
+    D --> I[Brand + Warna/Spec + Tahun<br/>140 frasa]
+    E & F & G & H & I --> J[(2.655 frasa unik<br/>+ route tujuan)]
+    J --> K[meta keywords<br/>per halaman]
+    J --> L[/indeks-kata-kunci<br/>hub 2.655 internal link]
+    J --> M[JSON-LD keywords]
+```
+
+**Prinsip anti-spam yang dipatuhi:** setiap frasa **wajib** menunjuk ke halaman nyata yang menjawabnya. Tidak ada keyword stuffing, tidak ada frasa fiktif — mesin pencari menghargai itu, dan pembeli pun menerima jawaban yang benar.
+
+### 2. 🏭 Landing Grid Programatik — `src/lib/landing-grid.ts`
+
+```
+4 Model × 9 Area (Jakarta, Depok, Tangerang, Bekasi,
+Sentul, Cibinong, Cibubur, BSD, Kab. Bogor)
+= 36 halaman + 8 halaman manual + halaman statis
+= 44 pintu masuk pencarian
+```
+
+Setiap halaman grid bukan halaman tipis — membawa:
+
+- ✅ **Tabel harga varian asli** (dari `MODELS`, indikatif OTR)
+- ✅ **Flavor teks khusus per-area** (Jakarta ≠ Sentul ≠ BSD — konteks lokal nyata)
+- ✅ **5 FAQ lokal** (rotasi deterministik dari 8 template)
+- ✅ **Simulator kredit interaktif** + form test drive + program pembiayaan
+- ✅ **5 internal link** ke halaman saudara (grid link matrix)
+- ✅ **Metadata lengkap**: title, description, canonical, OG, Twitter, keywords
+
+### 3. 🗺️ Teknis On-Page
+
+| Teknik | Status | Lokasi |
+|---|---|---|
+| Canonical + hreflang (id-ID/en) | ✅ | Semua halaman |
+| OpenGraph + Twitter Card | ✅ | Semua halaman |
+| `robots.txt` + `sitemap.xml` dinamis | ✅ | `app/robots.ts`, `app/sitemap.ts` |
+| PWA Manifest | ✅ | `app/manifest.ts` |
+| Image Optimization (WebP, lazy) | ✅ | `next/image` |
+| Bilingual hreflang | ✅ | Layout + semua route |
+| Breadcrumb visual + JSON-LD | ✅ | Semua halaman konten |
+| `humans.txt` | ✅ | `public/humans.txt` |
+| Verifikasi Search Console (3 mesin) | ✅ | via env, zero-config |
+
+---
+
+## 🗺️ Arsitektur Halaman
+
+```mermaid
+graph TD
+    HOME["🏠 / Beranda"] --> MODELS["🚙 /model/ex5 · ex2 · starray · coolray<br/>Product + AggregateOffer"]
+    HOME --> HARGA["💰 /harga-mobil-geely-bogor<br/>Tabel harga semua varian"]
+    HOME --> PROMO["🎁 /promo-geely-bogor<br/>Program pembiayaan 5 leasing"]
+    HOME --> GRID["🧭 36 Landing Model × Area<br/>geely-ex5-jakarta dst."]
+    HOME --> LAIN
+    subgraph LAIN["📄 Halaman Pendukung"]
+        SALES["🤝 /sales-geely-bogor"]
+        KREDIT["🧮 /kredit-cicilan-geely-bogor"]
+        TD["🔑 /test-drive-geely-bogor"]
+        EV["⚡ /mobil-listrik-geely-bogor"]
+        ART["📚 /artikel ×4"]
+        TENT["🏛️ /tentang"]
+        KON["📞 /kontak"]
+    end
+    HOME --> INDEX["🗂️ /indeks-kata-kunci<br/>2.655 frasa → semua halaman"]
+    INDEX -.->|internal link massal| GRID & MODELS & HARGA & PROMO & LAIN
+```
+
+---
+
+## 📊 Struktur Data (JSON-LD Matrix)
+
+Sembilan tipe schema.org bekerja sama membentuk **Knowledge Graph** yang utuh:
+
+| JSON-LD | Tipe | Isi Kunci |
+|---|---|---|
+| `layout.tsx` | `AutoDealer` | Bisnis, jam, area layanan, telepon, price range, `sameAs` sosial |
+| `layout.tsx` | `FAQPage` | 8 FAQ nyata → rich result dropdown di Google |
+| `layout.tsx` | `WebSite` | Publisher + provider (support system) |
+| `layout.tsx` | `@graph` | **2 Person + 3 Organization** saling ter-link `@id` |
+| `[landing]/page.tsx` | `BreadcrumbList` | Jejak navigasi semua landing |
+| `[landing]/page.tsx` | `FAQPage` | FAQ lokal per halaman |
+| `[landing]/page.tsx` | `Service` / `ItemList` | Layanan konsultasi / daftar varian |
+| `model/[slug]/page.tsx` | `Product + AggregateOffer` | Harga low/high + offer per varian |
+| `artikel/[slug]/page.tsx` | `Article` | Author, tanggal, publisher |
+| `indeks-kata-kunci/page.tsx` | `CollectionPage + ItemList` | Peta topik situs |
+
+> 🔍 **Bonus tersembunyi:** Person schema **H. Gugun Gunara** (alias *prabudanling* · *santri angon*) & **Muhammad Lutfi Azmi** + organisasi **PT Top Konsultan Internasional** & **PT Digital Bisnis Manajemen** terhubung ke 6 profil sosial via `sameAs` — jalur resmi Google Knowledge Graph. Hadir di balik layar, tidak mengganggu permukaan UI. Lihat [`src/lib/branding.ts`](src/lib/branding.ts).
+
+---
+
+## 🗂️ Struktur Proyek
+
+```
+pusatgeely/
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx              # Metadata global + Knowledge Graph + GA4 opsional
+│   │   ├── page.tsx                # Beranda
+│   │   ├── [landing]/page.tsx      # Router 44 halaman landing SEO
+│   │   ├── model/[slug]/           # Detail 4 model (Product JSON-LD)
+│   │   ├── harga-mobil-geely-bogor/ # Tabel harga lengkap
+│   │   ├── promo-geely-bogor/      # Program pembiayaan
+│   │   ├── artikel/                # Blog + detail (Article JSON-LD)
+│   │   ├── indeks-kata-kunci/      # 🗂️ Hub 2.655 internal link
+│   │   ├── tentang · kontak/       # Profil & kontak
+│   │   ├── api/indexnow/           # ⚡ Bridge indeks instan Bing/Yandex
+│   │   ├── api/leads/              # Form test drive → database
+│   │   ├── sitemap.ts · robots.ts · manifest.ts
+│   │   └── globals.css             # Tailwind 4 + design tokens
+│   ├── lib/
+│   │   ├── site.ts                 # ⭐ Single source of truth bisnis & produk
+│   │   ├── seo-keywords.ts         # 🧠 Mesin 2.655 kata kunci
+│   │   ├── landing-pages.ts        # 8 landing manual (ditulis tangan)
+│   │   ├── landing-grid.ts         # 🏭 Generator 36 landing model×area
+│   │   ├── landing-all.ts          # Barrel gabungan + finder
+│   │   ├── branding.ts             # 👻 Ghost branding layer (kredit tersembunyi)
+│   │   ├── model-details.ts · articles.ts · faq-data.ts · promos.ts
+│   │   └── db.ts                   # Prisma client
+│   └── components/                 # 30+ komponen (hero, simulator, galeri, dst.)
+├── prisma/schema.prisma            # Model Lead
+├── public/                         # Foto unit asli, promo PDF, humans.txt
+└── db/custom.db                    # SQLite
+```
+
+---
+
+## 📡 IndexNow — Indeks Instan
+
+Website ini memakai **protokol IndexNow** agar Bing, Yandex, Seznam, dan Naver mengindeks perubahan **dalam hitungan detik**:
+
+```bash
+# Ping satu URL
+curl -X POST https://pusatgeely.web.id/api/indexnow \
   -H "Content-Type: application/json" \
-  -d '{"name":"Tes","phone":"081234567890","interest":"general","lang":"id","website":""}'
+  -d '{"urls": ["https://pusatgeely.web.id/geely-ex5-jakarta"]}'
+
+# Ping setelah deploy konten baru
+curl -X POST https://pusatgeely.web.id/api/indexnow \
+  -H "Content-Type: application/json" \
+  -d '{"urls": ["<url1>", "<url2>", "..."]}'
 ```
 
-**Skema database (Prisma):**
+- 🔑 Key file verifikasi: `public/<key>.txt` (otomatis tersedia)
+- 🛡️ Validasi host ketat — hanya `pusatgeely.web.id` yang diterima
+- 📊 Kuota resmi: 10.000 URL/hari
 
-```prisma
-model Lead {
-  id            String   @id @default(cuid())
-  name          String
-  phone         String
-  model         String?
-  interest      String   @default("general")
-  area          String?
-  preferredDate String?
-  message       String?
-  lang          String   @default("id")
-  source        String   @default("website")   // asal lead: website | wa | lainnya
-  status        String   @default("new")
-  createdAt     DateTime @default(now())
-}
-```
-
-> 💡 Kolom `source` memungkinkan segmentasi asal lead di masa depan (mis. dari halaman harga vs beranda) tanpa migrasi ulang.
+> Google tidak memakai IndexNow (mereka punya crawling sendiri) — untuk Google, cukup submit sitemap di Search Console sekali, sisanya sitemap ping otomatis.
 
 ---
 
-## 🌐 Dwibahasa (ID/EN)
+## 🚢 Deployment
 
-- Kamus terpusat & **fully-typed** di `src/lib/i18n.ts` — TSC menjamin ID dan EN selalu punya key yang sama.
-- Default SSR: **Indonesia** (prioritas SEO lokal). Pilihan user persist di `localStorage` (`pusat-geely-lang`).
-- `<html lang>` disinkronkan otomatis; toggle ada di header (desktop & mobile).
-- `hreflang` (id / en / x-default) dinyatakan di metadata setiap halaman → mesin pencari menyajikan versi bahasa yang tepat.
-- Menambah bahasa baru: duplikasi objek `ID`, tambahkan tipe `Lang`, tambahkan opsi di `language-provider.tsx`.
-
----
-
-## 🛡️ Kebijakan Data Anti-Fabrication
-
-> ⭐ **Aturan paling penting proyek ini.**
-
-1. **Harga & spesifikasi** hanya dari riset multi-sumber publik (stamp: **September 2026**) dan **wajib** ditampilkan sebagai *indikatif* + disclaimer.
-2. **DILARANG KERAS** menampilkan: klaim dealer resmi, promo fiktif, testimoni fiktif, alamat fiktif, atau pernyataan atas nama PT Geely Mobil Indonesia / Geely Holding.
-3. Pusat Geely dinyatakan **konsultan penjualan independen** — proses pembelian/garansi/purna jual via jaringan dealer resmi Geely Indonesia (lihat blok *Legal & Transparansi* di footer).
-4. **Sebelum rilis publik**, semua angka wajib diverifikasi ulang ke kanal resmi Geely (geely.co.id / geelyauto.id).
-5. **Sebagian besar visual adalah foto unit asli** milik owner (EX5 Snowy White/Carbon Black/Frost Grey, EX2, Coolray) — ditandai badge "Foto Unit Asli". Visual yang masih berupa gambar generatif (Starray) diberi badge "Ilustrasi" — dinyatakan terbuka di footer.
-6. **Konten multi-sumber ditulis ulang, bukan disalin** — materi referensi dari 4 situs Geely dipakai sebagai fakta, lalu semua kalimat ditulis orisinal. Plagiarisme = risiko hukum + penalti SEO; orisinalitas = aset.
-
----
-
-## 🚀 Mulai Cepat
+### Vercel (paling cepat)
 
 ```bash
-# 1. Install dependensi
-bun install
-
-# 2. Siapkan database (SQLite)
-bun run db:push
-
-# 3. Jalankan development server
-bun run dev            # → http://localhost:3000
-
-# 4. Pastikan kualitas kode
-bun run lint
+bunx vercel --prod
 ```
 
-> Tidak butuh environment variable — SQLite file-based dan semua data bisnis statis di `src/lib/site.ts`. (Prisma membaca `DATABASE_URL` dari konfigurasi bawaan proyek.)
->
-> **Opsional:** set `NEXT_PUBLIC_GA_ID=G-XXXXXXX` untuk mengaktifkan Google Analytics 4 (kosong = tidak ada script analytics yang dimuat).
-
----
-
-## 🛠️ Skrip
-
-| Perintah | Fungsi |
-| --- | --- |
-| `bun run dev` | Development server (port 3000) + log ke `dev.log` |
-| `bun run build` | Production build (standalone) + salin static/public |
-| `bun run start` | Jalankan hasil production build |
-| `bun run lint` | ESLint (aturan Next.js + react-hooks) |
-| `bun run db:push` | Dorong `prisma/schema.prisma` ke SQLite |
-| `bun run db:generate` | Generate Prisma Client |
-| `bun run db:migrate` | Prisma migrate dev (untuk evolusi skema bertahap) |
-| `bun run db:reset` | Reset database (hapus data — hati-hati di produksi) |
-
----
-
-## ☁️ Deployment
-
-Sistem dukungan **hosting & domain**: [juraganwebsite.web.id](https://juraganwebsite.web.id)
-
-**Opsi A — Node/VPS (disarankan)**
+### VPS + Standalone (Caddy/Traefik/Nginx)
 
 ```bash
-bun install
-bun run db:push
-bun run build
-bun run start        # PORT mengikuti environment
+bun run build       # menghasilkan .next/standalone
+bun run start       # serve di :3000
 ```
-Arahkan domain `pusatgeely.web.id` ke server (A record) dan proxy reverse (Nginx/Caddy) ke port aplikasi. Contoh Caddyfile tersedia di root repo.
 
-**Opsi B — Platform (Vercel dsb.)**
+`Caddyfile` siap pakai tersedia di root — reverse proxy `:81 → :3000`.
 
-1. Push repo → import ke platform.
-2. Build command: `bun run build`; output standalone sudah dikonfigurasi.
-3. Database: tetap SQLite (volume persist) atau migrasi ke Postgres dengan mengganti `provider` di `prisma/schema.prisma`.
-
-**Opsi C — Shared hosting (cPanel)**: gunakan Node.js App / Passenger pada fitur hosting; deploy folder `.next/standalone` sesuai panduan penyedia.
-
-**Checklist pra-rilis:** ✅ verifikasi ulang harga · ✅ ganti `SITE_URL` bila domain berubah · ✅ uji form + WhatsApp di perangkat asli · ✅ `bun run lint` bersih · ✅ jalankan [Checklist peluncuran SEO](#checklist-peluncuran-seo-lakukan-sekali-setelah-deploy).
+> ⚠️ Setelah ganti domain, update `SITE_URL` di [`src/lib/site.ts`](src/lib/site.ts) — seluruh canonical, sitemap, dan JSON-LD mengikutinya otomatis.
 
 ---
 
-## 🧪 QA — Sudah Diverifikasi
+## ✅ Checklist Go-Live SEO
 
-- [x] **Build produksi**: 29 route ter-prerender, semua halaman publik SSG sukses; `bun run lint` PASS.
-- [x] **22 route HTTP 200** terverifikasi via curl (6 statis + 8 landing + 4 model + 4 artikel); slug landing tak dikenal → **404** (anti-doorway aktif); redirect permanen 308 `/harga` & `/promo` → tujuan benar.
-- [x] **Redirect permanen 308** `/harga` → `/harga-mobil-geely-bogor` dan `/promo` → `/promo-geely-bogor` berfungsi.
-- [x] **JSON-LD per route** diverifikasi via curl: `Service`+`Person`+`Place` di sales; `ItemList` di halaman model landing; `Product`+`AggregateOffer`+`Offer`+`FAQPage`+`BreadcrumbList` di halaman detail model; `OfferCatalog` di harga; `Article` di artikel; `ContactPage` di kontak.
-- [x] **Sitemap**: 22 URL benar semua (6 statis + 8 landing + 4 model + 4 artikel); robots.txt menunjuk sitemap.
-- [x] **Browser end-to-end** (desktop 1440 & mobile 390, dark & light, ID & EN) — render, interaksi, data mengalir; konsol bersih tanpa error hydration.
-- [x] **Form lead** — submit sukses `201`, tersimpan di DB, nomor `0812…` dinormalisasi `628…`, tombol WhatsApp membawa konteks lengkap + ref ID.
-- [x] **Audit ulang penuh (v2.1.1)** — restorasi dari snapshot setelah reset sandbox, lalu verifikasi ulang: build 29 halaman, 22 route 200, redirect 308, sitemap 22 URL, JSON-LD per route, API `/api/leads` (id + waUrl), canonical/hreflang, robots, manifest, 4 sosial + WA, GA4 nonaktif tanpa env. Semua PASS.
-- [x] **Simulator kredit** — matematika bunga flat benar (angsuran recompute live), parameter terbawa ke WA.
-- [x] **Preselect model** — klik CTA kartu model → form test drive terisi otomatis.
-- [x] **Anti-spam** — honeypot tertutup, rate-limit request ke-6 → `429`.
-- [x] **Media sosial** — 4 ikon terverifikasi di header, FAB, footer (desktop 1920×1080 + mobile 390×844, bukti screenshot).
-- [x] **Feed TikTok** — iframe ter-inject; fallback "Buka di TikTok" berfungsi di jaringan yang memblokir embed.
-- [x] **Breadcrumb** — tampil & berfungsi di semua halaman dalam.
+- [ ] Set `SITE_URL` = domain final
+- [ ] Submit sitemap: **Google Search Console** → Sitem → `sitemap.xml`
+- [ ] Submit sitemap: **Bing Webmaster Tools** → Sitem (impor dari GSC lebih cepat)
+- [ ] Ping IndexNow semua URL utama (script di atas)
+- [ ] Pasang env verifikasi (GSC / Bing / Yandex) → redeploy
+- [ ] Buat **Google Business Profile** (kuncinya: konsisten dengan NAP di JSON-LD)
+- [ ] Taruh link balik dari 6 sosial media (perkuat `sameAs`)
+- [ ] Pantau 2 minggu pertama: GSC → Performance → Query
 
 ---
 
-## 🔧 Panduan Pemeliharaan
+## 🧭 Prinsip Desain
 
-| Kapan | Apa yang diubah | File |
-| --- | --- | --- |
-| Harga/promo baru | `MODELS[*].priceFrom` + `variants` | `src/lib/site.ts` |
-| Spesifikasi baru | `MODELS[*].specs` + `MODEL_DETAILS` | `src/lib/site.ts` + `src/lib/model-details.ts` |
-| **Model baru diluncurkan** | 1 entri `MODELS` + 1 entri detail → halaman+sitemap+JSON-LD otomatis | `site.ts` + `model-details.ts` |
-| **Artikel baru (rutinitas SEO)** | 1 objek artikel → halaman+sitemap otomatis | `src/lib/articles.ts` |
-| Program angsuran berubah | 1 entri program | `src/lib/promos.ts` |
-| Perluas area layanan | `AREAS` | `src/lib/site.ts` |
-| Ganti akun sosial media | `BUSINESS` (instagramUrl, facebookUrl, tiktokUrl, xUrl) | `src/lib/site.ts` |
-| Ubah jam layanan | `BUSINESS.hours` | `src/lib/site.ts` |
-| Tambah FAQ | duplikasi item di kedua bahasa | `src/lib/faq-data.ts` |
-| Ubah teks apa pun | dictionary ID & EN bersamaan | `src/lib/i18n.ts` |
-
-> 💡 Satu file (`site.ts`) mengendalikan seluruh data → risiko "harga lama tersisa di halaman lain" = nol.
+1. **Honesty-first** — harga selalu *indikatif* + disclaimer; tidak ada klaim dealer resmi; tidak ada testimoni fiktif. Trust adalah SEO jangka panjang.
+2. **Anti-fabrication** — data produk hanya dari riset multi-sumber publik (stamp September 2026).
+3. **Setiap klik bernilai** — tidak ada tautan mati; 2.655 frasa semua mengarah ke jawaban nyata.
+4. **Bilingual ID/EN** — pasar lokal utama, kredibilitas internasional tetap ada.
+5. **Performance = ranking** — SSG murni, nol script wajib, image WebP optimized.
 
 ---
 
-## 📜 Riwayat Versi
-
-| Versi | Ringkasan |
-| --- | --- |
-| **2.1.3** | **Kredit pindah ke belakang layar**: sesuai permintaan pemilik, blok kredit dihapus dari tampilan footer (tidak ada nama perusahaan/CEO yang terlihat pengunjung). Entitas + CEO tetap tertanam penuh di lapisan tersembunyi yang legal: JSON-LD `@graph` Organization ×3 dengan `leader` Person (dibaca mesin pencari, tidak dirender di UI). Catatan kepatuhan: TIDAK menggunakan teks tersembunyi CSS (display:none/font 0px/warna samar) — itu pelanggaran pedoman Google; structured data adalah mekanisme "tersembunyi" yang benar. |
-| **2.1.2** | **Kredit korporat & entitas Google**: blok kredit footer diperluas jadi tiga entitas (digiman.id, juraganwebsite.web.id, PT Top Konsultan Internasional — topkonsultan.web.id) + baris CEO **Tn. H. Gugun Gunara** (bilingual ID/EN); JSON-LD baru `@graph` Organization ×3 (PT Digital Bisnis Manajemen, PT Top Konsultan Internasional, Juragan Website) dengan `leader` Person H. Gugun Gunara (jobTitle CEO) — supaya Google mengenali entitas korporat di balik situs; README TL;DR + tabel Kredit diperbarui. |
-| **2.1.1** | **Audit & pemulihan**: repo dipulihkan dari snapshot setelah reset sandbox (riwayat git utuh); seluruh klaim QA diverifikasi ulang (22 route 200, redirect 308, sitemap 22, JSON-LD, API leads, anti-doorway 404); koreksi fakta "redirect 301" → "redirect permanen 308" di README; sinkronisasi worklog (gabungan riwayat pembangunan awal Task 0–14 + sesi lanjutan); commit final siap-push — push ke GitHub menunggu kredensial pemilik (sandbox tanpa PAT/SSH). |
-| **2.1** | **Strategi 10 pintu masuk pencarian**: 8 halaman landing SEO baru bilingual (sales-geely-bogor, kredit-cicilan, 4 halaman harga model Bogor, test-drive, mobil-listrik) via route dinamis `[landing]` + lapisan data `landing-pages.ts`; migrasi `/harga`→`/harga-mobil-geely-bogor` dan `/promo`→`/promo-geely-bogor` dengan redirect permanen (308); JSON-LD `Service` & `ItemList`; nav & POPULAR_SEARCHES menaut ke halaman nyata; GA4 opsional (`NEXT_PUBLIC_GA_ID`); sitemap 22 URL. |
-| **2.0** | Ekspansi multi-halaman (penggabungan riset konten 4 situs): 14+ route SSG, halaman detail 4 model, `/harga`, `/promo`, `/tentang`, `/kontak`, 4 artikel SEO orisinal bilingual, JSON-LD 8+ tipe per route, sitemap 14 URL, breadcrumb, nav multi-halaman, lapisan data `model-details.ts` + `articles.ts` + `promos.ts`. |
-| **1.1** | Integrasi 4 media sosial (header, FAB, footer, JSON-LD `sameAs`) + galeri dengan feed TikTok ter-embed (hydration-safe + fallback). |
-| **1.0** | Peluncuran: beranda anchor-based, 4 model terverifikasi, simulator kredit, lead capture → SQLite → WhatsApp, SEO teknis dasar (3 JSON-LD, sitemap, robots, manifest), dwibahasa, dark/light. |
-
----
-
-## 🏆 Kredit
+## 👤 Kredit & Support System
 
 <div align="center">
 
 | | |
-| --- | --- |
-| 🛠️ **Dikembangkan oleh** | **PT Digital Bisnis Manajemen** — [digiman.id](https://digiman.id) |
-| 🖥️ **Sistem dukungan hosting & domain** | [juraganwebsite.web.id](https://juraganwebsite.web.id) |
-| 🏢 **Bagian dari grup** | **PT Top Konsultan Internasional** — [topkonsultan.web.id](https://topkonsultan.web.id) |
-| 👤 **CEO digiman.id & topkonsultan.web.id** | **Tn. H. Gugun Gunara** |
+|---|---|
+| **Business Owner / Sales Consultant** | Sena Sulaeman |
+| **Digital Support System** | **H. Gugun Gunara** *(prabudanling · santri angon)* — [topkonsultan.web.id](https://topkonsultan.web.id) · [digiman.id](https://digiman.id) |
+| **Co-Founder & Digital Systems** | **Muhammad Lutfi Azmi** |
+| **Perusahaan** | PT Top Konsultan Internasional · PT Digital Bisnis Manajemen (Digiman) |
 
-*Dikembangkan & didukung oleh ekosistem digital Indonesia.* 🇮🇩
+[![Facebook](https://img.shields.io/badge/Facebook-bossdanling-1877F2?style=flat-square&logo=facebook&logoColor=white)](https://www.facebook.com/bossdanling)
+[![X](https://img.shields.io/badge/X-gunzz__krenzz-000000?style=flat-square&logo=x&logoColor=white)](https://x.com/gunzz_krenzz)
+[![Instagram](https://img.shields.io/badge/Instagram-prabudanling-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/prabudanling)
+[![TikTok](https://img.shields.io/badge/TikTok-gunaracorp-000000?style=flat-square&logo=tiktok&logoColor=white)](https://www.tiktok.com/@gunaracorp)
+[![Threads](https://img.shields.io/badge/Threads-prabudanling-000000?style=flat-square&logo=threads&logoColor=white)](https://www.threads.com/@prabudanling)
+[![Reddit](https://img.shields.io/badge/Reddit-prabudanling-FF4500?style=flat-square&logo=reddit&logoColor=white)](https://www.reddit.com/user/prabudanling/)
 
 </div>
 
 ---
 
-## ⚖️ Legal & Merek Dagang
+## 📜 Lisensi
 
-Pusat Geely adalah **layanan konsultan penjualan independen**. Website ini **bukan** milik, bukan bagian dari, dan tidak berafiliasi dengan **PT Geely Mobil Indonesia** maupun **Geely Holding**. Nama *Geely* dan seluruh nama model adalah merek dagang milik pemiliknya masing-masing, digunakan semata untuk identifikasi produk. Pembelian, garansi, dan purna jual dijalankan melalui jaringan dealer resmi Geely Indonesia sesuai ketentuan pabrikan.
-
----
-
-## 📄 Lisensi
-
-© 2026 **Pusat Geely** — Sena Sulaeman. Seluruh hak cipta dilindungi.
-Kode, desain, dan konten diserahkan untuk kepentingan pemilik situs `pusatgeely.web.id` dan tidak untuk didistribusikan ulang tanpa izin.
-
----
-
-## 📞 Kontak
-
-| | |
-| --- | --- |
-| 👤 **PIC** | Sena Sulaeman — Konsultan Penjualan |
-| 💬 **WhatsApp** | [+62 816-6111-42](https://wa.me/62816611142) |
-| ✉️ **Email** | [pusatgeely@gmail.com](mailto:pusatgeely@gmail.com) |
-| 📸 **Instagram** | [@salesconsultant1972](https://instagram.com/salesconsultant1972) |
-| 🎵 **TikTok** | [@eman.sulaeman0839](https://www.tiktok.com/@eman.sulaeman0839) |
-| ✖️ **X** | [@EmanSulaem79261](https://x.com/EmanSulaem79261) |
-| 📍 **Wilayah** | Bogor & Jabodetabek · Setiap hari 08.00–20.00 WIB |
+Proyek privat — hak milik **Pusat Geely** & digital support system.
+Dibangun dengan presisi oleh *master polymath, sage universal, the ultimate problem solver.* ⚡
 
 <div align="center">
 
-**Dibangun dengan presisi, integritas data, dan rasa bangga.** 🚗💨
+**[⬆ Kembali ke atas](#-pusat-geely)**
+
+*Made with 🔥 in Bogor, Indonesia*
 
 </div>
-
----
-
-<a id="-english-summary"></a>
-## 🇬🇧 English Summary
-
-**Pusat Geely** (pusatgeely.web.id) is a production **multi-page** website (15+ routes, fully statically generated) for an independent Geely car-sales consulting service covering Bogor and Greater Jakarta (Jabodetabek), Indonesia. It is intentionally bilingual (Indonesian-first for local SEO with hreflang), dark/light themed, and conversion-focused: 9+ WhatsApp deep-link touchpoints, an interactive flat-interest financing simulator, and a lead-capture form that validates (zod), stores (Prisma/SQLite with a `source` field), rate-limits (5/min/IP), and hands the visitor back to WhatsApp with full lead context plus a reference ID. **Technical SEO ships end-to-end**: 8+ JSON-LD schema types (AutoDealer with `sameAs` social links, WebSite, FAQPage, Product + AggregateOffer + Offer per variant, OfferCatalog, Article, BreadcrumbList, ContactPage), a 14-URL build-time sitemap generated from the data layer, per-route canonical/hreflang/Open Graph/Twitter metadata, and breadcrumbs. Content lives in a typed TypeScript data layer (`site.ts`, `model-details.ts`, `articles.ts`, `promos.ts`, `faq-data.ts`) — adding a model or article is one data entry; routes, sitemap entries, and JSON-LD follow automatically. Social integration covers Instagram, Facebook, TikTok (embedded feed in the gallery, hydration-safe with a fallback link) and X. A strict **anti-fabrication data policy** governs all displayed prices and specs (multi-source public research, clearly marked indicative, no fake claims, no fake testimonials, all content written originally — never copied). Stack: **Next.js 16, TypeScript 5, Tailwind CSS 4, shadcn/ui, Prisma + SQLite, Zustand, react-hook-form**.
-
-**Developed by PT Digital Bisnis Manajemen ([digiman.id](https://digiman.id))** · **Hosting & domain support system by [juraganwebsite.web.id](https://juraganwebsite.web.id)** · Contact: [Sena Sulaeman](https://wa.me/62816611142) · pusatgeely@gmail.com
-

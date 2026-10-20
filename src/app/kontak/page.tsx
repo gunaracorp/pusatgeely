@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/page-shell";
 import { KontakPage } from "@/components/kontak-page";
 import { BUSINESS, SITE_URL, waLink } from "@/lib/site";
+import { keywordsForPage } from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Kontak Pusat Geely — WhatsApp, Email & Area Layanan Bogor Jabodetabek",
   description:
     "Hubungi Pusat Geely: WhatsApp +62 816-6111-42 (Senin–Minggu 08.00–20.00 WIB), email, dan media sosial. Melayani konsultasi, test drive, kredit, dan trade-in untuk seluruh Bogor & Jabodetabek.",
+  keywords: keywordsForPage({ intent: "sales", area: "bogor", cap: 50 }),
   alternates: {
     canonical: `${SITE_URL}/kontak`,
     languages: {

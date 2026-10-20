@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/page-shell";
 import { TentangPage } from "@/components/tentang-page";
 import { SITE_URL } from "@/lib/site";
+import { keywordsForPage } from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Tentang Pusat Geely — Konsultan Penjualan Independen Geely Bogor",
   description:
     "Kenali Pusat Geely: layanan konsultan penjualan independen untuk kendaraan Geely di Bogor & Jabodetabek — cara kerja kami, nilai yang kami pegang, dan mengapa pendampingan transparan lebih penting daripada promo sekali klaim.",
+  keywords: keywordsForPage({ core: true, cap: 40 }),
   alternates: {
     canonical: `${SITE_URL}/tentang`,
     languages: {

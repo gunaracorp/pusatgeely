@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL, MODELS } from "@/lib/site";
 import { ARTICLES } from "@/lib/articles";
-import { LANDING_PAGES } from "@/lib/landing-pages";
+import { ALL_LANDING_PAGES } from "@/lib/landing-all";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -13,10 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/artikel`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/tentang`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     { url: `${SITE_URL}/kontak`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    // Indeks kata kunci — hub internal-linking untuk crawler
+    { url: `${SITE_URL}/indeks-kata-kunci`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
   ];
 
-  // Halaman landing SEO (pintu masuk pencarian) — prioritas dari data.
-  const landingRoutes: MetadataRoute.Sitemap = LANDING_PAGES.map((p) => ({
+  // Halaman landing SEO (manual + programatik) — prioritas dari data.
+  const landingRoutes: MetadataRoute.Sitemap = ALL_LANDING_PAGES.map((p) => ({
     url: `${SITE_URL}/${p.slug}`,
     lastModified: now,
     changeFrequency: "weekly",

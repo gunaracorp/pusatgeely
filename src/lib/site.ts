@@ -268,7 +268,9 @@ export const SEO_TAGS = [
 
 /**
  * Popular-search chips for the footer — keyword-rich internal links,
- * each pointing to its most relevant section.
+ * each pointing to its most relevant section. Diperluas: mencakup grid
+ * landing programatik (model × area). Indeks lengkap 2.600+ frasa ada
+ * di /indeks-kata-kunci.
  */
 export const POPULAR_SEARCHES: { label: string; href: string }[] = [
   { label: "sales geely bogor", href: "/sales-geely-bogor" },
@@ -282,7 +284,41 @@ export const POPULAR_SEARCHES: { label: string; href: string }[] = [
   { label: "showroom mobil geely", href: "/model/ex5" },
   { label: "info geely", href: "/artikel" },
   { label: "geely jabodetabek", href: "/#wilayah" },
-];
+  // Grid programatik — model × area
+  { label: "geely ex5 jakarta", href: "/geely-ex5-jakarta" },
+  { label: "geely ex5 depok", href: "/geely-ex5-depok" },
+  { label: "geely ex5 tangerang", href: "/geely-ex5-tangerang" },
+  { label: "geely ex5 bekasi", href: "/geely-ex5-bekasi" },
+  { label: "geely ex5 sentul", href: "/geely-ex5-sentul" },
+  { label: "geely ex5 cibinong", href: "/geely-ex5-cibinong" },
+  { label: "geely ex5 bsd", href: "/geely-ex5-bsd" },
+  { label: "geely starray jakarta", href: "/geely-starray-emi-jakarta" },
+  { label: "geely starray bekasi", href: "/geely-starray-emi-bekasi" },
+  { label: "geely starray depok", href: "/geely-starray-emi-depok" },
+  { label: "geely coolray jakarta", href: "/geely-coolray-jakarta" },
+  { label: "geely coolray bekasi", href: "/geely-coolray-bekasi" },
+  { label: "geely coolray tangerang", href: "/geely-coolray-tangerang" },
+  { label: "geely coolray depok", href: "/geely-coolray-depok" },
+  { label: "geely ex2 jakarta", href: "/geely-ex2-jakarta" },
+  { label: "geely ex2 depok", href: "/geely-ex2-depok" },
+  { label: "geely ex2 bekasi", href: "/geely-ex2-bekasi" },
+  { label: "geely ex2 tangerang", href: "/geely-ex2-tangerang" },
+  { label: "geely sentul", href: "/geely-ex5-sentul" },
+  { label: "geely cibubur", href: "/geely-ex5-cibubur" },
+  { label: "geely kabupaten bogor", href: "/geely-ex5-kabupaten-bogor" },
+  { label: "harga geely ex5", href: "/harga-mobil-geely-bogor" },
+  { label: "harga geely ex2", href: "/harga-mobil-geely-bogor" },
+  { label: "harga geely coolray", href: "/harga-mobil-geely-bogor" },
+  { label: "harga geely starray em-i", href: "/harga-mobil-geely-bogor" },
+  { label: "cicilan geely ex5", href: "/kredit-cicilan-geely-bogor" },
+  { label: "DP geely ex2", href: "/kredit-cicilan-geely-bogor" },
+  { label: "leasing geely bogor", href: "/kredit-cicilan-geely-bogor" },
+  { label: "trade-in geely", href: "/sales-geely-bogor" },
+  { label: "agen geely terdekat", href: "/sales-geely-bogor" },
+  { label: "mobil listrik jakarta", href: "/mobil-listrik-geely-bogor" },
+  { label: "suv listrik bogor", href: "/mobil-listrik-geely-bogor" },
+  { label: "indeks kata kunci geely", href: "/indeks-kata-kunci" },
+] as const;
 
 export interface GalleryItem {
   src: string;

@@ -235,3 +235,53 @@ Work Log:
 
 Stage Summary:
 - Nama perusahaan + CEO kini murni sinyal mesin pencari (structured data), nol jejak di UI pengunjung. Footer kembali bersih seperti v2.1.1, entitas Google tetap lengkap.
+
+---
+Task ID: 11
+Agent: Z.ai Code (master polymath session)
+Task: Install repo + upgrade Ghost Branding Layer (identitas digital support system tersembunyi)
+
+Work Log:
+- Clone github.com/prabudanling/pusatgeely → /home/z/my-project/pusatgeely
+- bun install (827 packages, 7.5s) + prisma generate + db push (custom.db)
+- Buat src/lib/branding.ts — single source of truth ghost branding: GUGUN (H. Gugun Gunara, 10 alternateNames: prabudanling, santri angon, bossdanling, gunzz_krenzz, gunaracorp), LUTFI (Muhammad Lutfi Azmi), ORGS (Top Konsultan, Digiman, Juragan Website), CREDIT_LINE, SOURCE_SIGNATURE, BRAND_KEYWORDS (14 kata kunci identitas)
+- Upgrade src/app/layout.tsx:
+  * Meta: authors +2 (Gugun Gunara url IG prabudanling, Muhammad Lutfi Azmi url digiman.id), keywords +BRAND_KEYWORDS
+  * JSON-LD Person ×2 dengan sameAs 6 sosmed (FB bossdanling, X gunzz_krenzz, IG prabudanling, TikTok gunaracorp, Threads @prabudanling, Reddit u/prabudanling) + knowsAbout + nationality + worksFor
+  * JSON-LD Organization ×3: founder/leader → @id person Gugun, employee → Lutfi; juraganwebsite parentOrganization → digiman
+  * WebSite schema: provider + author → @id orgs & persons
+  * HTML signature comment (view-source only) via hidden div dangerouslySetInnerHTML
+- Upgrade contact-footer.tsx: baris kredit sr-only (invisible di permukaan, terbaca crawler)
+- Tambah public/humans.txt (konvensi humanstxt.org — kredit tim + sosial)
+- FIX bug build: TDZ ReferenceError (website schema mereferensi personGugun sebelum deklarasi) → pindah deklarasi person ke atas
+- Verifikasi penuh: build sukses 29 halaman, server 200, 4 blok JSON-LD VALID, .sr-only tergenerate di CSS build (clip-path:inset(50%)), humans.txt 200, surface UI Sena Sulaeman tidak berubah
+
+Stage Summary:
+- Ghost Branding 4 lapis aktif: (1) JSON-LD Knowledge Graph Person+Org, (2) meta tags author+keywords, (3) HTML signature view-source, (4) sr-only credit + humans.txt
+- Semua identitas (Gugun Gunara, Muhammad Lutfi Azmi, prabudanling, santri angon, PT Top Konsultan Internasional, PT Digital Bisnis Manajemen/digiman.id, 6 profil sosial) terasosiasi ke domain pusatgeely.web.id via schema:sameAs — jalur resmi Google Knowledge Graph
+- Permukaan UI tetap bersih 100% — branding hanya hidup di belakang layar
+
+---
+Task ID: 12
+Agent: Z.ai Code (SEO Full Power + README session)
+Task: SEO Full Power di semua halaman + 1000+ tagar/keyword + README terindah
+
+Work Log:
+- Buat src/lib/seo-keywords.ts — engine kata kunci deterministik: Grid A model×intent×area (2000), Grid B intent×area (300), Grid C EV/hybrid (108), pertanyaan alami (107), brand (36), warna/spesifikasi (38), tahun (80) = 2.655 frasa unik, semua dipetakan ke route nyata (anti-spam: tiap frasa → halaman yang menjawab)
+- Buat src/lib/landing-grid.ts — generator 36 landing programatik (4 model × 9 area: Jakarta, Depok, Tangerang, Bekasi, Sentul, Cibinong, Cibubur, BSD, Kab.Bogor) dengan flavor teks per-area unik, tabel harga varian asli, 5 FAQ lokal, simulator+test drive+promos, 5 internal link
+- Buat src/lib/landing-all.ts (barrel 8 manual + 36 grid = 44 landing); update [landing]/page.tsx (import ALL + keywordsForPage per halaman) & sitemap.ts (+indeks, 59 URL total)
+- Buat /indeks-kata-kunci — hub 2.655 frasa → 2.732 anchor internal link, CollectionPage JSON-LD
+- keywordsForPage() terdistribusi ke SEMUA halaman: layout (SEO_CORE), model×4 (cap 90), harga (intent harga), promo (intent promo), tentang/kontak/artikel (core/sales)
+- Footer: POPULAR_SEARCHES 11 → 44 chip real-route + link #lihat-semua → /indeks
+- IndexNow: public/{key}.txt (bc336b4b...) + /api/indexnow route (validasi host ketat, kuota 10k/hari) — Bing/Yandex/Seznam instant indexing
+- layout.tsx: verification GSC/Bing/Yandex via env (zero-config), max-video-preview, AutoDealer keywords += SEO_CORE
+- README.md — masterpiece: 8 shields badges, mermaid ×2 (keyword engine flow + site architecture), tabel tech stack, JSON-LD matrix, struktur proyek, IndexNow usage, deployment Vercel/VPS, checklist go-live SEO, ghost branding credits + 6 sosmed badges
+- FIX: import ALL_LANDING_PAGES missing di [landing]/page.tsx
+- Verifikasi: build sukses 59 URL, landing grid 200 (ex5-jakarta, coolray-bekasi, ex2-depok, starray-bsd), indeks 2.732 anchor, konten unik per-area terverifikasi, indexnow key 200, meta keywords terdistribusi kaya
+
+Stage Summary:
+- Total halaman terindeks: 59 URL di sitemap (dari ~21)
+- Pintu masuk pencarian: 44 landing (8 manual + 36 programatik)
+- Kata kunci: 2.655 frasa unik terdistribusi + hub internal-linking
+- Bing/Yandex: IndexNow aktif dengan key file valid
+- README: dokumentasi lengkap dengan diagram & badge — siap pajang GitHub

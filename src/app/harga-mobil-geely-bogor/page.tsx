@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/page-shell";
 import { HargaPage } from "@/components/harga-page";
 import { MODELS, SITE_URL, waLink } from "@/lib/site";
+import { keywordsForPage } from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Harga Mobil Geely Bogor | EX5, Starray EM-i, Coolray, EX2 (Indikatif OTR)",
   description:
     "Daftar harga mobil Geely di Bogor & Jabodetabek per September 2026: EX5 mulai Rp 465 juta, Starray EM-i Rp 499 juta, Coolray Rp 333 juta, EX2 Rp 239,9 juta — per varian, biaya yang perlu disiapkan, dan cara meminta penawaran terbaru.",
+  keywords: keywordsForPage({ intent: "harga", cap: 60 }),
   alternates: {
     canonical: `${SITE_URL}/harga-mobil-geely-bogor`,
     languages: {

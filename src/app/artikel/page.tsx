@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/page-shell";
 import { ArticleList } from "@/components/article-list";
 import { SITE_URL } from "@/lib/site";
+import { keywordsForPage } from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Artikel & Panduan Geely — Harga, Perbandingan, Tips, Trade-in",
   description:
     "Kumpulan artikel panduan membeli Geely di Bogor & Jabodetabek: daftar harga terbaru, perbandingan EX5 vs Starray EM-i, tips merawat baterai mobil listrik, dan panduan trade-in lengkap.",
+  keywords: keywordsForPage({ core: true, cap: 45 }),
   alternates: {
     canonical: `${SITE_URL}/artikel`,
     languages: {

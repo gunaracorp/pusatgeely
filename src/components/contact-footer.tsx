@@ -18,6 +18,7 @@ import {
   PRICE_DISCLAIMER,
   waLink,
 } from "@/lib/site";
+import { CREDIT_LINE } from "@/lib/branding";
 
 const NAV_LINKS = [
   { href: "#model", key: "models" },
@@ -209,6 +210,14 @@ export function ContactFooter() {
                 </a>
               </li>
             ))}
+            <li>
+              <a
+                href="/indeks-kata-kunci"
+                className="inline-flex items-center rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-[11px] font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                #lihat-semua-2.600+kata-kunci →
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -231,6 +240,13 @@ export function ContactFooter() {
           </p>
           <p className="font-medium">{t.footer.madeIn}</p>
         </div>
+
+        {/*
+          GHOST BRANDING — kredit support system.
+          sr-only: tidak tampak di permukaan (permintaan pemilik),
+          tetapi hadir di DOM & terbaca crawler/screen-reader.
+        */}
+        <p className="sr-only">{CREDIT_LINE}</p>
       </div>
 
       {/* Giant decorative wordmark */}

@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { LandingShell } from "@/components/landing-shell";
-import { LANDING_PAGES } from "@/lib/landing-pages";
+import { ALL_LANDING_PAGES, findLanding } from "@/lib/landing-all";
+import { keywordsForPage } from "@/lib/seo-keywords";
 import { AREAS, BUSINESS, MODELS, SITE_URL, POWERTRAIN_LABEL } from "@/lib/site";
 
 /**
  * Route dinamis halaman landing SEO. Hanya slug yang terdaftar di
- * LANDING_PAGES yang di-prerender — slug lain otomatis 404
- * (mencegah halaman tipis tak sengaja terindeks).
+ * ALL_LANDING_PAGES (manual + programatik) yang di-prerender —
+ * slug lain otomatis 404 (mencegah halaman tipis tak sengaja terindeks).
  */
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return LANDING_PAGES.map((p) => ({ landing: p.slug }));
+  return ALL_LANDING_PAGES.map((p) => ({ landing: p.slug }));
 }
 
 export async function generateMetadata({
@@ -22,12 +23,20 @@ export async function generateMetadata({
   params: Promise<{ landing: string }>;
 }): Promise<Metadata> {
   const { landing } = await params;
-  const page = LANDING_PAGES.find((p) => p.slug === landing);
+  const page = findLanding(landing);
   if (!page) return {};
 
   const title = page.title.id;
   const description = page.description.id;
   const url = `${SITE_URL}/${page.slug}`;
+
+  // Kata kunci terdistribusi: frasa inti + klaster sesuai niat halaman.
+  const kw = keywordsForPage({
+    modelId: page.modelId,
+    intent: page.slug.split("-")[0],
+    core: true,
+    cap: 60,
+  });
 
   return {
     title,
@@ -38,6 +47,7 @@ export async function generateMetadata({
       "geely bogor",
       "pusat geely",
       "geely jabodetabek",
+      ...kw,
     ],
     alternates: {
       canonical: url,
@@ -68,7 +78,7 @@ export default async function LandingRoute({
   params: Promise<{ landing: string }>;
 }) {
   const { landing } = await params;
-  const page = LANDING_PAGES.find((p) => p.slug === landing);
+  const page = findLanding(landing);
   if (!page) notFound();
 
   const url = `${SITE_URL}/${page.slug}`;

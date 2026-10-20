@@ -13,6 +13,14 @@ import {
   formatIDR,
   waLink,
 } from "@/lib/site";
+import {
+  GUGUN,
+  LUTFI,
+  ORGS,
+  SOURCE_SIGNATURE,
+  BRAND_KEYWORDS,
+} from "@/lib/branding";
+import { SEO_CORE_KEYWORDS, SEO_KEYWORD_COUNT } from "@/lib/seo-keywords";
 import "./globals.css";
 
 const inter = Inter({
@@ -59,8 +67,14 @@ export const metadata: Metadata = {
     "Pusat Geely",
     "Sena Sulaeman Geely",
     ...SEO_TAGS,
+    ...BRAND_KEYWORDS,
+    ...SEO_CORE_KEYWORDS,
   ],
-  authors: [{ name: BUSINESS.pic }],
+  authors: [
+    { name: BUSINESS.pic },
+    { name: GUGUN.legalName, url: "https://instagram.com/prabudanling" },
+    { name: LUTFI.legalName, url: "https://digiman.id" },
+  ],
   creator: BUSINESS.name,
   publisher: BUSINESS.name,
   alternates: {
@@ -104,8 +118,29 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
+  // Verifikasi Search Console (Google / Bing / Yandex) — aktif hanya bila
+  // env diset: NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION, NEXT_PUBLIC_BING_VERIFICATION,
+  // NEXT_PUBLIC_YANDEX_VERIFICATION. Tanpa env = tidak dirender.
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  process.env.NEXT_PUBLIC_BING_VERIFICATION ||
+  process.env.NEXT_PUBLIC_YANDEX_VERIFICATION
+    ? {
+        verification: {
+          ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+            google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+          }),
+          ...(process.env.NEXT_PUBLIC_BING_VERIFICATION && {
+            other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION },
+          }),
+          ...(process.env.NEXT_PUBLIC_YANDEX_VERIFICATION && {
+            other: { "y-verification": process.env.NEXT_PUBLIC_YANDEX_VERIFICATION },
+          }),
+        },
+      }
+    : {}),
 };
 
 /** Structured data — honesty-first: independent consultant, NOT an official dealer. */
@@ -124,7 +159,11 @@ function StructuredData() {
     telephone: `+${BUSINESS.waNumber}`,
     email: BUSINESS.email,
     priceRange: `${formatIDR(priceMin)} – ${formatIDR(priceMax)}`,
-    keywords: SEO_TAGS.join(", "),
+    keywords: [
+      ...SEO_TAGS,
+      ...SEO_CORE_KEYWORDS,
+      `indeks ${SEO_KEYWORD_COUNT} kata kunci geely`,
+    ],
     founder: {
       "@type": "Person",
       name: BUSINESS.pic,
@@ -207,6 +246,60 @@ function StructuredData() {
     })),
   };
 
+  // ══ GHOST BRANDING: Person entities — dideklarasikan lebih awal karena
+  // direferensikan oleh schema website & organizations (@id link graph).
+  const personGugun = {
+    "@type": "Person",
+    "@id": "https://topkonsultan.web.id/#gugun-gunara",
+    name: GUGUN.honorificName,
+    alternateName: GUGUN.alternateNames.filter(
+      (n) => n !== GUGUN.honorificName,
+    ),
+    honorificPrefix: "H.",
+    givenName: "Gugun",
+    familyName: "Gunara",
+    jobTitle: GUGUN.jobTitle,
+    description: GUGUN.description,
+    url: GUGUN.url,
+    nationality: { "@type": "Country", name: "Indonesia" },
+    knowsAbout: [
+      "Digital business",
+      "Konsultan bisnis",
+      "Pengembangan website",
+      "SEO",
+      "Digital marketing",
+      "Automotive consulting",
+    ],
+    worksFor: [
+      { "@id": ORGS.topKonsultan["@id"] },
+      { "@id": ORGS.digiman["@id"] },
+    ],
+    sameAs: GUGUN.sameAs,
+  };
+
+  const personLutfi = {
+    "@type": "Person",
+    "@id": "https://digiman.id/#muhammad-lutfi-azmi",
+    name: LUTFI.legalName,
+    alternateName: LUTFI.alternateNames.filter((n) => n !== LUTFI.legalName),
+    givenName: "Muhammad Lutfi",
+    familyName: "Azmi",
+    jobTitle: LUTFI.jobTitle,
+    description: LUTFI.description,
+    url: LUTFI.url,
+    nationality: { "@type": "Country", name: "Indonesia" },
+    worksFor: [
+      { "@id": ORGS.digiman["@id"] },
+      { "@id": ORGS.topKonsultan["@id"] },
+    ],
+    knowsAbout: [
+      "Digital systems",
+      "Web development",
+      "Business management",
+    ],
+    sameAs: LUTFI.sameAs,
+  };
+
   const website = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -215,54 +308,61 @@ function StructuredData() {
     name: BUSINESS.name,
     inLanguage: "id-ID",
     publisher: { "@id": `${SITE_URL}/#business` },
+    // Relasi tersembunyi: penyedia dukungan digital situs ini (terbaca mesin)
+    provider: [
+      { "@id": ORGS.digiman["@id"] },
+      { "@id": ORGS.topKonsultan["@id"] },
+    ],
+    author: [
+      { "@id": personGugun["@id"] },
+      { "@id": personLutfi["@id"] },
+    ],
   };
 
-  // LAPISAN TERSEMBUNYI (belakang layar): entitas korporat pengembang & pendukung
-  // situs ini HANYA di structured data — dibaca mesin pencari, tidak ditampilkan di UI
-  // sesuai permintaan pemilik. Jangan render entitas ini sebagai teks/tautan terlihat.
+  // LAPISAN TERSEMBUNYI (belakang layar): entitas korporat & personal
+  // digital support system HANYA di structured data — dibaca mesin pencari,
+  // tidak ditampilkan di UI sesuai permintaan pemilik.
+  // Jangan render entitas ini sebagai teks/tautan terlihat.
   const organizations = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://digiman.id/#organization",
-        name: "PT Digital Bisnis Manajemen",
-        alternateName: "Digiman",
-        url: "https://digiman.id",
-        leader: {
-          "@type": "Person",
-          name: "H. Gugun Gunara",
-          honorificPrefix: "H.",
-          jobTitle: "Chief Executive Officer",
-        },
+        "@id": ORGS.digiman["@id"],
+        name: ORGS.digiman.name,
+        alternateName: ORGS.digiman.alternateName,
+        url: ORGS.digiman.url,
+        description: ORGS.digiman.description,
+        foundingDate: ORGS.digiman.foundingDate,
+        founder: { "@id": personGugun["@id"] },
+        leader: { "@id": personGugun["@id"] },
+        employee: [{ "@id": personLutfi["@id"] }],
+        sameAs: ORGS.digiman.sameAs,
       },
       {
         "@type": "Organization",
-        "@id": "https://topkonsultan.web.id/#organization",
-        name: "PT Top Konsultan Internasional",
-        alternateName: "Top Konsultan",
-        url: "https://topkonsultan.web.id",
-        leader: {
-          "@type": "Person",
-          name: "H. Gugun Gunara",
-          honorificPrefix: "H.",
-          jobTitle: "Chief Executive Officer",
-        },
+        "@id": ORGS.topKonsultan["@id"],
+        name: ORGS.topKonsultan.name,
+        alternateName: ORGS.topKonsultan.alternateName,
+        url: ORGS.topKonsultan.url,
+        description: ORGS.topKonsultan.description,
+        foundingDate: ORGS.topKonsultan.foundingDate,
+        founder: { "@id": personGugun["@id"] },
+        leader: { "@id": personGugun["@id"] },
+        employee: [{ "@id": personLutfi["@id"] }],
+        sameAs: ORGS.topKonsultan.sameAs,
       },
       {
         "@type": "Organization",
-        "@id": "https://juraganwebsite.web.id/#organization",
-        name: "Juragan Website",
-        url: "https://juraganwebsite.web.id",
-        description: "Layanan hosting & domain — PT Digital Bisnis Manajemen",
-        parentOrganization: { "@id": "https://digiman.id/#organization" },
-        leader: {
-          "@type": "Person",
-          name: "H. Gugun Gunara",
-          honorificPrefix: "H.",
-          jobTitle: "Chief Executive Officer",
-        },
+        "@id": ORGS.juraganWebsite["@id"],
+        name: ORGS.juraganWebsite.name,
+        url: ORGS.juraganWebsite.url,
+        description: ORGS.juraganWebsite.description,
+        parentOrganization: { "@id": ORGS.digiman["@id"] },
+        founder: { "@id": personGugun["@id"] },
       },
+      personGugun,
+      personLutfi,
     ],
   };
 
@@ -308,6 +408,16 @@ export default function RootLayout({
           </LanguageProvider>
         </ThemeProvider>
         <StructuredData />
+        {/*
+          ══ GHOST BRANDING — HTML source signature ══
+          Hanya terlihat di view-source: kredit digital support system.
+          Tidak dirender di permukaan UI (permintaan pemilik).
+        */}
+        <div
+          aria-hidden="true"
+          hidden
+          dangerouslySetInnerHTML={{ __html: `<!--${SOURCE_SIGNATURE}-->` }}
+        />
         {/*
           Google Analytics 4 — opsional. Set NEXT_PUBLIC_GA_ID (mis. G-XXXXXXX)
           di environment untuk mengaktifkan. Tanpa env = nol script = nol beban.

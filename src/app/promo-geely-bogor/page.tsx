@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/page-shell";
 import { PromoSection } from "@/components/promo-section";
 import { SITE_URL } from "@/lib/site";
+import { keywordsForPage } from "@/lib/seo-keywords";
 
 export const metadata: Metadata = {
   title: "Promo Geely Bogor Terbaru | Program Pembiayaan & Paket Kredit (Indikatif)",
   description:
     "Promo Geely Bogor yang benar-benar berlaku: program pembiayaan dari 5 perusahaan — DP, angsuran per tenor, total bayar pertama, model yang memenuhi syarat, dan cara mengonfirmasi ketersediaannya. Promo kedaluwarsa segera dicabut dari halaman ini.",
+  keywords: keywordsForPage({ intent: "promo", cap: 60 }),
   alternates: {
     canonical: `${SITE_URL}/promo-geely-bogor`,
     languages: {
