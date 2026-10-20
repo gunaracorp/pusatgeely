@@ -1,0 +1,88 @@
+import type { MetadataRoute } from "next";
+import { SITE_URL, MODELS } from "@/lib/site";
+import { ARTICLES } from "@/lib/articles";
+import { ALL_LANDING_PAGES } from "@/lib/landing-all";
+
+const XML_NAMESPACE = "http://www.sitemaps.org/schemas/sitemap/0.9";
+
+// A regular Route Handler makes the XML response explicit and bypasses the
+// metadata sitemap route pipeline, which can help with certain production 404s.
+export const revalidate = 3600;
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function formatLastModified(value: Date | string): string {
+  return escapeXml(value instanceof Date ? value.toISOString() : value);
+}
+
+export async function GET(): Promise<Response> {
+  const now = new Date();
+
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: SITE_URL, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/harga-mobil-geely-bogor`, lastModified: now, changeFrequency: "weekly", priority: 0.95 },
+    { url: `${SITE_URL}/promo-geely-bogor`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/artikel`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
+    { url: `${SITE_URL}/tentang`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    { url: `${SITE_URL}/kontak`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/indeks-kata-kunci`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+  ];
+
+  const landingRoutes: MetadataRoute.Sitemap = ALL_LANDING_PAGES.map((page) => ({
+    url: `${SITE_URL}/${page.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: page.priority,
+  }));
+
+  const modelPages: MetadataRoute.Sitemap = MODELS.map((model) => ({
+    url: `${SITE_URL}/model/${model.id}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.9,
+  }));
+
+  const articlePages: MetadataRoute.Sitemap = ARTICLES.map((article) => ({
+    url: `${SITE_URL}/artikel/${article.slug}`,
+    lastModified: new Date(article.date),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  const entries = [...staticPages, ...landingRoutes, ...modelPages, ...articlePages];
+  const urlsXml = entries
+    .map((entry) => {
+      const lines = ["  <url>", `    <loc>${escapeXml(entry.url)}</loc>`];
+
+      if (entry.lastModified) {
+        lines.push(`    <lastmod>${formatLastModified(entry.lastModified)}</lastmod>`);
+      }
+      if (entry.changeFrequency) {
+        lines.push(`    <changefreq>${entry.changeFrequency}</changefreq>`);
+      }
+      if (typeof entry.priority === "number") {
+        lines.push(`    <priority>${entry.priority}</priority>`);
+      }
+
+      lines.push("  </url>");
+      return lines.join("\n");
+    })
+    .join("\n");
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="${XML_NAMESPACE}">\n${urlsXml}\n</urlset>\n`;
+
+  return new Response(xml, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/xml; charset=utf-8",
+      "Cache-Control": "public, max-age=0, s-maxage=3600, stale-while-revalidate=86400",
+    },
+  });
+}
