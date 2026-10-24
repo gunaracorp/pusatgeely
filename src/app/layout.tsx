@@ -405,7 +405,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang="id" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${grotesk.variable}`}>
         <ThemeProvider
           attribute="class"

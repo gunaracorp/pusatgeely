@@ -61,3 +61,24 @@ Stage Summary:
 - Pusat unduhan online: /downloads/index.html + 5 arsip + panduan — semua file proyek kini diunduh satu klik via preview
 - Zip lengkap 4,0 MB deploy-ready: sudah memuat fix sitemap SITE_URL dinamis + vercel.json (Task 2) + hardening OG (Task 3)
 - /downloads diblokir crawler; OG image kini tangguh di Vercel
+---
+Task ID: 4
+Agent: Z.ai Code (main orchestrator)
+Task: Rapihkan menu navigasi + sentuhan animasi halus (user: "rapihkan menu ... tambahkan sentuhan animasi yang tidak terlalu berat")
+
+Work Log:
+- AUDIT menu lama: 11 item datar (penuh, tanpa hierarki), logo pakai href="#beranda" (RUSAK di halaman sub), nav pakai <a> biasa (tanpa prefetch Next.js)
+- RESTRUKTURISASI → 3 grup dropdown desktop: MODEL (grid 2x2: 4 model + powertrain + harga + footer "Lihat semua harga"), LAYANAN (Harga/Promo/Simulasi Kredit/Test Drive + deskripsi 1 baris + ikon), JELAJAH (Artikel/Galeri/FAQ/Indeks Kata Kunci/Sales/Kontak)
+- Animasi halus (<300ms, hormati prefers-reduced-motion via useReducedMotion): scroll progress bar spring di tepi header (useScroll+useSpring, transform-only GPU), dropdown fade+slide+scale via AnimatePresence, stagger item 28ms, underline gradient scaleX di hover trigger, chevron rotate, logo BrandMark rotate+scale saat hover grup, header menyusut h-16→h-14 saat scroll, WA CTA active:scale + hover shadow, pill bahasa layoutId meluncur antar ID/EN, mobile sheet item stagger x:-12→0 40ms
+- Mobile sheet dikontrol (open state): semua link next/link + onClick tutup sheet; grup MODEL (harga di kanan), LAYANAN (tile ikon + deskripsi), JELAJAH; logo → Link "/" (fix broken hash), sheet diberi SheetDescription sr-only
+- i18n: tambah 8 kunci nav baru bilingual (keywords, explore, seeAllPrices, hargaDesc, promoDesc, kreditDesc, testDriveDesc)
+- Aksesibilitas: aria-expanded/aria-haspopup trigger, tutup via Escape (fokus kembali ke trigger), klik luar via pointerdown, hover intent 140ms close delay, panel tetap dalam hover area
+- FIX warning Next 16: data-scroll-behavior="smooth" di <html> (smooth scroll tak lagi melawan transisi rute)
+- FIX warning Radix: DialogContent tanpa Description → SheetDescription sr-only
+- Verifikasi Agent Browser end-to-end: dropdown Model (expanded=true, 4 link + harga), Layanan, Jelajah tampil benar; klik EX2 → client-side nav ke /model/ex2; Escape menutup; mobile 390px: sheet terstagger sempurna (15 link + sosial + toggle); toggle EN di dalam sheet mengubah seluruh menu ke Inggris dan persist setelah reload; console 100% bersih; lint 0 error
+
+Stage Summary:
+- Menu: 11 item datar → 3 grup elegan dengan mega-panel Model berisi harga real-time dari lib/site.ts
+- Semua nav kini next/link (prefetch + SPA nav); logo fix ke "/"
+- Animasi ringan GPU-only, semua hormati reduced-motion; 2 warning console dihapus permanen
+- File: site-header.tsx (rewrite), i18n.ts, layout.tsx
