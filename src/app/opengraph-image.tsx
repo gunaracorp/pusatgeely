@@ -1,9 +1,11 @@
 import { ImageResponse } from "next/og";
-import { BUSINESS, MODELS, formatJuta } from "@/lib/site";
+import { BUSINESS, MODELS, SITE_URL, formatJuta } from "@/lib/site";
 
 export const alt = "Pusat Geely — Mobil Geely Bogor & Jabodetabek";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+const SITE_HOSTNAME = new URL(SITE_URL).hostname;
 
 /** Dynamic OG image untuk beranda — brand + lineup + harga. */
 export default function OpengraphImage() {
@@ -108,7 +110,7 @@ export default function OpengraphImage() {
           }}
         >
           <span style={{ color: "#8fd6b5", fontSize: 24, fontWeight: 600 }}>
-            pusatgeely.web.id
+            {SITE_HOSTNAME}
           </span>
           <span style={{ color: "#8fd6b5", fontSize: 24, fontWeight: 600 }}>
             WA {BUSINESS.waDisplay} · Setiap hari 08.00–20.00

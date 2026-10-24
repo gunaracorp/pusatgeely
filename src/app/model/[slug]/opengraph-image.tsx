@@ -2,12 +2,14 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
-import { MODELS, formatJuta, POWERTRAIN_LABEL } from "@/lib/site";
+import { MODELS, SITE_URL, formatJuta, POWERTRAIN_LABEL } from "@/lib/site";
 import type { Lang } from "@/lib/i18n";
 
 export const alt = "Pusat Geely — Detail Model Geely";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+
+const SITE_HOSTNAME = new URL(SITE_URL).hostname;
 
 /** Baca gambar dari /public → data URI PNG (satori tidak mendukung webp). */
 async function toDataUri(webPath: string): Promise<string | null> {
@@ -159,7 +161,7 @@ export default async function ModelOpengraphImage({
 
           {/* Footer */}
           <span style={{ color: "#8fd6b5", fontSize: 21, fontWeight: 600 }}>
-            pusatgeely.web.id/model/{model.id} · Test drive fleksibel
+            {SITE_HOSTNAME}/model/{model.id} · Test drive fleksibel
           </span>
         </div>
 

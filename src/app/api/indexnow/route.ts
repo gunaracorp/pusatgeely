@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * INDEXNOW API — notifikasi indeks instan ke Bing, Yandex, Seznam, Naver.
  * Docs: https://www.indexnow.org/documentation
  *
  * POST /api/indexnow
- *   body: { "urls": ["https://pusatgeely.web.id/...", ...] }  (max 10.000/hari)
+ *   body: { "urls": ["https://<domain-situs>/...", ...] }  (max 10.000/hari)
  *
  * Dipakai setelah deploy konten baru / perubahan harga agar mesin pencari
  * langsung tahu (tidak menunggu crawl berkala). Key file disimpan di
@@ -13,8 +14,22 @@ import { NextResponse } from "next/server";
  */
 
 const INDEXNOW_KEY = "bc336b4b6001017bc99244eba80d0206";
-const ALLOWED_HOST = "pusatgeely.web.id";
 const ENDPOINT = "https://api.indexnow.org/indexnow";
+
+/** Host produksi resmi + host deployment aktif (mengikuti SITE_URL). */
+const PRIMARY_HOST = "pusatgeely.web.id";
+const ACTIVE_HOST = new URL(SITE_URL).hostname;
+const ALLOWED_HOSTS = new Set<string>(
+  [PRIMARY_HOST, ACTIVE_HOST, `www.${PRIMARY_HOST}`].filter(Boolean),
+);
+
+function extractHost(url: string): string | null {
+  try {
+    return new URL(url).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -23,13 +38,17 @@ export async function POST(request: Request) {
       ? body.urls.filter(
           (u): u is string =>
             typeof u === "string" &&
-            u.startsWith(`https://${ALLOWED_HOST}`),
+            u.startsWith("http") &&
+            ALLOWED_HOSTS.has(extractHost(u) ?? ""),
         )
       : [];
 
     if (urls.length === 0) {
       return NextResponse.json(
-        { ok: false, error: "Tidak ada URL valid (harus domain pusatgeely.web.id)" },
+        {
+          ok: false,
+          error: `Tidak ada URL valid (harus domain: ${[...ALLOWED_HOSTS].join(" atau ")})`,
+        },
         { status: 400 },
       );
     }
@@ -40,10 +59,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // IndexNow mensyaratkan host + keyLocation milik host yang sama dengan URL.
+    // Gunakan host dari URL pertama yang dikirim agar selalu konsisten.
+    const host = extractHost(urls[0]) ?? ACTIVE_HOST;
+
     const payload = {
-      host: ALLOWED_HOST,
+      host,
       key: INDEXNOW_KEY,
-      keyLocation: `https://${ALLOWED_HOST}/${INDEXNOW_KEY}.txt`,
+      keyLocation: `https://${host}/${INDEXNOW_KEY}.txt`,
       urlList: urls,
     };
 
@@ -71,8 +94,9 @@ export async function POST(request: Request) {
 export function GET() {
   return NextResponse.json({
     service: "IndexNow bridge",
-    host: ALLOWED_HOST,
-    usage: 'POST { "urls": ["https://pusatgeely.web.id/..."] }',
+    host: ACTIVE_HOST,
+    allowedHosts: [...ALLOWED_HOSTS],
+    usage: 'POST { "urls": ["https://<domain-situs>/..."] }',
     note: "Kirim setiap kali konten berubah — indeks Bing/Yandex instan",
   });
 }

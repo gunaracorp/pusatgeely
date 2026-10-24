@@ -309,6 +309,16 @@ function StructuredData() {
     name: BUSINESS.name,
     inLanguage: "id-ID",
     publisher: { "@id": `${SITE_URL}/#business` },
+    // Sitelinks SearchAction — kandidat search box Google di hasil pencarian
+    // merek. Target-nya NYATA: /indeks-kata-kunci?q= memfilter 2.000+ frasa.
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/indeks-kata-kunci?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
     // Relasi tersembunyi: penyedia dukungan digital situs ini (terbaca mesin)
     provider: [
       { "@id": ORGS.digiman["@id"] },

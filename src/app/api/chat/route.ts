@@ -3,6 +3,7 @@ import ZAI from "z-ai-web-dev-sdk";
 import {
   BUSINESS,
   MODELS,
+  SITE_URL,
   formatIDR,
   waLink,
 } from "@/lib/site";
@@ -52,7 +53,7 @@ function buildSystemPrompt(lang: "id" | "en"): string {
       `  ${lang === "id" ? "Varian & harga indikatif OTR" : "Variants & indicative OTR prices"}: ${variants}`,
       `  ${lang === "id" ? "Spesifikasi kunci" : "Key specs"}: ${specs}`,
       colors ? `  ${lang === "id" ? "Warna unit" : "Unit colors"}: ${colors}` : "",
-      `  ${lang === "id" ? "Halaman detail" : "Detail page"}: https://pusatgeely.web.id/model/${m.id}`,
+      `  ${lang === "id" ? "Halaman detail" : "Detail page"}: ${SITE_URL}/model/${m.id}`,
     ]
       .filter(Boolean)
       .join("\n");

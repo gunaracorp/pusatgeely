@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageShell } from "@/components/page-shell";
+import { KeywordExplorer } from "@/components/keyword-explorer";
 import {
   KEYWORD_CLUSTERS,
   SEO_KEYWORD_COUNT,
@@ -90,51 +90,10 @@ export default function IndeksKataKunciPage() {
               langsung.
             </p>
           </div>
-          {/* Navigasi klaster */}
-          <nav aria-label="Klaster kata kunci" className="mt-6 flex flex-wrap gap-2">
-            {KEYWORD_CLUSTERS.map((c) => (
-              <a
-                key={c.id}
-                href={`#klaster-${c.id}`}
-                className="inline-flex items-center gap-1.5 rounded-full border bg-card px-3 py-1.5 text-xs font-semibold transition-colors hover:border-primary/40 hover:text-primary"
-              >
-                {c.label}
-                <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">
-                  {c.items.length}
-                </span>
-              </a>
-            ))}
-          </nav>
         </header>
 
-        {/* Klaster */}
-        <div className="mt-12 space-y-12">
-          {KEYWORD_CLUSTERS.map((c) => (
-            <section key={c.id} id={`klaster-${c.id}`} aria-label={c.label}>
-              <div className="flex flex-wrap items-baseline justify-between gap-2 border-b pb-3">
-                <h2 className="font-display text-xl font-bold tracking-tight sm:text-2xl">
-                  {c.label}
-                </h2>
-                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {c.items.length.toLocaleString("id-ID")} frasa
-                </span>
-              </div>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {c.items.map((k) => (
-                  <li key={k.t}>
-                    <Link
-                      href={k.h}
-                      className="inline-flex items-center rounded-full border bg-card px-2.5 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
-                      title={`Buka halaman: ${k.t}`}
-                    >
-                      #{k.t}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
+        {/* Pencarian instan + klaster (SSR default) */}
+        <KeywordExplorer clusters={KEYWORD_CLUSTERS} />
 
         {/* Catatan */}
         <div className="mt-12 max-w-3xl rounded-xl border bg-muted/30 p-4 text-[11px] leading-relaxed text-muted-foreground">

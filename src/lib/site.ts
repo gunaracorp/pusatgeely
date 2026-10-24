@@ -7,7 +7,47 @@
  * - TIDAK ADA: klaim dealer resmi, promo fiktif, testimoni fiktif, alamat fiktif.
  */
 
-export const SITE_URL = "https://pusatgeely.web.id";
+/**
+ * ══ RESOLUSI DOMAIN SITE (SEO-critical) ══
+ *
+ * Canonical, sitemap, JSON-LD, dan OG image WAJIB menunjuk ke host yang
+ * SAMA dengan domain yang diakses crawler. Kalau tidak, Google Search
+ * Console menolak sitemap ("Kami mengalami error saat mencoba mengakses
+ * peta situs") karena URL di dalamnya berada di host berbeda.
+ *
+ * Prioritas:
+ * 1. NEXT_PUBLIC_SITE_URL          — set manual di Vercel → Settings → Environment Variables
+ *                                    (mis. https://pusatgeely.web.id saat domain kustom aktif)
+ * 2. VERCEL_PROJECT_PRODUCTION_URL — otomatis tersedia di Vercel (mis. pusatgeely.vercel.app)
+ * 3. VERCEL_URL                    — fallback per-deployment preview Vercel
+ * 4. https://pusatgeely.web.id     — domain produksi (default)
+ */
+function normalizeSiteUrl(raw: string): string {
+  let url = raw.trim().replace(/\/+$/, "");
+  if (!/^https?:\/\//i.test(url)) url = `https://${url}`;
+  return url;
+}
+
+function resolveSiteUrl(): { url: string; source: "env" | "vercel" | "fallback" } {
+  const envUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (envUrl) return { url: normalizeSiteUrl(envUrl), source: "env" };
+
+  const vercelProd = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (vercelProd) return { url: normalizeSiteUrl(vercelProd), source: "vercel" };
+
+  const vercelAny = process.env.VERCEL_URL?.trim();
+  if (vercelAny) return { url: normalizeSiteUrl(vercelAny), source: "vercel" };
+
+  return { url: "https://pusatgeely.web.id", source: "fallback" };
+}
+
+const resolvedSite = resolveSiteUrl();
+
+/** Base URL produksi situs (tanpa trailing slash) — sumber canonical/sitemap. */
+export const SITE_URL = resolvedSite.url;
+
+/** Asal nilai SITE_URL — dipakai /api/seo-status untuk diagnostik deploy. */
+export const SITE_URL_SOURCE = resolvedSite.source;
 
 export const BUSINESS = {
   name: "Pusat Geely",

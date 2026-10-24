@@ -20,3 +20,25 @@ Stage Summary:
 - Fitur baru: Geely Bot (AI chat 24/7 dengan data produk real-time dari lib/site.ts) + dynamic OG image per halaman
 - API baru: /api/chat (POST, z-ai LLM, rate-limited)
 - Semua verifikasi browser lolos; lint 0 error 0 warning
+---
+Task ID: 2
+Agent: Z.ai Code (main orchestrator)
+Task: Diagnosis & perbaikan error sitemap Google Search Console pasca-deploy Vercel + upgrade SEO (46 dewan pakar)
+
+Work Log:
+- DIAGNOSIS: fetch live seperti Googlebot — pusatgeely.web.id/sitemap.xml 200 OK (59 URL valid); pusatgeely.vercel.app/sitemap.xml juga 200 tetapi SELURUH <loc> menunjuk ke pusatgeely.web.id → HOST MISMATCH = penyebab "Kami mengalami error saat mencoba mengakses peta situs" saat disubmit dari property vercel.app/domain lain
+- FIX KRITIS: SITE_URL dinamis di src/lib/site.ts — prioritas NEXT_PUBLIC_SITE_URL → VERCEL_PROJECT_PRODUCTION_URL → VERCEL_URL → fallback https://pusatgeely.web.id; canonical, sitemap, JSON-LD, OG otomatis mengikuti domain deployment
+- FIX: /api/indexnow ACCEPT multi-host (web.id + www + host aktif dari SITE_URL), host payload diambil dari URL pertama
+- FIX: /api/chat + kedua opengraph-image pakai SITE_URL dinamis (tidak ada hardcode domain lagi)
+- BARU: /api/seo-status — endpoint diagnostik pasca-deploy (host check vs canonical, jumlah URL sitemap, robots, keyword engine, checklist GSC 6 langkah)
+- BARU: Sitelinks SearchAction JSON-LD di WebSite schema (target /indeks-kata-kunci?q={search_term_string}) + komponen keyword-explorer.tsx (search instan 2.655 frasa, word-based matching, ?q= deep-link, replaceState shareable, empty-state CTA WhatsApp)
+- BUG FIX saat verifikasi: pencarian multi-kata substring → word-based ("kredit coolray" kini cocok 51 frasa)
+- Verifikasi SSR: 2.729 internal link tetap di HTML awal (crawler-friendly)
+- vercel.json: header cache sitemap/robots + X-Content-Type-Options + Referrer-Policy
+- README di-rewrite lengkap + section baru "🚨 TROUBLESHOOTING: Error Sitemap di Google Search Console" (4 penyebab + solusi + alat diagnostik)
+- Lint bersih; semua route 200
+
+Stage Summary:
+- Root cause error GSC: host mismatch (sitemap vercel.app berisi URL web.id) — diperbaiki permanen via SITE_URL dinamis; user tinggal set NEXT_PUBLIC_SITE_URL di Vercel + redeploy, lalu submit sitemap dari property yang host-nya sama
+- SEO naik level: SearchAction sitelinks + search instan 2.655 frasa + endpoint diagnostik + vercel hardening
+- Semua verifikasi browser & curl lolos; lint 0 error
