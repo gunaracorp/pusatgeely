@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Pusat Unduhan — Pusat Geely Super Web App</title>
+<style>
+  :root {
+    --bg: #0c1210; --bg2: #10181a; --card: #111b16; --line: rgba(255,255,255,.09);
+    --txt: #fafcfa; --mut: #9fb3aa; --grn: #10b981; --tea: #0d9488; --soft: #d1fae5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+    color: var(--txt); min-height: 100vh; line-height: 1.6;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 40px 20px 64px; }
+  header.top { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .logo {
+    width: 58px; height: 58px; border-radius: 16px; flex: none;
+    background: linear-gradient(135deg, var(--grn), var(--tea));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; font-weight: 800; color: #fff;
+  }
+  h1 { font-size: clamp(22px, 4vw, 30px); letter-spacing: -.5px; }
+  .sub { color: var(--mut); font-size: 15px; }
+  .note {
+    background: rgba(16,185,129,.08); border: 1px solid rgba(16,185,129,.35);
+    border-radius: 16px; padding: 18px 20px; margin: 0 0 30px; font-size: 14.5px;
+  }
+  .note strong { color: var(--soft); }
+  .note code { background: rgba(255,255,255,.08); padding: 2px 7px; border-radius: 6px; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 22px; display: flex; flex-direction: column; gap: 10px;
+    transition: transform .18s ease, border-color .18s ease;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(16,185,129,.5); }
+  .card.hero { border-color: rgba(16,185,129,.55); background: linear-gradient(150deg, rgba(16,185,129,.12), var(--card) 55%); }
+  .badge {
+    align-self: flex-start; font-size: 11.5px; font-weight: 800; letter-spacing: .6px;
+    padding: 4px 12px; border-radius: 999px; text-transform: uppercase;
+    background: linear-gradient(135deg, var(--grn), var(--tea)); color: #fff;
+  }
+  .badge.alt { background: rgba(16,185,129,.14); color: var(--soft); border: 1px solid rgba(16,185,129,.4); }
+  .card h2 { font-size: 18px; letter-spacing: -.3px; }
+  .card p { color: var(--mut); font-size: 14px; flex: 1; }
+  .meta { display: flex; gap: 14px; color: var(--mut); font-size: 13px; }
+  .meta b { color: var(--soft); font-weight: 700; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 6px; padding: 12px 18px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--grn), var(--tea)); color: #fff;
+    font-weight: 700; font-size: 15px; text-decoration: none; min-height: 46px;
+    transition: filter .15s ease;
+  }
+  .btn:hover { filter: brightness(1.1); }
+  .btn.ghost { background: transparent; border: 1.5px solid rgba(16,185,129,.45); color: var(--soft); }
+  .divider { border: none; border-top: 1px solid var(--line); margin: 36px 0; }
+  h3.sec { font-size: 20px; margin-bottom: 14px; }
+  ul.list { color: var(--mut); font-size: 14.5px; padding-left: 22px; }
+  ul.list li { margin-bottom: 7px; }
+  ul.list b { color: var(--txt); }
+  ol.steps { color: var(--mut); font-size: 14.5px; padding-left: 22px; }
+  ol.steps li { margin-bottom: 8px; }
+  ol.steps code { background: rgba(255,255,255,.08); padding: 2px 7px; border-radius: 6px; font-size: 13px; }
+  footer.bot { margin-top: 40px; color: var(--mut); font-size: 13px; text-align: center; }
+  .ic { font-size: 22px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="logo">G</div>
+    <div>
+      <h1>Pusat Unduhan — Pusat Geely Super Web App</h1>
+      <div class="sub">Semua file proyek dapat diunduh di sini · Source + assets + database + config siap deploy</div>
+    </div>
+  </header>
+
+  <div class="note">
+    💡 <strong>Kenapa ukurannya kecil (±4 MB)?</strong> Ini NORMAL dan benar — arsip berisi
+    <strong>seluruh source code, gambar, PDF promo, database &amp; config</strong> (195 file).
+    Folder <code>node_modules</code> (±1,2 GB) sengaja <strong>tidak diikutkan</strong> karena tidak
+    pernah di-upload ke GitHub/Vercel — cukup jalankan <code>bun install</code> / <code>npm install</code>,
+    dan Vercel meng-install-nya otomatis saat build.
+  </div>
+
+  <div class="grid">
+
+    <div class="card hero">
+      <span class="badge">★ Rekomendasi</span>
+      <h2><span class="ic">📦</span> Source Lengkap Siap Deploy</h2>
+      <p>SEMUA dalam satu arsip: <code>src/</code>, <code>public/</code> (foto unit + galeri + brosur promo PDF), <code>prisma/</code>, <code>db/</code>, semua config (next.config, vercel.json, tailwind, eslint), README &amp; <b>Panduan Deploy Vercel</b>. Ekstrak → push ke GitHub → import ke Vercel. Selesai.</p>
+      <div class="meta"><span>Ukuran: <b>4,0 MB</b></span><span><b>195 file</b></span></div>
+      <a class="btn" href="./00-pusatgeely-source-lengkap.zip" download>⬇ Unduh ZIP Lengkap</a>
+    </div>
+
+    <div class="card">
+      <span class="badge alt">Per-bagian</span>
+      <h2><span class="ic">💻</span> Source Code</h2>
+      <p>Hanya <code>src/</code> — 50+ halaman SEO landing, komponen UI, Geely Bot AI, API routes, engine 2.655 keyword, i18n ID/EN.</p>
+      <div class="meta"><span>Ukuran: <b>240 KB</b></span></div>
+      <a class="btn ghost" href="./01-source-code.zip" download>⬇ Unduh</a>
+    </div>
+
+    <div class="card">
+      <span class="badge alt">Per-bagian</span>
+      <h2><span class="ic">🖼️</span> Assets — Gambar &amp; Promo</h2>
+      <p>Hanya <code>public/</code> — foto unit Coolray/EX5/Starray/EX2, 9 foto galeri, hero, 5 brosur PDF promo leasing, logo &amp; key IndexNow.</p>
+      <div class="meta"><span>Ukuran: <b>3,6 MB</b></span></div>
+      <a class="btn ghost" href="./02-assets-gambar-promo.zip" download>⬇ Unduh</a>
+    </div>
+
+    <div class="card">
+      <span class="badge alt">Per-bagian</span>
+      <h2><span class="ic">🗄️</span> Database &amp; Prisma</h2>
+      <p><code>prisma/schema.prisma</code> + <code>db/custom.db</code> (SQLite berisi tabel Lead). Kecil karena SQLite terkompresi sangat efisien.</p>
+      <div class="meta"><span>Ukuran: <b>1,5 KB</b></span></div>
+      <a class="btn ghost" href="./03-database-prisma.zip" download>⬇ Unduh</a>
+    </div>
+
+    <div class="card">
+      <span class="badge alt">Per-bagian</span>
+      <h2><span class="ic">⚙️</span> Config &amp; Deployment</h2>
+      <p><code>package.json</code>, lockfile, <code>next.config.ts</code> (redirect 301), <code>vercel.json</code> (header SEO), tsconfig, tailwind, eslint, components.json, README.</p>
+      <div class="meta"><span>Ukuran: <b>116 KB</b></span></div>
+      <a class="btn ghost" href="./04-config-deployment.zip" download>⬇ Unduh</a>
+    </div>
+
+    <div class="card">
+      <span class="badge alt">Dokumen</span>
+      <h2><span class="ic">🚀</span> Panduan Deploy Vercel + GSC</h2>
+      <p>Langkah deploy, env <code>NEXT_PUBLIC_SITE_URL</code>, domain kustom, submit sitemap ke Google Search Console tanpa error, troubleshooting &amp; checklist go-live. Bisa dibaca langsung di browser.</p>
+      <div class="meta"><span>Ukuran: <b>4,5 KB</b></span></div>
+      <a class="btn ghost" href="./PANDUAN-DEPLOY-VERCEL.md">📖 Baca / Unduh</a>
+    </div>
+
+  </div>
+
+  <hr class="divider" />
+
+  <h3 class="sec">🚀 Deploy ulang cepat (ringkasan)</h3>
+  <ol class="steps">
+    <li>Unduh <b>ZIP Lengkap</b> → ekstrak → push ke repositori GitHub Anda.</li>
+    <li>Vercel → <b>New Project</b> → Import → set env <code>NEXT_PUBLIC_SITE_URL = https://pusatgeely.web.id</code> → Deploy.</li>
+    <li>Settings → Domains → sambungkan <code>pusatgeely.web.id</code> (DNS: A <code>76.76.21.21</code> / CNAME <code>cname.vercel-dns.com</code>).</li>
+    <li>Cek <code>/api/seo-status</code> → pastikan host = canonical, sitemap = 59 URL.</li>
+    <li>Google Search Console (property <b>https://pusatgeely.web.id</b>) → Sitemaps → submit <code>sitemap.xml</code>.</li>
+  </ol>
+
+  <hr class="divider" />
+
+  <h3 class="sec">✨ Yang ada di dalam paket</h3>
+  <ul class="list">
+    <li><b>59 URL sitemap</b> · 44 landing SEO · JSON-LD 9 tipe schema · hreflang ID/EN · IndexNow</li>
+    <li><b>Geely Bot</b> — AI chat 24/7 dengan data harga &amp; spesifikasi real-time + handoff WhatsApp</li>
+    <li><b>Dynamic OG Image</b> 1200×630 per halaman (aman di Vercel, ada fallback tanpa foto)</li>
+    <li><b>Search instan 2.655 frasa keyword</b> di halaman indeks-kata-kunci + Sitelinks SearchAction</li>
+    <li>Simulasi kredit, form test drive + lead database, SEO header cache via vercel.json</li>
+  </ul>
+
+  <footer class="bot">Pusat Geely Super Web App — dibangun dengan Next.js 16 · TypeScript · Tailwind · Prisma<br/>※ Arsip di folder ini diblokir dari crawler (robots.txt Disallow: /downloads/) dan noindex.</footer>
+</div>
+</body>
+</html>

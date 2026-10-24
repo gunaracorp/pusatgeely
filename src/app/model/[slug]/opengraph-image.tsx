@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import sharp from "sharp";
 import { MODELS, SITE_URL, formatJuta, POWERTRAIN_LABEL } from "@/lib/site";
 import type { Lang } from "@/lib/i18n";
 
@@ -16,6 +15,9 @@ async function toDataUri(webPath: string): Promise<string | null> {
   try {
     const filePath = path.join(process.cwd(), "public", webPath.replace(/^\//, ""));
     const buf = await readFile(filePath);
+    // Lazy import: di Vercel sharp tetap ter-trace; bila bundel tidak memuatnya,
+    // kartu tetap dirender tanpa foto (bukan 500).
+    const { default: sharp } = await import("sharp");
     const png = await sharp(buf).png().toBuffer();
     return `data:image/png;base64,${png.toString("base64")}`;
   } catch {

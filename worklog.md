@@ -42,3 +42,22 @@ Stage Summary:
 - Root cause error GSC: host mismatch (sitemap vercel.app berisi URL web.id) — diperbaiki permanen via SITE_URL dinamis; user tinggal set NEXT_PUBLIC_SITE_URL di Vercel + redeploy, lalu submit sitemap dari property yang host-nya sama
 - SEO naik level: SearchAction sitelinks + search instan 2.655 frasa + endpoint diagnostik + vercel hardening
 - Semua verifikasi browser & curl lolos; lint 0 error
+---
+Task ID: 3
+Agent: Z.ai Code (main orchestrator)
+Task: Pusat Unduhan — semua file proyek dapat diunduh via link (user: "tolong agar semua bisa di download berikan link nya")
+
+Work Log:
+- Audit ukuran: source total ±5,2 MB (src 1,1M + public 3,8M + prisma/db ~36K); node_modules 1,2 GB sengaja tidak diikutkan (di-install ulang via bun install; Vercel install otomatis)
+- Rebuild zip lengkap 2 iterasi: percobaan pertama 44 MB karena folder sandbox skills/ (61 MB) ikut terzip; final dibersihkan dari skills/, .zscripts/, upload/, mini-services/, examples/, tests/, .git/, .next/, *.log, .env → 4,0 MB / 195 file
+- 6 arsip di public/downloads/: 00-pusatgeely-source-lengkap.zip (4,0 MB, rekomendasi, deploy-ready), 01-source-code.zip (240 KB), 02-assets-gambar-promo.zip (3,6 MB), 03-database-prisma.zip (1,5 KB — SQLite terkompresi ekstrem, terverifikasi isinya benar), 04-config-deployment.zip (116 KB), PANDUAN-DEPLOY-VERCEL.md (4,5 KB)
+- Download center /downloads/index.html: tema emerald branded, 6 kartu unduhan (badge, ukuran, deskripsi, tombol download), box penjelasan "kenapa kecil itu normal", ringkasan deploy 5 langkah, meta noindex
+- robots.ts: tambah Disallow /downloads/ agar arsip tidak terindex Google
+- DEPLOY-VERCEL.md baru (root + copy di /downloads): langkah deploy Vercel, env NEXT_PUBLIC_SITE_URL, domain kustom, submit sitemap GSC dengan aturan host-sama, troubleshooting error sitemap, catatan SQLite read-only di Vercel + migrasi Postgres, checklist go-live
+- Hardening OG image model: sharp di-lazy-import → bila bundel Vercel tidak menyertakan sharp, kartu OG tetap render tanpa foto (bukan 500)
+- Verifikasi: curl 200 semua unduhan (content-type application/zip + content-length benar), sitemap.xml 200, robots.txt menutup /downloads, lint 0 error, Agent Browser: download center render sempurna (6 kartu, 0 console error), href unduh benar, beranda tetap normal; dev.log bersih
+
+Stage Summary:
+- Pusat unduhan online: /downloads/index.html + 5 arsip + panduan — semua file proyek kini diunduh satu klik via preview
+- Zip lengkap 4,0 MB deploy-ready: sudah memuat fix sitemap SITE_URL dinamis + vercel.json (Task 2) + hardening OG (Task 3)
+- /downloads diblokir crawler; OG image kini tangguh di Vercel
