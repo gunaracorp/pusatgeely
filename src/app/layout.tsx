@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/components/language-provider";
 import { AiChatWidget } from "@/components/ai-chat-widget";
+import { WebVitals } from "@/components/web-vitals";
 import {
   BUSINESS,
   INDEPENDENCE_DISCLAIMER,
@@ -84,6 +85,10 @@ export const metadata: Metadata = {
     languages: {
       "id-ID": SITE_URL,
       "en": SITE_URL,
+    },
+    // Autodiscovery RSS — pembaca feed & crawler freshness signal
+    types: {
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
     },
   },
   openGraph: {
@@ -441,6 +446,8 @@ export default function RootLayout({
             {children}
             {/* Geely Bot — asisten AI instan di seluruh halaman */}
             <AiChatWidget />
+            {/* RUM Core Web Vitals → dataLayer + GA4 (nol beban tanpa GA) */}
+            <WebVitals />
             <Toaster position="bottom-center" richColors closeButton />
           </LanguageProvider>
         </ThemeProvider>

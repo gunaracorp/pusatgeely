@@ -1,4 +1,5 @@
 import { ARTICLES } from "@/lib/articles";
+import { GLOSSARY } from "@/lib/glossary";
 import { ALL_LANDING_PAGES } from "@/lib/landing-all";
 import { BUSINESS, MODELS, POWERTRAIN_LABEL, SITE_URL, formatIDR } from "@/lib/site";
 import {
@@ -53,6 +54,8 @@ export function GET() {
     `- [Simulasi kredit](${SITE_URL}/kredit-cicilan-geely-bogor): hitung DP & angsuran`,
     `- [Test drive](${SITE_URL}/test-drive-geely-bogor): jadwalkan di lokasi Anda`,
     `- [Artikel panduan](${SITE_URL}/artikel): ${ARTICLES.length} artikel edukasi pembelian`,
+    `- [Glosarium otomotif](${SITE_URL}/glosarium): ${GLOSSARY.length} istilah EV/hybrid/pembiayaan dalam bahasa Indonesia — definisi siap kutip`,
+    `- RSS feed: ${SITE_URL}/feed.xml (artikel terbaru, application/rss+xml)`,
     `- [Indeks kata kunci](${SITE_URL}/indeks-kata-kunci): telusuri ${"2.000+"} frasa pencarian Geely`,
     `- [Tentang](${SITE_URL}/tentang) · [Kontak](${SITE_URL}/kontak)`
   );
@@ -78,6 +81,11 @@ export function GET() {
     lines.push(
       `- [${c.geelyName} vs ${c.rivalName}](${SITE_URL}/vs/${c.slug}): ${c.rows[0].geely} vs ${c.rows[0].rival} mulai — ${c.description}`,
     );
+  }
+  lines.push("");
+  lines.push("## Glosarium istilah otomotif (definisi pendek, siap kutip)");
+  for (const g of GLOSSARY) {
+    lines.push(`- [${g.term.id} (${g.term.en})](${SITE_URL}/glosarium#${g.slug}): ${g.definition.id}`);
   }
   lines.push("");
   lines.push("## Data terstruktur");

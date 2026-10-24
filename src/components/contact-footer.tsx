@@ -218,6 +218,22 @@ export function ContactFooter() {
                 #lihat-semua-2.600+kata-kunci →
               </a>
             </li>
+            <li>
+              <a
+                href="/artikel"
+                className="inline-flex items-center rounded-full border bg-card px-3 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+              >
+                #artikel-panduan
+              </a>
+            </li>
+            <li>
+              <a
+                href="/glosarium"
+                className="inline-flex items-center rounded-full border bg-card px-3 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-foreground"
+              >
+                #glosarium-otomotif
+              </a>
+            </li>
           </ul>
         </nav>
 

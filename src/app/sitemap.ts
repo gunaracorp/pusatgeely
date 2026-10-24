@@ -16,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/kontak`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     // Indeks kata kunci — hub internal-linking untuk crawler
     { url: `${SITE_URL}/indeks-kata-kunci`, lastModified: now, changeFrequency: "monthly", priority: 0.4 },
+    // Glosarium — entity SEO (DefinedTermSet) & magnet jawaban AI
+    { url: `${SITE_URL}/glosarium`, lastModified: now, changeFrequency: "monthly", priority: 0.65 },
   ];
 
   // Halaman landing SEO (manual + programatik) — prioritas dari data.
