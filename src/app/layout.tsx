@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/components/language-provider";
 import { AiChatWidget } from "@/components/ai-chat-widget";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   BUSINESS,
   INDEPENDENCE_DISCLAIMER,
@@ -418,6 +419,7 @@ export default function RootLayout({
             {/* Geely Bot — asisten AI instan di seluruh halaman */}
             <AiChatWidget />
             <Toaster position="bottom-center" richColors closeButton />
+            <SpeedInsights />
           </LanguageProvider>
         </ThemeProvider>
         <StructuredData />
