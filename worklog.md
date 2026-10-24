@@ -82,3 +82,25 @@ Stage Summary:
 - Semua nav kini next/link (prefetch + SPA nav); logo fix ke "/"
 - Animasi ringan GPU-only, semua hormati reduced-motion; 2 warning console dihapus permanen
 - File: site-header.tsx (rewrite), i18n.ts, layout.tsx
+---
+Task ID: 5
+Agent: Z.ai Code (main orchestrator)
+Task: Fix warning GSC aggregateRating/review + jadikan sumber rujukan utama mesin pencari AI (GEO god mode)
+
+Work Log:
+- DIAGNOSIS: hint GSC "aggregateRating/review tidak ada" bersumber dari Product JSON-LD di 4 halaman model. Keputusan 46 dewan pakar: TIDAK memalsukan rating (Google spam policy → manual action) — bangun mesin review ASLI
+- DB: model Review (modelId, name, city, rating 1-5, comment, published flag, @@index) + db push
+- API publik /api/reviews: GET published+aggregate (degrade aman tanpa DB), POST submit publik (validasi ketat, honeypot "website", rate limit 1/10 menit/IP, published=false)
+- API admin /api/reviews/admin: GET list semua + POST publish/unpublish/delete/add — auth header x-admin-key = env REVIEWS_ADMIN_KEY (min 8 char, 403 tanpa env)
+- Komponen review-section.tsx: badge agregat bintang, daftar ulasan (max-h-96 scroll), form rating bintang interaktif + honeypot + toast sonner, empty-state jujur, teks bilingual inline
+- Halaman model: revalidate 3600 (ISR) + query review server-side try/catch → Product JSON-LD memuat aggregateRating + review (10 terbaru) HANYA saat ada data nyata; mount ReviewSection di 4 halaman model
+- GEO: /llms.txt + /llms-full.txt (standar llmstxt.org, force-static, dinamis dari site.ts/model-details/landing-all/articles — lineup+harga per varian+specs+FAQ+44 landing+artikel+panduan kutip)
+- robots.ts: whitelist eksplisit 19 bot AI (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot/Perplexity-User, Google-Extended, Applebot(+Extended), Bingbot, meta-externalagent, YouBot, DuckAssistBot, Amazonbot, cohere-ai, MistralAI-User, Bytespider)
+- layout.tsx: AutoDealer + slogan + knowsAbout (E-E-A-T untuk AI Overviews); seo-status: +3 check (llms, bot AI, review engine) + urls llms; fix normalisasi host localhost:3000 → localhost (8/8 PASS)
+- DEPLOY-VERCEL.md: §9 Review Engine (curl moderasi + imposi ulasan ASLI) + §10 AI SEO GEO + env REVIEWS_ADMIN_KEY/DATABASE_URL di tabel
+- UJI E2E penuh: form submit via Agent Browser (Budi Santoso, Depok, 5★) → pending → admin publish → GET aggregate {count:1,average:5} → JSON-LD muncul di HTML /model/ex5 (ratingValue 5, reviewCount 1) → admin add di coolray OK → visual bintang 5.0 terscreenshot → semua data uji DIHAPUS → JSON-LD hilang otomatis (honest schema) → arsip unduhan diregenerasi (00/01/03/04) → lint 0 error → console bersih
+
+Stage Summary:
+- Warning GSC aggregateRating/review kini punya jalur penyelesaian LEGITIM: bintang muncul otomatis begitu ulasan pelanggan nyata dipublikasikan pemilik via /api/reviews/admin
+- Situs kini "discovery-max" untuk AI: llms.txt + llms-full.txt + 19 bot AI full-access + knowsAbout + max-snippet bebas + IndexNow
+- Vercel catatan: set REVIEWS_ADMIN_KEY; untuk review persisten gunakan DB produksi (§6 panduan)

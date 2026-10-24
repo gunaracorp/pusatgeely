@@ -21,3 +21,19 @@ model Lead {
   status        String   @default("new")
   createdAt     DateTime @default(now())
 }
+
+/// Ulasan pelanggan ASLI. published=false sampai dimoderasi pemilik.
+/// JSON-LD aggregateRating/review HANYA dibangkitkan dari data published —
+/// anti-fabrication: tidak ada rating palsu (Google spam policy).
+model Review {
+  id        String   @id @default(cuid())
+  modelId   String
+  name      String
+  city      String?
+  rating    Int
+  comment   String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([modelId, published])
+}

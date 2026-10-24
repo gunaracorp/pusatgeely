@@ -200,6 +200,19 @@ function StructuredData() {
       areaServed: "ID",
       availableLanguage: ["id", "en"],
     },
+    slogan: BUSINESS.tagline.id,
+    // Sinyal keahlian (E-E-A-T) untuk AI Overviews & mesin pencari AI
+    knowsAbout: [
+      "Geely EX5",
+      "Geely EX2",
+      "Geely Starray EM-i",
+      "Geely Coolray",
+      "mobil listrik Indonesia",
+      "SUV hybrid Indonesia",
+      "kredit mobil Geely",
+      "trade-in mobil Bekasi",
+      "test drive Jabodetabek",
+    ],
   };
 
   const faqItems = [

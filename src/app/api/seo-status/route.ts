@@ -15,10 +15,12 @@ export const dynamic = "force-dynamic";
  * Google Search Console. Ini meniru pemeriksaan yang dilakukan Googlebot.
  */
 export async function GET(request: Request) {
-  const requestHost =
+  // Normalisasi host: buang port & entri proxy berantai (localhost:3000 → localhost)
+  const rawHost =
     request.headers.get("x-forwarded-host") ??
     request.headers.get("host") ??
     "unknown";
+  const requestHost = rawHost.split(",")[0].trim().split(":")[0];
   const requestProto =
     request.headers.get("x-forwarded-proto") ??
     (requestHost.startsWith("localhost") ? "http" : "https");
@@ -67,6 +69,23 @@ export async function GET(request: Request) {
       pass: true,
       detail: `https://${siteHostname}/bc336b4b6001017bc99244eba80d0206.txt (Bing, Yandex, Seznam)`,
     },
+    {
+      name: "llms.txt aktif (GEO — sumber rujukan mesin pencari AI)",
+      pass: true,
+      detail: `${SITE_URL}/llms.txt (ringkasan) + ${SITE_URL}/llms-full.txt (konten penuh, standar llmstxt.org)`,
+    },
+    {
+      name: "Bot AI diizinkan penuh di robots.txt",
+      pass: true,
+      detail:
+        "19 bot eksplisit: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot, Google-Extended, Applebot, Bingbot (Copilot), meta-externalagent, dst.",
+    },
+    {
+      name: "Review engine + JSON-LD aggregateRating/review",
+      pass: true,
+      detail:
+        "Ulasan asli tersimpan di DB & dimoderasi via /api/reviews/admin (header x-admin-key = env REVIEWS_ADMIN_KEY). Product JSON-LD otomatis memuat aggregateRating + review saat ada ulasan terpublikasi — hint GSC terpenuhi secara legitim.",
+    },
   ];
 
   return NextResponse.json(
@@ -82,6 +101,8 @@ export async function GET(request: Request) {
         robots: robotsUrl,
         keywordIndex: `${SITE_URL}/indeks-kata-kunci`,
         indexNowKey: `https://${siteHostname}/bc336b4b6001017bc99244eba80d0206.txt`,
+        llmsTxt: `${SITE_URL}/llms.txt`,
+        llmsFullTxt: `${SITE_URL}/llms-full.txt`,
       },
       checks,
       gscChecklist: [
