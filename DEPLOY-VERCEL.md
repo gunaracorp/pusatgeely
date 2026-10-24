@@ -142,3 +142,55 @@ Sudah aktif tanpa konfigurasi:
 - **IndexNow** — ping cepat ke Bing/Yandex setiap ada konten baru
 
 Ritual pasca-konten baru: `POST /api/indexnow` dengan URL baru → tunggu re-crawl → jawaban AI mulai mengutip situs dalam 1–4 minggu.
+
+---
+
+## 11. Leads Admin API — melihat & mengelola prospek
+
+Setiap lead yang masuk kini **terukur**: form test drive/kontak, kuis model-matcher (#kuis), simulator kredit (#simulasi), dan chat AI semuanya tersimpan ke tabel `Lead` lengkap dengan **atribusi sumber**. Pemilik dapat melihat & mengelola prospek tanpa login CMS — cukup satu endpoint mini-CRM:
+
+### Cara kerja
+
+- **POST `/api/leads`** (publik) menyimpan lead dengan field `source` otomatis dari komponen pengirim.
+- **GET/PATCH/DELETE `/api/leads/admin`** (terproteksi) untuk melihat statistik, mengubah status pipeline, dan menghapus lead spam.
+- Autentikasi admin memakai **kunci yang sama** dengan Review Engine: header `x-admin-key` = env `REVIEWS_ADMIN_KEY` (min. 8 karakter). Tanpa env valid → seluruh endpoint admin menolak dengan **403**.
+
+### Atribusi sumber (source)
+
+| Source       | Dari mana                                     |
+| ------------ | --------------------------------------------- |
+| `website`    | Form test drive & form kontak (default)       |
+| `quiz`       | Kuis "Pilih Geely-mu" di beranda (#kuis)      |
+| `simulator`  | Simulasi kredit di beranda & landing (#simulasi) |
+| `chat`       | Handoff chat AI Geely Bot                     |
+
+### Alur status lead
+
+```
+new → contacted → qualified → won | lost
+```
+
+- `new` — baru masuk, belum dihubungi
+- `contacted` — sudah dihubungi via WhatsApp/telepon
+- `qualified` — serius & punya anggaran/jadwal
+- `won` — closing (SPK/serah terima) · `lost` — tidak jadi
+
+### Contoh curl
+
+```bash
+# Lihat statistik + 100 lead terbaru (bySource, byStatus, byInterest, byModel top-5, last7Days)
+curl -H "x-admin-key: $KEY" https://pusatgeely.web.id/api/leads/admin
+
+# Ubah status satu lead menjadi "contacted"
+curl -X PATCH -H "x-admin-key: $KEY" -H "Content-Type: application/json" \
+  -d '{"id":"<id-lead>","status":"contacted"}' \
+  https://pusatgeely.web.id/api/leads/admin
+
+# Hapus lead spam / data uji
+curl -X DELETE -H "x-admin-key: $KEY" -H "Content-Type: application/json" \
+  -d '{"id":"<id-lead>"}' \
+  https://pusatgeely.web.id/api/leads/admin
+```
+
+> `GET` tanpa key / key salah → `403 {"ok":false,"error":"unauthorized"}`. `PATCH`/`DELETE` dengan id tak dikenal → `404`.
+> Env yang dibutuhkan: `REVIEWS_ADMIN_KEY` (sudah tercantum di tabel §1). Data lead persisten di produksi → ikuti §6 (Postgres/Turso).

@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AREAS, INTERESTS, MODELS, waLink } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 import { useLeadIntent } from "@/store/lead-intent";
 
 type FormValues = {
@@ -111,6 +112,8 @@ export function TestDriveSection() {
       });
       const data = (await res.json()) as { ok: boolean; waUrl?: string; error?: string };
       if (!res.ok || !data.ok) throw new Error(data.error || "failed");
+      // Analytics — lead test drive terkirim sukses (ok === true).
+      trackEvent("generate_lead", { form: "test_drive", model: values.model || "any" });
       setSuccessWaUrl(data.waUrl ?? waLink("Halo Pusat Geely, saya baru saja mengirim permintaan lewat website."));
       toast.success(t.testDrive.successTitle);
     } catch {

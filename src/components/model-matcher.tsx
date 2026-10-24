@@ -1,14 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, RotateCcw, Sparkles, Share2, MessageCircle } from "lucide-react";
+import { ArrowRight, RotateCcw, Sparkles, Share2, MessageCircle, ShieldCheck, FileText, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useLang } from "@/components/language-provider";
 import { WhatsAppIcon } from "@/components/site-header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { MODELS, formatIDR, waLink, type Powertrain } from "@/lib/site";
+import { trackEvent } from "@/lib/analytics";
 
 type ModelId = "ex5" | "ex2" | "coolray" | "starray";
 type Weights = Partial<Record<ModelId, number>>;
@@ -160,6 +164,13 @@ export function ModelMatcher() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const done = step >= QUESTIONS.length;
 
+  /* ---- Lead capture opsional (layar hasil) ---- */
+  const [leadName, setLeadName] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
+  const [leadWebsite, setLeadWebsite] = useState(""); // honeypot — harus kosong
+  const [leadState, setLeadState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [leadWaUrl, setLeadWaUrl] = useState<string | null>(null);
+
   const result = useMemo(() => {
     if (!done) return null;
     const totals: Record<ModelId, number> = { ex5: 0, ex2: 0, coolray: 0, starray: 0 };
@@ -178,6 +189,16 @@ export function ModelMatcher() {
 
   const model = MODELS.find((m) => m.id === result?.winner);
   const runner = MODELS.find((m) => m.id === result?.runnerUp);
+
+  /* quiz_complete — sekali per penyelesaian kuis (anti-noise) */
+  const quizTracked = useRef(false);
+  useEffect(() => {
+    if (done && result && !quizTracked.current) {
+      quizTracked.current = true;
+      trackEvent("quiz_complete", { model: result.winner });
+    }
+    if (!done) quizTracked.current = false;
+  }, [done, result]);
 
   /** Alasan hasil — disusun dari jawaban nyata user (bukan template kosong). */
   const reasons = useMemo(() => {
@@ -243,6 +264,81 @@ export function ModelMatcher() {
   function restart() {
     setAnswers({});
     setStep(0);
+    setLeadName("");
+    setLeadPhone("");
+    setLeadWebsite("");
+    setLeadState("idle");
+    setLeadWaUrl(null);
+  }
+
+  /** Ringkasan jawaban kuis untuk konteks konsultan (disimpan sebagai message lead). */
+  function quizSummary(): string {
+    const label = (qid: string) =>
+      QUESTIONS.find((qq) => qq.id === qid)?.options.find((o) => o.key === answers[qid])?.label[lang] ?? "-";
+    const parts = [
+      lang === "id" ? "Kuis Geely:" : "Geely quiz:",
+      label("who"),
+      `budget ${label("budget")}`,
+      lang === "id" ? `jarak harian ${label("distance")}` : `daily distance ${label("distance")}`,
+      lang === "id" ? `charger rumah ${label("charging")}` : `home charger ${label("charging")}`,
+      lang === "id" ? `prioritas ${label("priority")}` : `priority ${label("priority")}`,
+    ];
+    return `${parts.join(", ")} → ${lang === "id" ? "rekomendasi" : "recommendation"}: ${model?.name ?? "-"}${runner ? `, ${lang === "id" ? "runner-up" : "runner-up"} ${runner.name}` : ""}`;
+  }
+
+  async function submitLead(e: React.FormEvent) {
+    e.preventDefault();
+    if (!model || leadState === "sending") return;
+
+    const name = leadName.trim();
+    const phone = leadPhone.replace(/[^0-9+]/g, "");
+    if (name.length < 2) {
+      toast.error(lang === "id" ? "Nama minimal 2 karakter." : "Name must be at least 2 characters.");
+      return;
+    }
+    if (!/^(\+?62|0)8\d{7,12}$/.test(phone)) {
+      toast.error(
+        lang === "id"
+          ? "Nomor WhatsApp tidak valid — contoh: 081234567890."
+          : "Invalid WhatsApp number — e.g. 081234567890."
+      );
+      return;
+    }
+
+    setLeadState("sending");
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          phone,
+          model: model.id,
+          interest: "general",
+          message: quizSummary(),
+          source: "quiz",
+          lang,
+          website: leadWebsite,
+        }),
+      });
+      const data = (await res.json().catch(() => null)) as { waUrl?: string } | null;
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      setLeadWaUrl(data?.waUrl ?? null);
+      setLeadState("sent");
+      trackEvent("generate_lead", { form: "quiz", model: model.id });
+      toast.success(
+        lang === "id"
+          ? "Terima kasih! Permintaan penawaran tersimpan — Sena akan menghubungi Anda."
+          : "Thank you! Your quote request is saved — Sena will contact you."
+      );
+    } catch {
+      setLeadState("error");
+      toast.error(
+        lang === "id"
+          ? "Gagal mengirim. Coba lagi, atau lanjut langsung via WhatsApp di atas."
+          : "Failed to send. Try again, or continue straight via the WhatsApp button above."
+      );
+    }
   }
 
   async function shareResult() {
@@ -254,9 +350,11 @@ export function ModelMatcher() {
     try {
       if (navigator.share) {
         await navigator.share({ text });
+        trackEvent("quiz_share", { model: model.id });
       } else {
         await navigator.clipboard.writeText(text);
         toast.success(lang === "id" ? "Hasil disalin!" : "Result copied!");
+        trackEvent("quiz_share", { model: model.id });
       }
     } catch {
       /* user dismissed — ignore */
@@ -410,6 +508,7 @@ export function ModelMatcher() {
                           href={waHref}
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={() => trackEvent("wa_click", { location: "quiz" })}
                           className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90"
                         >
                           <WhatsAppIcon className="size-4" aria-hidden="true" />
@@ -444,6 +543,129 @@ export function ModelMatcher() {
                         </p>
                       )}
                     </div>
+                  </div>
+
+                  {/* Lead capture opsional — minta penawaran resmi (tanpa paksaan) */}
+                  <div className="mt-8 rounded-2xl border bg-muted/30 p-5 sm:p-6">
+                    <div className="flex items-start gap-3">
+                      <ShieldCheck className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+                      <div>
+                        <h4 className="font-display text-base font-bold tracking-tight sm:text-lg">
+                          {lang === "id"
+                            ? "Minta penawaran resmi — gratis, tanpa paksaan"
+                            : "Request an official quote — free, no pressure"}
+                        </h4>
+                        <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                          {lang === "id"
+                            ? "Tinggalkan nama & nomor WhatsApp — Sena akan menghubungi Anda dengan angka resmi & promo terkini. Tanpa spam, tanpa tekanan."
+                            : "Leave your name & WhatsApp number — Sena will reach out with official figures & current promos. No spam, no pressure."}
+                        </p>
+                      </div>
+                    </div>
+
+                    {leadState === "sent" ? (
+                      <div
+                        aria-live="polite"
+                        className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border bg-background/60 px-4 py-3"
+                      >
+                        <ShieldCheck className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                        <p className="text-sm font-medium">
+                          {lang === "id"
+                            ? "Permintaan tersimpan — lanjutkan via WhatsApp bila ingin respons lebih cepat."
+                            : "Request saved — continue via WhatsApp for an even faster reply."}
+                        </p>
+                        {leadWaUrl && (
+                          <a
+                            href={leadWaUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ml-auto inline-flex h-9 items-center gap-2 rounded-full border bg-background px-4 text-sm font-semibold text-primary transition-colors hover:border-primary/50"
+                          >
+                            <WhatsAppIcon className="size-4" aria-hidden="true" />
+                            {lang === "id" ? "Buka WhatsApp" : "Open WhatsApp"}
+                          </a>
+                        )}
+                      </div>
+                    ) : (
+                      <form
+                        onSubmit={submitLead}
+                        className="mt-4 grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end"
+                      >
+                        {/* Honeypot — tersembunyi dari manusia, manis untuk bot */}
+                        <input
+                          type="text"
+                          name="website"
+                          value={leadWebsite}
+                          onChange={(e) => setLeadWebsite(e.target.value)}
+                          className="hidden"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          aria-hidden="true"
+                        />
+                        <div className="grid gap-1.5">
+                          <Label htmlFor="quiz-lead-name">
+                            {lang === "id" ? "Nama" : "Name"}
+                          </Label>
+                          <Input
+                            id="quiz-lead-name"
+                            name="name"
+                            value={leadName}
+                            onChange={(e) => setLeadName(e.target.value)}
+                            placeholder={lang === "id" ? "Nama Anda" : "Your name"}
+                            autoComplete="name"
+                            maxLength={80}
+                            required
+                            minLength={2}
+                          />
+                        </div>
+                        <div className="grid gap-1.5">
+                          <Label htmlFor="quiz-lead-phone">
+                            {lang === "id" ? "No. WhatsApp" : "WhatsApp number"}
+                          </Label>
+                          <Input
+                            id="quiz-lead-phone"
+                            name="phone"
+                            type="tel"
+                            inputMode="tel"
+                            value={leadPhone}
+                            onChange={(e) => setLeadPhone(e.target.value)}
+                            placeholder="0812xxxxxxx"
+                            autoComplete="tel"
+                            maxLength={20}
+                            required
+                          />
+                        </div>
+                        <Button
+                          type="submit"
+                          disabled={leadState === "sending"}
+                          className="h-10 rounded-full px-5 font-semibold sm:h-11"
+                        >
+                          {leadState === "sending" ? (
+                            <>
+                              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+                              {lang === "id" ? "Mengirim..." : "Sending..."}
+                            </>
+                          ) : (
+                            <>
+                              <FileText className="size-4" aria-hidden="true" />
+                              {lang === "id" ? "Minta penawaran" : "Request quote"}
+                            </>
+                          )}
+                        </Button>
+                        {/* Region status untuk screen reader */}
+                        <p aria-live="polite" className="sr-only">
+                          {leadState === "sending"
+                            ? lang === "id"
+                              ? "Mengirim permintaan…"
+                              : "Sending request…"
+                            : leadState === "error"
+                              ? lang === "id"
+                                ? "Gagal mengirim, silakan coba lagi."
+                                : "Failed to send, please try again."
+                              : ""}
+                        </p>
+                      </form>
+                    )}
                   </div>
                 </motion.div>
               </AnimatePresence>

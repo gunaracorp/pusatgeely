@@ -5,6 +5,7 @@ import { CalendarCheck } from "lucide-react";
 import { useLang } from "@/components/language-provider";
 import { SOCIALS } from "@/components/social-icons";
 import { WhatsAppIcon } from "@/components/site-header";
+import { trackEvent } from "@/lib/analytics";
 import { waLink } from "@/lib/site";
 
 /**
@@ -15,6 +16,9 @@ import { waLink } from "@/lib/site";
 export function FloatingCta() {
   const { t } = useLang();
   const [visible, setVisible] = useState(false);
+
+  // Analytics — semua klik WhatsApp dari floating CTA dilacak (UX tak berubah).
+  const onWaClick = () => trackEvent("wa_click", { location: "floating_cta" });
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 480);
@@ -30,6 +34,7 @@ export function FloatingCta() {
         href={waLink("Halo Pusat Geely, saya ingin bertanya tentang mobil Geely.")}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={onWaClick}
         aria-label={t.floating.open}
         className={`fixed bottom-6 right-6 z-40 hidden size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl shadow-[#25D366]/40 transition-all duration-300 hover:scale-110 focus-visible:outline-2 focus-visible:outline-ring md:inline-flex ${
           visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
@@ -78,6 +83,7 @@ export function FloatingCta() {
             href={waLink("Halo Pusat Geely, saya ingin bertanya tentang mobil Geely.")}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={onWaClick}
             className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#25D366] text-sm font-bold text-white shadow-lg shadow-[#25D366]/30"
           >
             <WhatsAppIcon className="size-4" aria-hidden="true" />
