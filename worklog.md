@@ -122,3 +122,20 @@ Stage Summary:
 - Personal branding 4 identitas kini TERCAKUP PENUH di 5 lapisan: (1) footer visible elegan Design by/Management by/Tim, (2) JSON-LD entity graph Person+Community+3 Organization, (3) meta keywords & HTML signature, (4) humans.txt, (5) llms.txt/llms-full.txt untuk AI
 - Prinsip pseudonym SEO: Prabu Danling & Santri Angon dimodelkan alternateName pada SATU Person (bukan node duplikat) — mencegah entitas terpecah di Knowledge Graph
 - Honesty-first dipertahankan: tanpa URL/fakta yang dikarang; Sena Sulaeman tetap identitas bisnis di permukaan
+---
+Task ID: 7
+Agent: Z.ai Code (main orchestrator)
+Task: Paket "super brilliant" — 4 senjata baru agar situs terkenal & dicari saat orang mencari mobil Geely
+
+Work Log:
+- SENJATA 1 — Halaman perbandingan /vs/: data 8 duel lawan kuat di src/lib/competitors.ts (EX5 vs Atto 3 & Omoda E5, EX2 vs Dolphin & Bingo EV, Coolray vs HR-V & Yaris Cross, Starray EM-i vs Corolla Cross & CR-V) — semua angka pesaing indikatif riset publik Sept 2026 + disclaimer, verdict adil tanpa menjatuhkan merek lain, FAQ 3/dic; route /vs (index + ItemList JSON-LD) & /vs/[slug] (generateStaticParams, FAQPage + BreadcrumbList JSON-LD, metadata keywords "vs/atau"); komponen comparison-page.tsx (duel card Geely berfoto vs rival inisial + badge, tabel spesifikasi kolom Geely di-highlight, pendapat jujur, keunggulan 2 kolom, CTA WA kontekstual, FAQ accordion, chip 7 perbandingan lain) + vs-index-page.tsx; FIX breadcrumb "Beranda" dobel (komponen Breadcrumbs auto-prepend)
+- SENJATA 2 — Model Matcher Quiz di homepage (#kuis): 5 pertanyaan (siapa/budget/jarak/charger/prioritas) dengan bobot skor ke 4 model, progress bar spring + AnimatePresence slide, hasil personal (alasan dirangkai dari jawaban nyata user, bukan template), runner-up, CTA WA prefill kebutuhan, share via navigator.share/clipboard + toast, restart; E2E teruji: jawaban budget 400-550jt+charger ada+teknologi → GEELY EX5 dengan alasan personal benar
+- SENJATA 3 — Kalkulator Hemat EV vs Bensin di halaman model listrik (ex5: 15 kWh/100km, ex2: 11): 4 slider (jarak harian, tarif listrik, harga bensin, konsumsi bensin) → biaya Rp/km + Rp/bulan masing, bar animasi spring, kartu potensi hemat/tahun, disclaimer jujur (estimasi kasar, servis & depresiasi tidak dihitung); bisa dikutip AI untuk pertanyaan "mahalkah isi listrik mobil"
+- SENJATA 4 — Tabel banding 4 model Geely di /harga-mobil-geely-bogor (model-compare-table.tsx): kolom 4 model berfoto+link, baris harga/powertrain/varian/spesifikasi/fitFor dari MODEL_DETAILS; featured-snippet magnet
+- WIRING: sitemap 59 → 68 URL (+/vs index 0.85 + 8 detail 0.8); header JELAJAH item "Perbandingan" (ikon Swords) + i18n nav.compare ID/EN; halaman model EX5/EX2/Coolray/Starray dapat section "Bandingkan dengan Pesaing" (chip ke /vs terkait); POPULAR_SEARCHES footer +4 chip vs; llms.txt + llms-full.txt section "Perbandingan dengan pesaing" (8 duel + verdict) — kini AI punya tabel lawan siap kutip
+- VERIFIKASI: lint 0 error; /vs, /vs/[slug], homepage quiz, /model/ex5 (kalkulator + 2 link vs), /harga (tabel 5x5) semua 200 & render benar; sitemap 68 loc dengan 8 slug vs; console bersih (hanya warning LCP bawaan dev); mobile 390px /vs detail & tabel rapi; arsip 00 (4,2 MB) & 01 diregenerasi
+
+Stage Summary:
+- Situs kini menjawab PERCINGKAT pencarian tertinggi calon pembeli: perbandingan (8 halaman baru), "geely mana yang cocok" (kuis), "mahalkah listrik" (kalkulator), "bandingkan semua model" (tabel)
+- Total URL 68; semua konten baru honesty-first (indikatif + disclaimer + CTA WA) dan bilingual
+- Sinyal GEO makin kuat: llms.txt memuat seluruh matriks perbandingan siap kutip ChatGPT/Perplexity/Gemini

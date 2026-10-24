@@ -23,6 +23,7 @@ import {
   Moon,
   Search,
   Sun,
+  Swords,
   Tag,
   UserRound,
   Wallet,
@@ -79,7 +80,8 @@ type LeafKey =
   | "faq"
   | "keywords"
   | "sales"
-  | "contact";
+  | "contact"
+  | "compare";
 
 /** Layanan — 4 tautan konversi utama. */
 const LAYANAN: ReadonlyArray<{
@@ -96,6 +98,7 @@ const LAYANAN: ReadonlyArray<{
 
 /** Jelajah — konten informasi & halaman pendukung. */
 const JELAJAH: ReadonlyArray<{ href: string; key: LeafKey; icon: typeof BookOpen }> = [
+  { href: "/vs", key: "compare", icon: Swords },
   { href: "/artikel", key: "artikel", icon: BookOpen },
   { href: "/#galeri", key: "gallery", icon: Images },
   { href: "/#faq", key: "faq", icon: MessageCircleQuestion },

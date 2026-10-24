@@ -355,6 +355,11 @@ export const POPULAR_SEARCHES: { label: string; href: string }[] = [
   { label: "leasing geely bogor", href: "/kredit-cicilan-geely-bogor" },
   { label: "trade-in geely", href: "/sales-geely-bogor" },
   { label: "agen geely terdekat", href: "/sales-geely-bogor" },
+  // Halaman perbandingan "vs" — pencarian kompetitif volume tinggi
+  { label: "geely ex5 vs atto 3", href: "/vs/geely-ex5-vs-byd-atto-3" },
+  { label: "geely ex2 vs dolphin", href: "/vs/geely-ex2-vs-byd-dolphin" },
+  { label: "coolray vs hrv", href: "/vs/geely-coolray-vs-honda-hr-v" },
+  { label: "starray vs corolla cross", href: "/vs/geely-starray-emi-vs-toyota-corolla-cross" },
   { label: "mobil listrik jakarta", href: "/mobil-listrik-geely-bogor" },
   { label: "suv listrik bogor", href: "/mobil-listrik-geely-bogor" },
   { label: "indeks kata kunci geely", href: "/indeks-kata-kunci" },

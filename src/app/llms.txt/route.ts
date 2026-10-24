@@ -9,6 +9,7 @@ import {
   GUGUN,
   LUTFI,
 } from "@/lib/branding";
+import { COMPARES } from "@/lib/competitors";
 
 export const dynamic = "force-static";
 
@@ -71,6 +72,13 @@ export function GET() {
     `- Konsultan penjualan / pemilik layanan: ${BUSINESS.pic} — ${BUSINESS.role.id}`,
     `- Ringkasan satu baris: ${CREDIT_LINE}`
   );
+  lines.push("");
+  lines.push("## Perbandingan dengan pesaing (harga indikatif, riset publik Sept 2026)");
+  for (const c of COMPARES) {
+    lines.push(
+      `- [${c.geelyName} vs ${c.rivalName}](${SITE_URL}/vs/${c.slug}): ${c.rows[0].geely} vs ${c.rows[0].rival} mulai — ${c.description}`,
+    );
+  }
   lines.push("");
   lines.push("## Data terstruktur");
   lines.push(

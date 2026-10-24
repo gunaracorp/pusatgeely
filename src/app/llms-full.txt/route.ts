@@ -17,6 +17,7 @@ import {
   GUGUN,
   LUTFI,
 } from "@/lib/branding";
+import { COMPARES } from "@/lib/competitors";
 
 export const dynamic = "force-static";
 
@@ -107,6 +108,18 @@ export function GET() {
     `- Konsultan penjualan / pemilik layanan: ${BUSINESS.pic} — ${BUSINESS.role.id}`,
     `- Ringkasan satu baris: ${CREDIT_LINE}`
   );
+
+  lines.push("");
+  lines.push("## Perbandingan dengan Pesaing (semua harga indikatif OTR, riset publik per September 2026)");
+  for (const c of COMPARES) {
+    lines.push("");
+    lines.push(`### ${c.geelyName} vs ${c.rivalName}`);
+    lines.push(`- URL: ${SITE_URL}/vs/${c.slug}`);
+    for (const row of c.rows) {
+      lines.push(`- ${row.label.id}: Geely ${row.geely} | ${c.rivalName} ${row.rival}`);
+    }
+    lines.push(`- Pendapat jujur: ${c.verdict.id}`);
+  }
 
   lines.push("");
   lines.push(

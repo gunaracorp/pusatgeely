@@ -1,6 +1,7 @@
 import { SiteHeader } from "@/components/site-header";
 import { SiteHero } from "@/components/site-hero";
 import { ModelSection } from "@/components/model-section";
+import { ModelMatcher } from "@/components/model-matcher";
 import { ServicesSection } from "@/components/services-section";
 import { PromoSection } from "@/components/promo-section";
 import { GallerySection } from "@/components/gallery-section";
@@ -19,6 +20,7 @@ export default function Home() {
       <main className="flex-1">
         <SiteHero />
         <ModelSection />
+        <ModelMatcher />
         <ServicesSection />
         <PromoSection />
         <FinancingSimulator />
