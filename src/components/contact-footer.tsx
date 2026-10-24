@@ -18,7 +18,7 @@ import {
   PRICE_DISCLAIMER,
   waLink,
 } from "@/lib/site";
-import { CREDIT_LINE } from "@/lib/branding";
+import { CREDIT_LINE, DESIGN_CREDIT, MANAGEMENT_CREDIT, TEAM_CREDIT } from "@/lib/branding";
 
 const NAV_LINKS = [
   { href: "#model", key: "models" },
@@ -233,6 +233,49 @@ export function ContactFooter() {
           <p>{t.footer.visualNote}</p>
         </div>
 
+        {/*
+          Personal branding — kredit design & management (permintaan pemilik).
+          Tampak halus: teks kecil, tautan netral, tetap elegan di footer.
+        */}
+        <div className="mt-6 space-y-1.5 border-t pt-4 text-[11px] leading-relaxed text-muted-foreground">
+          <p className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+            <span className="font-bold uppercase tracking-wider">
+              {DESIGN_CREDIT.label}
+            </span>
+            <a
+              href={DESIGN_CREDIT.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground/75 underline-offset-2 transition-colors hover:text-primary hover:underline"
+            >
+              {DESIGN_CREDIT.orgName}
+            </a>
+            <span aria-hidden="true">·</span>
+            <span>
+              {DESIGN_CREDIT.scope} — {DESIGN_CREDIT.domain}
+            </span>
+          </p>
+          <p className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+            <span className="font-bold uppercase tracking-wider">
+              {MANAGEMENT_CREDIT.label}
+            </span>
+            <a
+              href={MANAGEMENT_CREDIT.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground/75 underline-offset-2 transition-colors hover:text-primary hover:underline"
+            >
+              {MANAGEMENT_CREDIT.orgName}
+            </a>
+            <span aria-hidden="true">·</span>
+            <span>{MANAGEMENT_CREDIT.domain}</span>
+          </p>
+          <p>
+            <span className="font-bold uppercase tracking-wider">Tim </span>
+            {TEAM_CREDIT.line}
+          </p>
+        </div>
+
         {/* Bottom bar */}
         <div className="mt-6 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>
@@ -242,9 +285,8 @@ export function ContactFooter() {
         </div>
 
         {/*
-          GHOST BRANDING — kredit support system.
-          sr-only: tidak tampak di permukaan (permintaan pemilik),
-          tetapi hadir di DOM & terbaca crawler/screen-reader.
+          GHOST BRANDING — kredit support system (versi mesin, satu baris).
+          sr-only: pelengkap blok kredit visible di atas.
         */}
         <p className="sr-only">{CREDIT_LINE}</p>
       </div>

@@ -1,6 +1,14 @@
 import { ARTICLES } from "@/lib/articles";
 import { ALL_LANDING_PAGES } from "@/lib/landing-all";
 import { BUSINESS, MODELS, POWERTRAIN_LABEL, SITE_URL, formatIDR } from "@/lib/site";
+import {
+  DESIGN_CREDIT,
+  MANAGEMENT_CREDIT,
+  TEAM_CREDIT,
+  CREDIT_LINE,
+  GUGUN,
+  LUTFI,
+} from "@/lib/branding";
 
 export const dynamic = "force-static";
 
@@ -52,6 +60,17 @@ export function GET() {
   for (const p of ALL_LANDING_PAGES) {
     lines.push(`- [${p.h1.id}](${SITE_URL}/${p.slug})`);
   }
+  lines.push("");
+  lines.push("## Kredit & personal branding");
+  lines.push(
+    `- ${DESIGN_CREDIT.label} ${DESIGN_CREDIT.orgName} (${DESIGN_CREDIT.scope}): ${DESIGN_CREDIT.url}`,
+    `- ${MANAGEMENT_CREDIT.label} ${MANAGEMENT_CREDIT.orgName}: ${MANAGEMENT_CREDIT.url}`,
+    `- Tim digital support system: ${TEAM_CREDIT.line}`,
+    `- ${GUGUN.legalName} — alias Prabu Danling (prabudanling); profil: ${GUGUN.sameAs.join(", ")}`,
+    `- ${LUTFI.legalName} (${LUTFI.shortName}) — co-founder & digital systems lead`,
+    `- Konsultan penjualan / pemilik layanan: ${BUSINESS.pic} — ${BUSINESS.role.id}`,
+    `- Ringkasan satu baris: ${CREDIT_LINE}`
+  );
   lines.push("");
   lines.push("## Data terstruktur");
   lines.push(

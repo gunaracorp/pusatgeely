@@ -2,14 +2,18 @@
    https://humanstxt.org — terbaca manusia & crawler, tidak tampil di UI. */
 
 /* TEAM */
-Founder & Digital Support System: H. Gugun Gunara (prabudanling · santri angon)
-Co-Founder & Digital Systems: Muhammad Lutfi Azmi
-Company: PT Top Konsultan Internasional — https://topkonsultan.web.id
-Company: PT Digital Bisnis Manajemen (Digiman) — https://digiman.id
-Sub-brand: Juragan Website (hosting & domain) — https://juraganwebsite.web.id
+Founder & Digital Support System: H. Gugun Gunara (Prabu Danling · prabudanling · Santri Angon)
+Co-Founder & Digital Systems: Muhammad Lutfi Azmi (M. Lutfi Azmi)
 Business Owner / Sales Consultant: Sena Sulaeman
 
-/* SOCIAL — GUGUN GUNARA */
+/* COMPANIES */
+Design: PT Digital Bisnis Manajemen (hosting & domain) — https://digiman.id
+Management: PT Top Konsultan Internasional — https://topkonsultan.web.id
+Sub-brand: Juragan Website (hosting & domain) — https://juraganwebsite.web.id
+Community: Santri Angon — digagas H. Gugun Gunara (prabudanling)
+
+/* SOCIAL — GUGUN GUNARA (prabudanling) */
+GitHub: https://github.com/prabudanling
 Facebook: https://www.facebook.com/bossdanling
 X: https://x.com/gunzz_krenzz
 Instagram: https://www.instagram.com/prabudanling

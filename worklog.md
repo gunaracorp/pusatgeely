@@ -104,3 +104,21 @@ Stage Summary:
 - Warning GSC aggregateRating/review kini punya jalur penyelesaian LEGITIM: bintang muncul otomatis begitu ulasan pelanggan nyata dipublikasikan pemilik via /api/reviews/admin
 - Situs kini "discovery-max" untuk AI: llms.txt + llms-full.txt + 19 bot AI full-access + knowsAbout + max-snippet bebas + IndexNow
 - Vercel catatan: set REVIEWS_ADMIN_KEY; untuk review persisten gunakan DB produksi (§6 panduan)
+---
+Task ID: 6
+Agent: Z.ai Code (main orchestrator)
+Task: Personal branding lengkap — 4 identitas (Gugun Gunara, M. Lutfi Azmi, Prabu Danling, Santri Angon) + kredit Design by digiman.id & Management by topkonsultan.web.id
+
+Work Log:
+- UPGRADE src/lib/branding.ts: header aturan diperbarui (kredit footer kini visible + halus); GUGUN.sameAs += GitHub (github.com/prabudanling); LUTFI.shortName; ekspor baru SANTRI_ANGON (komunitas, tanpa URL karangan — honesty-first), DESIGN_CREDIT, MANAGEMENT_CREDIT (format persis penugasan pemilik), TEAM_CREDIT; CREDIT_LINE ditulis ulang versi Design by/Management by; SOURCE_SIGNATURE dirombak (Design by/Management by/Tim + GITHUB line); BRAND_KEYWORDS += Prabu Danling, M. Lutfi Azmi, santri angon, design by digiman, management by topkonsultan, hosting dan domain digiman; "santri angon" DIHAPUS dari alternateName org topKonsultan (higiene entitas — kini entitas komunitas sendiri)
+- layout.tsx: node Organization "Santri Angon" (founder+leader @id personGugun) masuk @graph — JSON-LD kini mencakup 4 identitas + 3 organisasi; GitHub otomatis ikut sameAs Person
+- contact-footer.tsx: blok kredit VISIBLE baru antara legal & bottom bar — "DESIGN BY PT Digital Bisnis Manajemen · hosting & domain — digiman.id" / "MANAGEMENT BY PT Top Konsultan Internasional · topkonsultan.web.id" / "TIM H. Gugun Gunara (Prabu Danling · Santri Angon) · M. Lutfi Azmi" — teks 11px muted, 2 tautan eksternal hover:text-primary; baris sr-only CREDIT_LINE dipertahankan sebagai versi mesin; fix komentar JSX rusak `{/` → `{/*`
+- llms.txt + llms-full.txt: section baru "## Kredit & personal branding" (design, management, tim, alias prabudanling + semua profil, Sena Sulaeman, ringkasan satu baris CREDIT_LINE) — kredit kini TERBUKA bagi ChatGPT/Perplexity/Gemini/Claude
+- public/humans.txt: TEAM + COMPANIES (Design/Management/Sub-brand/Community) + SOCIAL diberi label (prabudanling) + GitHub
+- Verifikasi: lint 0 error; curl llms.txt section Kredit tampil sempurna; HTML beranda memuat node Santri Angon + github.com/prabudanling + kredit footer; Agent Browser desktop 1280px & mobile 390px: blok kredit render elegan, tautan benar (1 link digiman + 1 link topkonsultan), sticky bar mobile utuh, 0 page error, 0 console error
+- Arsip unduhan diregenerasi: 00-pusatgeely-source-lengkap.zip (4,1 MB — berisi branding.ts, llms routes, footer, humans.txt terbaru), 01-source-code.zip, 04-config-deployment.zip
+
+Stage Summary:
+- Personal branding 4 identitas kini TERCAKUP PENUH di 5 lapisan: (1) footer visible elegan Design by/Management by/Tim, (2) JSON-LD entity graph Person+Community+3 Organization, (3) meta keywords & HTML signature, (4) humans.txt, (5) llms.txt/llms-full.txt untuk AI
+- Prinsip pseudonym SEO: Prabu Danling & Santri Angon dimodelkan alternateName pada SATU Person (bukan node duplikat) — mencegah entitas terpecah di Knowledge Graph
+- Honesty-first dipertahankan: tanpa URL/fakta yang dikarang; Sena Sulaeman tetap identitas bisnis di permukaan

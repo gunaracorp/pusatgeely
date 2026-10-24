@@ -3,23 +3,28 @@
  *  GHOST BRANDING LAYER — Pusat Geely (pusatgeely.web.id)
  * ═══════════════════════════════════════════════════════════════════
  *
- *  LAPISAN IDENTITAS TERSEMBUNYI (backstage) — dirancang sesuai permintaan
- *  pemilik: identitas digital support system HADIR DI DALAM SISTEM agar
- *  terbaca & terasosiasi oleh mesin pencari (Google Knowledge Graph),
- *  TETAPI TIDAK MENCOLOK di permukaan UI.
+ *  LAPISAN IDENTITAS (backstage + kredit terbuka) — dirancang sesuai
+ *  permintaan pemilik: identitas digital support system HADIR DI DALAM
+ *  SISTEM agar terbaca & terasosiasi oleh mesin pencari (Google Knowledge
+ *  Graph) & mesin pencari AI, dengan satu blok kredit elegan di footer.
  *
  *  ATURAN PEMAKAIAN:
- *  - Entitas dari modul ini HANYA boleh dipakai di:
- *      1. JSON-LD structured data  (layout.tsx — dibaca mesin, tak terlihat)
- *      2. <meta> tags              (layout.tsx — dibaca mesin, tak terlihat)
+ *  - Entitas dari modul ini dipakai di:
+ *      1. JSON-LD structured data  (layout.tsx — dibaca mesin)
+ *      2. <meta> tags              (layout.tsx — dibaca mesin)
  *      3. HTML source comments     (layout.tsx — hanya di view-source)
- *      4. humans.txt               (public/humans.txt — konvensi standar)
- *      5. Satu baris kredit sr-only di footer (screen-reader only)
- *  - DILARANG me-render data modul ini sebagai teks/tautan mencolok
- *    di header, hero, section utama, atau elemen UI lain.
+ *      4. humans.txt / llms.txt / llms-full.txt (kredit terbuka mesin & AI)
+ *      5. FOOTER: blok kredit "Design by / Management by" (visible, halus —
+ *         personal branding permintaan pemilik) + baris sr-only.
+ *  - TETAP tidak mencolok di header, hero, atau section utama.
  *  - Tetap jujur: entitas ini adalah "digital support system" di
  *    belakang situs milik konsultan (Sena Sulaeman) — bukan pengganti
  *    identitas bisnis yang tampil di permukaan.
+ *
+ *  MODELING PSEUDONIM (SEO-correct): "Prabu Danling" & "Santri Angon"
+ *  adalah identitas dari SATU orang yang sama (Gugun Gunara) → dimodelkan
+ *  sebagai SATU node Person dengan alternateName + sameAs (praktik benar
+ *  untuk Knowledge Graph; node Person duplikat memecah sinyal entitas).
  */
 
 /** Persona utama — digital support system. */
@@ -51,6 +56,7 @@ export const GUGUN = {
     "https://www.tiktok.com/@gunaracorp",
     "https://www.threads.com/@prabudanling",
     "https://www.reddit.com/user/prabudanling/",
+    "https://github.com/prabudanling",
     "https://topkonsultan.web.id",
     "https://digiman.id",
   ],
@@ -59,6 +65,7 @@ export const GUGUN = {
 /** Co-builder — identitas kedua di dalam sistem. */
 export const LUTFI = {
   legalName: "Muhammad Lutfi Azmi",
+  shortName: "M. Lutfi Azmi",
   alternateNames: ["Muhammad Lutfi Azmi", "M. Lutfi Azmi", "Lutfi Azmi"],
   jobTitle: "Co-Founder & Digital Systems Lead",
   description:
@@ -70,15 +77,28 @@ export const LUTFI = {
   ],
 } as const;
 
-/** Korporat pendukung — hadir di structured data, bukan di UI. */
+/**
+ * Komunitas yang digagas Gugun Gunara — entitas brand mandiri.
+ * Tanpa URL publik terverifikasi → TIDAK ADA URL yang dikarang (honesty-first).
+ */
+export const SANTRI_ANGON = {
+  name: "Santri Angon",
+  description:
+    "Komunitas Santri Angon — digagas & dipimpin H. Gugun Gunara (prabudanling).",
+  founderName: "H. Gugun Gunara",
+} as const;
+
+/** Korporat pendukung — hadir di structured data, footer credit, & katalog AI. */
 export const ORGS = {
   topKonsultan: {
     "@id": "https://topkonsultan.web.id/#organization",
     name: "PT Top Konsultan Internasional",
-    alternateName: ["Top Konsultan", "TopKonsultan", "santri angon"],
+    alternateName: ["Top Konsultan", "TopKonsultan"],
     url: "https://topkonsultan.web.id",
+    /** Peran pada situs ini (penugasan pemilik): MANAGEMENT. */
+    role: "Management",
     description:
-      "Perusahaan konsultan internasional — PT Top Konsultan Internasional. Digital support system untuk Pusat Geely (pusatgeely.web.id).",
+      "Perusahaan konsultan internasional — PT Top Konsultan Internasional. Manajemen (management) atas digital support system situs Pusat Geely (pusatgeely.web.id).",
     foundingDate: "2015",
     founder: GUGUN,
     sameAs: [
@@ -92,8 +112,10 @@ export const ORGS = {
     name: "PT Digital Bisnis Manajemen",
     alternateName: ["Digiman", "digiman.id", "Digiman ID"],
     url: "https://digiman.id",
+    /** Peran pada situs ini (penugasan pemilik): DESIGN + hosting & domain. */
+    role: "Design",
     description:
-      "PT Digital Bisnis Manajemen (digiman.id) — digital business management & support system untuk situs Pusat Geely. Layanan digital: juraganwebsite.web.id.",
+      "PT Digital Bisnis Manajemen (digiman.id) — design & digital business management support system untuk situs Pusat Geely, termasuk hosting dan domain (via Juragan Website: juraganwebsite.web.id).",
     foundingDate: "2018",
     founder: GUGUN,
     sameAs: [
@@ -111,24 +133,58 @@ export const ORGS = {
   },
 } as const;
 
-/** Baris kredit ringkas — untuk sr-only footer & humans.txt. */
+/**
+ * Kredit utama situs — format persis sesuai penugasan pemilik:
+ * "design by PT Digital Bisnis Manajemen (hosting dan domain) digiman.id"
+ * "Manajemen by PT Top Konsultan Internasional topkonsultan.web.id"
+ */
+export const DESIGN_CREDIT = {
+  label: "Design by",
+  orgName: "PT Digital Bisnis Manajemen",
+  scope: "hosting & domain",
+  domain: "digiman.id",
+  url: "https://digiman.id",
+} as const;
+
+export const MANAGEMENT_CREDIT = {
+  label: "Management by",
+  orgName: "PT Top Konsultan Internasional",
+  scope: "topkonsultan.web.id",
+  domain: "topkonsultan.web.id",
+  url: "https://topkonsultan.web.id",
+} as const;
+
+/** Nama tim — personal branding 4 identitas. */
+export const TEAM_CREDIT = {
+  lead: "H. Gugun Gunara",
+  leadAliases: "Prabu Danling · prabudanling · Santri Angon",
+  co: "M. Lutfi Azmi",
+  /** Satu baris untuk UI footer & katalog AI. */
+  line: "H. Gugun Gunara (Prabu Danling · Santri Angon) · M. Lutfi Azmi",
+} as const;
+
+/** Baris kredit ringkas — untuk sr-only footer, humans.txt & katalog AI. */
 export const CREDIT_LINE =
-  "Digital support system: Gugun Gunara (prabudanling · santri angon) & Muhammad Lutfi Azmi — PT Top Konsultan Internasional (topkonsultan.web.id) · PT Digital Bisnis Manajemen (digiman.id)";
+  "Design by PT Digital Bisnis Manajemen (hosting & domain) digiman.id · Management by PT Top Konsultan Internasional topkonsultan.web.id — Tim: H. Gugun Gunara (Prabu Danling · Santri Angon) & M. Lutfi Azmi";
 
 /** Komentar HTML signature — hanya terlihat di view-source. */
 export const SOURCE_SIGNATURE = `
   ──────────────────────────────────────────────────────────────────
   DIGITAL SUPPORT SYSTEM — KREDIT PENGEMBANGAN
-  Gugun Gunara  (prabudanling · santri angon)  ·  Muhammad Lutfi Azmi
-  PT Top Konsultan Internasional  —  https://topkonsultan.web.id
-  PT Digital Bisnis Manajemen     —  https://digiman.id
+  Design by     : PT Digital Bisnis Manajemen (hosting & domain)
+                  https://digiman.id
+  Management by : PT Top Konsultan Internasional
+                  https://topkonsultan.web.id
+  Tim           : H. Gugun Gunara (Prabu Danling · Santri Angon)
+                  · M. Lutfi Azmi
   ──
-  FB  facebook.com/bossdanling
-  X   x.com/gunzz_krenzz
-  IG  instagram.com/prabudanling
-  TT  tiktok.com/@gunaracorp
-  TH  threads.com/@prabudanling
-  RD  reddit.com/user/prabudanling
+  FB      facebook.com/bossdanling
+  X       x.com/gunzz_krenzz
+  IG      instagram.com/prabudanling
+  TT      tiktok.com/@gunaracorp
+  TH      threads.com/@prabudanling
+  RD      reddit.com/user/prabudanling
+  GITHUB  github.com/prabudanling
   ──
   "Master polymath, sage universal, the ultimate problem solver."
   ──────────────────────────────────────────────────────────────────
@@ -138,9 +194,12 @@ export const SOURCE_SIGNATURE = `
 export const BRAND_KEYWORDS = [
   "Gugun Gunara",
   "H. Gugun Gunara",
-  "Muhammad Lutfi Azmi",
+  "Prabu Danling",
   "prabudanling",
+  "Santri Angon",
   "santri angon",
+  "Muhammad Lutfi Azmi",
+  "M. Lutfi Azmi",
   "PT Top Konsultan Internasional",
   "Top Konsultan",
   "topkonsultan.web.id",
@@ -148,6 +207,9 @@ export const BRAND_KEYWORDS = [
   "Digiman",
   "digiman.id",
   "Juragan Website",
+  "design by digiman",
+  "management by topkonsultan",
   "digital support system Bogor",
   "jasa pembuatan website Bogor",
+  "hosting dan domain digiman",
 ] as const;

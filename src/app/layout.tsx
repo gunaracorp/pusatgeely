@@ -18,6 +18,7 @@ import {
   GUGUN,
   LUTFI,
   ORGS,
+  SANTRI_ANGON,
   SOURCE_SIGNATURE,
   BRAND_KEYWORDS,
 } from "@/lib/branding";
@@ -384,6 +385,16 @@ function StructuredData() {
         description: ORGS.juraganWebsite.description,
         parentOrganization: { "@id": ORGS.digiman["@id"] },
         founder: { "@id": personGugun["@id"] },
+      },
+      // Komunitas yang digagas Gugun Gunara — entitas personal branding.
+      // Tanpa URL terverifikasi → tidak ada url yang dikarang (honesty-first).
+      {
+        "@type": "Organization",
+        name: SANTRI_ANGON.name,
+        alternateName: ["santri angon", "Komunitas Santri Angon"],
+        description: SANTRI_ANGON.description,
+        founder: { "@id": personGugun["@id"] },
+        leader: { "@id": personGugun["@id"] },
       },
       personGugun,
       personLutfi,

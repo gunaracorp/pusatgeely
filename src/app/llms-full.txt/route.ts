@@ -9,6 +9,14 @@ import {
   formatJuta,
 } from "@/lib/site";
 import { ALL_LANDING_PAGES } from "@/lib/landing-all";
+import {
+  DESIGN_CREDIT,
+  MANAGEMENT_CREDIT,
+  TEAM_CREDIT,
+  CREDIT_LINE,
+  GUGUN,
+  LUTFI,
+} from "@/lib/branding";
 
 export const dynamic = "force-static";
 
@@ -87,6 +95,18 @@ export function GET() {
   for (const a of ARTICLES) {
     lines.push(`- [${a.title.id}](${SITE_URL}/artikel/${a.slug})`);
   }
+
+  lines.push("");
+  lines.push("## Kredit & personal branding");
+  lines.push(
+    `- ${DESIGN_CREDIT.label} ${DESIGN_CREDIT.orgName} (${DESIGN_CREDIT.scope}): ${DESIGN_CREDIT.url}`,
+    `- ${MANAGEMENT_CREDIT.label} ${MANAGEMENT_CREDIT.orgName}: ${MANAGEMENT_CREDIT.url}`,
+    `- Tim digital support system: ${TEAM_CREDIT.line}`,
+    `- ${GUGUN.legalName} — ${GUGUN.jobTitle}. Alias/identitas: Prabu Danling (prabudanling), penggagas komunitas Santri Angon. Profil resmi: ${GUGUN.sameAs.join(", ")}`,
+    `- ${LUTFI.legalName} (${LUTFI.shortName}) — ${LUTFI.jobTitle}`,
+    `- Konsultan penjualan / pemilik layanan: ${BUSINESS.pic} — ${BUSINESS.role.id}`,
+    `- Ringkasan satu baris: ${CREDIT_LINE}`
+  );
 
   lines.push("");
   lines.push(
