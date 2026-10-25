@@ -1,0 +1,721 @@
+     1→"use client";
+     2→
+     3→import { useEffect, useRef, useState } from "react";
+     4→import { useTheme } from "next-themes";
+     5→import Link from "next/link";
+     6→import {
+     7→  AnimatePresence,
+     8→  motion,
+     9→  useReducedMotion,
+    10→  useScroll,
+    11→  useSpring,
+    12→  type Variants,
+    13→} from "framer-motion";
+    14→import {
+    15→  ArrowRight,
+    16→  BookOpen,
+    17→  Calculator,
+    18→  CalendarCheck,
+    19→  ChevronDown,
+    20→  Images,
+    21→  Mail,
+    22→  MessageCircleQuestion,
+    23→  Moon,
+    24→  Search,
+    25→  Sun,
+    26→  Swords,
+    27→  Tag,
+    28→  UserRound,
+    29→  Wallet,
+    30→} from "lucide-react";
+    31→import { Button } from "@/components/ui/button";
+    32→import {
+    33→  Sheet,
+    34→  SheetContent,
+    35→  SheetDescription,
+    36→  SheetHeader,
+    37→  SheetTitle,
+    38→  SheetTrigger,
+    39→} from "@/components/ui/sheet";
+    40→import { useLang } from "@/components/language-provider";
+    41→import { SOCIALS } from "@/components/social-icons";
+    42→import { MODELS, POWERTRAIN_LABEL, formatJuta, waLink } from "@/lib/site";
+    43→import { cn } from "@/lib/utils";
+    44→
+    45→/** Original Pusat Geely emblem — hexagonal "G" mark (not an official Geely logo). */
+    46→export function BrandMark({ className }: { className?: string }) {
+    47→  return (
+    48→    <svg
+    49→      viewBox="0 0 48 48"
+    50→      fill="none"
+    51→      aria-hidden="true"
+    52→      className={className}
+    53→    >
+    54→      <path
+    55→        d="M24 3 43 13.5v21L24 45 5 34.5v-21L24 3Z"
+    56→        className="stroke-primary"
+    57→        strokeWidth="2.6"
+    58→        strokeLinejoin="round"
+    59→      />
+    60→      <path
+    61→        d="M31.5 19.2c-1.6-2.4-4.3-3.9-7.4-3.9-5 0-9 3.9-9 8.7s4 8.7 9 8.7c4.2 0 7.7-2.8 8.7-6.6h-8.2"
+    62→        className="stroke-foreground"
+    63→        strokeWidth="2.6"
+    64→        strokeLinecap="round"
+    65→        strokeLinejoin="round"
+    66→        fill="none"
+    67→      />
+    68→    </svg>
+    69→  );
+    70→}
+    71→
+    72→type GroupKey = "model" | "layanan" | "jelajah";
+    73→type LeafKey =
+    74→  | "harga"
+    75→  | "promo"
+    76→  | "simulator"
+    77→  | "testDrive"
+    78→  | "artikel"
+    79→  | "gallery"
+    80→  | "faq"
+    81→  | "keywords"
+    82→  | "sales"
+    83→  | "contact"
+    84→  | "compare";
+    85→
+    86→/** Layanan — 4 tautan konversi utama. */
+    87→const LAYANAN: ReadonlyArray<{
+    88→  href: string;
+    89→  key: LeafKey;
+    90→  desc: "hargaDesc" | "promoDesc" | "kreditDesc" | "testDriveDesc";
+    91→  icon: typeof Wallet;
+    92→}> = [
+    93→  { href: "/harga-mobil-geely-bogor", key: "harga", desc: "hargaDesc", icon: Wallet },
+    94→  { href: "/promo-geely-bogor", key: "promo", desc: "promoDesc", icon: Tag },
+    95→  { href: "/kredit-cicilan-geely-bogor", key: "simulator", desc: "kreditDesc", icon: Calculator },
+    96→  { href: "/test-drive-geely-bogor", key: "testDrive", desc: "testDriveDesc", icon: CalendarCheck },
+    97→];
+    98→
+    99→/** Jelajah — konten informasi & halaman pendukung. */
+   100→const JELAJAH: ReadonlyArray<{ href: string; key: LeafKey; icon: typeof BookOpen }> = [
+   101→  { href: "/vs", key: "compare", icon: Swords },
+   102→  { href: "/artikel", key: "artikel", icon: BookOpen },
+   103→  { href: "/#galeri", key: "gallery", icon: Images },
+   104→  { href: "/#faq", key: "faq", icon: MessageCircleQuestion },
+   105→  { href: "/indeks-kata-kunci", key: "keywords", icon: Search },
+   106→  { href: "/sales-geely-bogor", key: "sales", icon: UserRound },
+   107→  { href: "/kontak", key: "contact", icon: Mail },
+   108→];
+   109→
+   110→/** Gaya trigger nav desktop — underline gradient muncul saat hover/aktif. */
+   111→function triggerCls(active: boolean) {
+   112→  return cn(
+   113→    "relative flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring",
+   114→    "after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-gradient-to-r after:from-emerald-500 after:to-teal-500 after:transition-transform after:duration-200 hover:after:scale-x-100",
+   115→    active && "text-foreground after:scale-x-100"
+   116→  );
+   117→}
+   118→
+   119→/** Entri panel dropdown dengan stagger halus. */
+   120→function PanelItem({
+   121→  index,
+   122→  reduce,
+   123→  className,
+   124→  children,
+   125→}: {
+   126→  index: number;
+   127→  reduce: boolean;
+   128→  className?: string;
+   129→  children: React.ReactNode;
+   130→}) {
+   131→  return (
+   132→    <motion.div
+   133→      initial={reduce ? false : { opacity: 0, y: 6 }}
+   134→      animate={{ opacity: 1, y: 0 }}
+   135→      transition={{ delay: 0.028 * index, duration: 0.16, ease: "easeOut" }}
+   136→      className={className}
+   137→    >
+   138→      {children}
+   139→    </motion.div>
+   140→  );
+   141→}
+   142→
+   143→const mobileListVariants: Variants = {
+   144→  hidden: {},
+   145→  show: { transition: { staggerChildren: 0.04, delayChildren: 0.05 } },
+   146→};
+   147→
+   148→const mobileItemVariants: Variants = {
+   149→  hidden: { opacity: 0, x: -12 },
+   150→  show: { opacity: 1, x: 0, transition: { duration: 0.22, ease: "easeOut" } },
+   151→};
+   152→
+   153→function MobileSection({ label }: { label: string }) {
+   154→  return (
+   155→    <p className="mt-4 px-3 text-[11px] font-bold uppercase tracking-[0.18em] text-muted-foreground">
+   156→      {label}
+   157→    </p>
+   158→  );
+   159→}
+   160→
+   161→function MobileItem({ children }: { children: React.ReactNode }) {
+   162→  return (
+   163→    <motion.div variants={mobileItemVariants} className="flex flex-col">
+   164→      {children}
+   165→    </motion.div>
+   166→  );
+   167→}
+   168→
+   169→export function SiteHeader() {
+   170→  const { t, lang, toggle } = useLang();
+   171→  const { resolvedTheme, setTheme } = useTheme();
+   172→  const [scrolled, setScrolled] = useState(false);
+   173→  const [openMenu, setOpenMenu] = useState<GroupKey | null>(null);
+   174→  const [mobileOpen, setMobileOpen] = useState(false);
+   175→  const navRef = useRef<HTMLElement | null>(null);
+   176→  const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+   177→  const triggerRefs = useRef<Record<GroupKey, HTMLButtonElement | null>>({
+   178→    model: null,
+   179→    layanan: null,
+   180→    jelajah: null,
+   181→  });
+   182→  const reduce = useReducedMotion();
+   183→
+   184→  /** Progress baca halaman — spring tipis di tepi bawah header. */
+   185→  const { scrollYProgress } = useScroll();
+   186→  const progress = useSpring(scrollYProgress, { stiffness: 380, damping: 34, mass: 0.4 });
+   187→
+   188→  useEffect(() => {
+   189→    const onScroll = () => setScrolled(window.scrollY > 12);
+   190→    window.addEventListener("scroll", onScroll, { passive: true });
+   191→    // Defer the initial check — setState must not run synchronously in the effect body.
+   192→    const raf = requestAnimationFrame(onScroll);
+   193→    return () => {
+   194→      window.removeEventListener("scroll", onScroll);
+   195→      cancelAnimationFrame(raf);
+   196→    };
+   197→  }, []);
+   198→
+   199→  // Dropdown terbuka: tutup saat klik di luar nav atau tekan Escape.
+   200→  useEffect(() => {
+   201→    if (!openMenu) return;
+   202→    const onPointerDown = (e: PointerEvent) => {
+   203→      if (navRef.current && !navRef.current.contains(e.target as Node)) setOpenMenu(null);
+   204→    };
+   205→    const onKeyDown = (e: KeyboardEvent) => {
+   206→      if (e.key === "Escape") {
+   207→        setOpenMenu(null);
+   208→        triggerRefs.current[openMenu]?.focus();
+   209→      }
+   210→    };
+   211→    document.addEventListener("pointerdown", onPointerDown);
+   212→    document.addEventListener("keydown", onKeyDown);
+   213→    return () => {
+   214→      document.removeEventListener("pointerdown", onPointerDown);
+   215→      document.removeEventListener("keydown", onKeyDown);
+   216→    };
+   217→  }, [openMenu]);
+   218→
+   219→  useEffect(
+   220→    () => () => {
+   221→      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+   222→    },
+   223→    []
+   224→  );
+   225→
+   226→  const openNow = (key: GroupKey) => {
+   227→    if (hoverTimer.current) {
+   228→      clearTimeout(hoverTimer.current);
+   229→      hoverTimer.current = null;
+   230→    }
+   231→    setOpenMenu(key);
+   232→  };
+   233→  const closeSoon = () => {
+   234→    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+   235→    hoverTimer.current = setTimeout(() => setOpenMenu(null), 140);
+   236→  };
+   237→
+   238→  return (
+   239→    <header
+   240→      className={cn(
+   241→        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+   242→        scrolled
+   243→          ? "border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/65"
+   244→          : "border-b border-transparent bg-transparent"
+   245→      )}
+   246→    >
+   247→      {/* Progress baca — hanya transform (GPU), hormati reduced motion */}
+   248→      {!reduce && (
+   249→        <motion.div
+   250→          aria-hidden="true"
+   251→          style={{ scaleX: progress }}
+   252→          className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400"
+   253→        />
+   254→      )}
+   255→
+   256→      <div
+   257→        className={cn(
+   258→          "mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-[height] duration-300 sm:px-6 lg:px-8",
+   259→          scrolled ? "h-14" : "h-16"
+   260→        )}
+   261→      >
+   262→        {/* Brand */}
+   263→        <Link
+   264→          href="/"
+   265→          className="group flex items-center gap-2.5 rounded-lg focus-visible:outline-2 focus-visible:outline-ring"
+   266→          aria-label="Pusat Geely — ke beranda"
+   267→        >
+   268→          <BrandMark className="h-9 w-9 transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-105" />
+   269→          <span className="font-display text-lg font-bold leading-none tracking-tight">
+   270→            PUSAT<span className="text-primary">GEELY</span>
+   271→            <span className="block text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+   272→              Bogor &amp; Jabodetabek
+   273→            </span>
+   274→          </span>
+   275→        </Link>
+   276→
+   277→        {/* Desktop nav — 3 grup rapi, panel animasi halus */}
+   278→        <nav
+   279→          ref={navRef}
+   280→          aria-label="Navigasi utama"
+   281→          className="hidden items-center gap-1 lg:flex"
+   282→        >
+   283→          {/* ── MODEL ── */}
+   284→          <div className="relative">
+   285→            <button
+   286→              ref={(el) => {
+   287→                triggerRefs.current.model = el;
+   288→              }}
+   289→              type="button"
+   290→              aria-expanded={openMenu === "model"}
+   291→              onClick={() => setOpenMenu(openMenu === "model" ? null : "model")}
+   292→              onMouseEnter={() => openNow("model")}
+   293→              onMouseLeave={closeSoon}
+   294→              className={triggerCls(openMenu === "model")}
+   295→            >
+   296→              {t.nav.models}
+   297→              <ChevronDown
+   298→                className={cn(
+   299→                  "size-3.5 opacity-60 transition-transform duration-200",
+   300→                  openMenu === "model" && "rotate-180"
+   301→                )}
+   302→                aria-hidden="true"
+   303→              />
+   304→            </button>
+   305→            <div
+   306→              className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-2"
+   307→              onMouseEnter={() => openNow("model")}
+   308→              onMouseLeave={closeSoon}
+   309→            >
+   310→              <AnimatePresence>
+   311→                {openMenu === "model" && (
+   312→                  <motion.div
+   313→                    initial={{ opacity: 0, y: 8, scale: 0.985 }}
+   314→                    animate={{ opacity: 1, y: 0, scale: 1 }}
+   315→                    exit={{ opacity: 0, y: 6, scale: 0.985 }}
+   316→                    transition={{ duration: 0.18, ease: "easeOut" }}
+   317→                    className="w-[540px] overflow-hidden rounded-2xl border bg-popover/95 p-2 shadow-xl shadow-black/10 backdrop-blur-xl"
+   318→                  >
+   319→                    <div className="grid grid-cols-2 gap-1">
+   320→                      {MODELS.map((m, i) => (
+   321→                        <PanelItem key={m.id} index={i} reduce={!!reduce}>
+   322→                          <Link
+   323→                            href={`/model/${m.id}`}
+   324→                            onClick={() => setOpenMenu(null)}
+   325→                            className="flex flex-col gap-1 rounded-xl px-3 py-2.5 transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
+   326→                          >
+   327→                            <span className="text-sm font-semibold">{m.name}</span>
+   328→                            <span className="flex items-center justify-between gap-2 text-[11px] text-muted-foreground">
+   329→                              {POWERTRAIN_LABEL[m.powertrain][lang]}
+   330→                              <span className="font-display text-xs font-bold text-primary">
+   331→                                {lang === "id" ? "Mulai" : "From"} {formatJuta(m.priceFrom)}
+   332→                              </span>
+   333→                            </span>
+   334→                          </Link>
+   335→                        </PanelItem>
+   336→                      ))}
+   337→                    </div>
+   338→                    <PanelItem index={MODELS.length} reduce={!!reduce}>
+   339→                      <Link
+   340→                        href="/harga-mobil-geely-bogor"
+   341→                        onClick={() => setOpenMenu(null)}
+   342→                        className="mt-1 flex items-center justify-center gap-1.5 rounded-xl border-t bg-primary/5 px-3 py-2.5 text-xs font-semibold text-primary transition-colors hover:bg-primary/10"
+   343→                      >
+   344→                        {t.nav.seeAllPrices}
+   345→                        <ArrowRight className="size-3.5" aria-hidden="true" />
+   346→                      </Link>
+   347→                    </PanelItem>
+   348→                  </motion.div>
+   349→                )}
+   350→              </AnimatePresence>
+   351→            </div>
+   352→          </div>
+   353→
+   354→          {/* ── LAYANAN ── */}
+   355→          <div className="relative">
+   356→            <button
+   357→              ref={(el) => {
+   358→                triggerRefs.current.layanan = el;
+   359→              }}
+   360→              type="button"
+   361→              aria-expanded={openMenu === "layanan"}
+   362→              onClick={() => setOpenMenu(openMenu === "layanan" ? null : "layanan")}
+   363→              onMouseEnter={() => openNow("layanan")}
+   364→              onMouseLeave={closeSoon}
+   365→              className={triggerCls(openMenu === "layanan")}
+   366→            >
+   367→              {t.nav.services}
+   368→              <ChevronDown
+   369→                className={cn(
+   370→                  "size-3.5 opacity-60 transition-transform duration-200",
+   371→                  openMenu === "layanan" && "rotate-180"
+   372→                )}
+   373→                aria-hidden="true"
+   374→              />
+   375→            </button>
+   376→            <div
+   377→              className="absolute left-0 top-full z-50 pt-2"
+   378→              onMouseEnter={() => openNow("layanan")}
+   379→              onMouseLeave={closeSoon}
+   380→            >
+   381→              <AnimatePresence>
+   382→                {openMenu === "layanan" && (
+   383→                  <motion.div
+   384→                    initial={{ opacity: 0, y: 8, scale: 0.985 }}
+   385→                    animate={{ opacity: 1, y: 0, scale: 1 }}
+   386→                    exit={{ opacity: 0, y: 6, scale: 0.985 }}
+   387→                    transition={{ duration: 0.18, ease: "easeOut" }}
+   388→                    className="flex w-[320px] flex-col gap-0.5 rounded-2xl border bg-popover/95 p-2 shadow-xl shadow-black/10 backdrop-blur-xl"
+   389→                  >
+   390→                    {LAYANAN.map((s, i) => (
+   391→                      <PanelItem key={s.key} index={i} reduce={!!reduce}>
+   392→                        <Link
+   393→                          href={s.href}
+   394→                          onClick={() => setOpenMenu(null)}
+   395→                          className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
+   396→                        >
+   397→                          <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+   398→                            <s.icon className="size-4" aria-hidden="true" />
+   399→                          </span>
+   400→                          <span className="flex flex-col">
+   401→                            <span className="text-sm font-medium text-foreground">
+   402→                              {t.nav[s.key]}
+   403→                            </span>
+   404→                            <span className="text-xs text-muted-foreground">{t.nav[s.desc]}</span>
+   405→                          </span>
+   406→                        </Link>
+   407→                      </PanelItem>
+   408→                    ))}
+   409→                  </motion.div>
+   410→                )}
+   411→              </AnimatePresence>
+   412→            </div>
+   413→          </div>
+   414→
+   415→          {/* ── JELAJAH ── */}
+   416→          <div className="relative">
+   417→            <button
+   418→              ref={(el) => {
+   419→                triggerRefs.current.jelajah = el;
+   420→              }}
+   421→              type="button"
+   422→              aria-expanded={openMenu === "jelajah"}
+   423→              onClick={() => setOpenMenu(openMenu === "jelajah" ? null : "jelajah")}
+   424→              onMouseEnter={() => openNow("jelajah")}
+   425→              onMouseLeave={closeSoon}
+   426→              className={triggerCls(openMenu === "jelajah")}
+   427→            >
+   428→              {t.nav.explore}
+   429→              <ChevronDown
+   430→                className={cn(
+   431→                  "size-3.5 opacity-60 transition-transform duration-200",
+   432→                  openMenu === "jelajah" && "rotate-180"
+   433→                )}
+   434→                aria-hidden="true"
+   435→              />
+   436→            </button>
+   437→            <div
+   438→              className="absolute right-0 top-full z-50 pt-2"
+   439→              onMouseEnter={() => openNow("jelajah")}
+   440→              onMouseLeave={closeSoon}
+   441→            >
+   442→              <AnimatePresence>
+   443→                {openMenu === "jelajah" && (
+   444→                  <motion.div
+   445→                    initial={{ opacity: 0, y: 8, scale: 0.985 }}
+   446→                    animate={{ opacity: 1, y: 0, scale: 1 }}
+   447→                    exit={{ opacity: 0, y: 6, scale: 0.985 }}
+   448→                    transition={{ duration: 0.18, ease: "easeOut" }}
+   449→                    className="flex w-[250px] flex-col gap-0.5 rounded-2xl border bg-popover/95 p-2 shadow-xl shadow-black/10 backdrop-blur-xl"
+   450→                  >
+   451→                    {JELAJAH.map((s, i) => (
+   452→                      <PanelItem key={s.key} index={i} reduce={!!reduce}>
+   453→                        <Link
+   454→                          href={s.href}
+   455→                          onClick={() => setOpenMenu(null)}
+   456→                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:bg-accent focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+   457→                        >
+   458→                          <s.icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
+   459→                          {t.nav[s.key]}
+   460→                        </Link>
+   461→                      </PanelItem>
+   462→                    ))}
+   463→                  </motion.div>
+   464→                )}
+   465→              </AnimatePresence>
+   466→            </div>
+   467→          </div>
+   468→        </nav>
+   469→
+   470→        <div className="flex items-center gap-2">
+   471→          {/* Social links — very wide screens only */}
+   472→          <div className="hidden items-center gap-0.5 2xl:flex">
+   473→            {SOCIALS.map(({ label, href, Icon }) => (
+   474→              <a
+   475→                key={label}
+   476→                href={href}
+   477→                target="_blank"
+   478→                rel="noopener noreferrer"
+   479→                aria-label={`Pusat Geely — ${label}`}
+   480→                title={`Pusat Geely — ${label}`}
+   481→                className="inline-flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+   482→              >
+   483→                <Icon className="size-4" aria-hidden="true" />
+   484→              </a>
+   485→            ))}
+   486→            <span aria-hidden="true" className="mx-1.5 h-5 w-px bg-border" />
+   487→          </div>
+   488→
+   489→          {/* Language toggle — pill indikator meluncur halus */}
+   490→          <div
+   491→            role="group"
+   492→            aria-label="Bahasa / Language"
+   493→            className="hidden rounded-full border p-0.5 sm:flex"
+   494→          >
+   495→            {(["id", "en"] as const).map((l) => (
+   496→              <button
+   497→                key={l}
+   498→                type="button"
+   499→                onClick={() => (l === lang ? undefined : toggle())}
+   500→                aria-pressed={lang === l}
+   501→                className="relative min-w-9 rounded-full px-2.5 py-1 text-xs font-semibold uppercase focus-visible:outline-2 focus-visible:outline-ring"
+   502→              >
+   503→                {lang === l && (
+   504→                  <motion.span
+   505→                    layoutId="lang-pill"
+   506→                    transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 38 }}
+   507→                    className="absolute inset-0 rounded-full bg-primary"
+   508→                    aria-hidden="true"
+   509→                  />
+   510→                )}
+   511→                <span
+   512→                  className={cn(
+   513→                    "relative z-10",
+   514→                    lang === l
+   515→                      ? "text-primary-foreground"
+   516→                      : "text-muted-foreground transition-colors hover:text-foreground"
+   517→                  )}
+   518→                >
+   519→                  {l}
+   520→                </span>
+   521→              </button>
+   522→            ))}
+   523→          </div>
+   524→
+   525→          {/* Theme toggle */}
+   526→          <Button
+   527→            variant="ghost"
+   528→            size="icon"
+   529→            className="hidden size-9 sm:inline-flex"
+   530→            aria-label={t.header.theme}
+   531→            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+   532→          >
+   533→            {/* CSS-driven swap — no mounted state needed, hydration-safe */}
+   534→            <Sun className="size-4 dark:hidden" aria-hidden="true" />
+   535→            <Moon className="hidden size-4 dark:inline-block" aria-hidden="true" />
+   536→          </Button>
+   537→
+   538→          {/* WA CTA */}
+   539→          <a
+   540→            href={waLink("Halo Pusat Geely, saya ingin konsultasi tentang mobil Geely.")}
+   541→            target="_blank"
+   542→            rel="noopener noreferrer"
+   543→            className="hidden h-9 items-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-95 hover:shadow-md hover:shadow-primary/25 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-ring md:inline-flex"
+   544→          >
+   545→            <WhatsAppIcon className="size-4" aria-hidden="true" />
+   546→            {t.header.cta}
+   547→          </a>
+   548→
+   549→          {/* Mobile menu */}
+   550→          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+   551→            <SheetTrigger asChild>
+   552→              <Button
+   553→                variant="outline"
+   554→                size="icon"
+   555→                className="size-10 transition-transform active:scale-95 lg:hidden"
+   556→                aria-label={t.header.openMenu}
+   557→                /* Radix derives aria-controls from React.useId() inside
+   558→                   DialogRoot — it cannot be pinned from outside. In some
+   559→                   client environments (browser extensions / stale HMR HTML)
+   560→                   that id differs from the SSR one. The value self-corrects
+   561→                   on the first re-render when the menu opens, and Radix
+   562→                   renders the sheet lazily anyway, so the mismatch is
+   563→                   benign — suppress the warning at the source. */
+   564→                suppressHydrationWarning
+   565→              >
+   566→                <svg viewBox="0 0 24 24" className="size-5" aria-hidden="true">
+   567→                  <path
+   568→                    d="M4 7h16M4 12h16M4 17h16"
+   569→                    stroke="currentColor"
+   570→                    strokeWidth="2"
+   571→                    strokeLinecap="round"
+   572→                  />
+   573→                </svg>
+   574→              </Button>
+   575→            </SheetTrigger>
+   576→            <SheetContent side="right" className="w-80 overflow-y-auto">
+   577→              <SheetHeader>
+   578→                <SheetTitle className="flex items-center gap-2 text-left">
+   579→                  <BrandMark className="h-7 w-7" />
+   580→                  PUSAT<span className="-ml-1.5 text-primary">GEELY</span>
+   581→                </SheetTitle>
+   582→                <SheetDescription className="sr-only">
+   583→                  {lang === "id"
+   584→                    ? "Menu navigasi: model, layanan, dan jelajah."
+   585→                    : "Navigation menu: models, services, and explore."}
+   586→                </SheetDescription>
+   587→              </SheetHeader>
+   588→              <motion.nav
+   589→                aria-label="Navigasi seluler"
+   590→                className="mt-2 flex flex-col pb-8"
+   591→                initial={reduce ? false : "hidden"}
+   592→                animate="show"
+   593→                variants={reduce ? undefined : mobileListVariants}
+   594→              >
+   595→                {/* MODEL */}
+   596→                <MobileSection label={t.nav.models} />
+   597→                {MODELS.map((m) => (
+   598→                  <MobileItem key={m.id}>
+   599→                    <Link
+   600→                      href={`/model/${m.id}`}
+   601→                      onClick={() => setMobileOpen(false)}
+   602→                      className="flex items-center justify-between rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-accent"
+   603→                    >
+   604→                      {m.name}
+   605→                      <span className="font-display text-xs font-bold text-primary">
+   606→                        {formatJuta(m.priceFrom)}
+   607→                      </span>
+   608→                    </Link>
+   609→                  </MobileItem>
+   610→                ))}
+   611→                <MobileItem>
+   612→                  <Link
+   613→                    href="/harga-mobil-geely-bogor"
+   614→                    onClick={() => setMobileOpen(false)}
+   615→                    className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold text-primary transition-colors hover:bg-primary/10"
+   616→                  >
+   617→                    {t.nav.seeAllPrices}
+   618→                    <ArrowRight className="size-3.5" aria-hidden="true" />
+   619→                  </Link>
+   620→                </MobileItem>
+   621→
+   622→                {/* LAYANAN */}
+   623→                <MobileSection label={t.nav.services} />
+   624→                {LAYANAN.map((s) => (
+   625→                  <MobileItem key={s.key}>
+   626→                    <Link
+   627→                      href={s.href}
+   628→                      onClick={() => setMobileOpen(false)}
+   629→                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-accent"
+   630→                    >
+   631→                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+   632→                        <s.icon className="size-4" aria-hidden="true" />
+   633→                      </span>
+   634→                      <span className="flex flex-col">
+   635→                        <span className="text-[15px] font-medium">{t.nav[s.key]}</span>
+   636→                        <span className="text-[11px] text-muted-foreground">{t.nav[s.desc]}</span>
+   637→                      </span>
+   638→                    </Link>
+   639→                  </MobileItem>
+   640→                ))}
+   641→
+   642→                {/* JELAJAH */}
+   643→                <MobileSection label={t.nav.explore} />
+   644→                {JELAJAH.map((s) => (
+   645→                  <MobileItem key={s.key}>
+   646→                    <Link
+   647→                      href={s.href}
+   648→                      onClick={() => setMobileOpen(false)}
+   649→                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-accent"
+   650→                    >
+   651→                      <s.icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
+   652→                      {t.nav[s.key]}
+   653→                    </Link>
+   654→                  </MobileItem>
+   655→                ))}
+   656→
+   657→                <div className="mt-4 flex items-center gap-1.5 px-1">
+   658→                  {SOCIALS.map(({ label, href, Icon }) => (
+   659→                    <a
+   660→                      key={label}
+   661→                      href={href}
+   662→                      target="_blank"
+   663→                      rel="noopener noreferrer"
+   664→                      aria-label={`Pusat Geely — ${label}`}
+   665→                      className="inline-flex size-9 items-center justify-center rounded-full border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+   666→                    >
+   667→                      <Icon className="size-4" aria-hidden="true" />
+   668→                    </a>
+   669→                  ))}
+   670→                </div>
+   671→                <div className="mt-4 flex items-center gap-2 border-t pt-4">
+   672→                  <div
+   673→                    role="group"
+   674→                    aria-label="Bahasa / Language"
+   675→                    className="flex rounded-full border p-0.5"
+   676→                  >
+   677→                    {(["id", "en"] as const).map((l) => (
+   678→                      <button
+   679→                        key={l}
+   680→                        type="button"
+   681→                        onClick={() => (l === lang ? undefined : toggle())}
+   682→                        aria-pressed={lang === l}
+   683→                        className={cn(
+   684→                          "rounded-full px-3 py-1.5 text-xs font-semibold uppercase",
+   685→                          lang === l
+   686→                            ? "bg-primary text-primary-foreground"
+   687→                            : "text-muted-foreground"
+   688→                        )}
+   689→                      >
+   690→                        {l}
+   691→                      </button>
+   692→                    ))}
+   693→                  </div>
+   694→                  <Button
+   695→                    variant="outline"
+   696→                    size="icon"
+   697→                    className="size-9"
+   698→                    aria-label={t.header.theme}
+   699→                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+   700→                  >
+   701→                    <Sun className="size-4 dark:hidden" />
+   702→                    <Moon className="hidden size-4 dark:inline-block" />
+   703→                  </Button>
+   704→                </div>
+   705→              </motion.nav>
+   706→            </SheetContent>
+   707→          </Sheet>
+   708→        </div>
+   709→      </div>
+   710→    </header>
+   711→  );
+   712→}
+   713→
+   714→export function WhatsAppIcon({ className }: { className?: string }) {
+   715→  return (
+   716→    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+   717→      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+   718→    </svg>
+   719→  );
+   720→}
+   721→

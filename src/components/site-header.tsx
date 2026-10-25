@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   AnimatePresence,
   motion,
@@ -13,11 +14,13 @@ import {
 } from "framer-motion";
 import {
   ArrowRight,
+  BookMarked,
   BookOpen,
   Calculator,
   CalendarCheck,
   ChevronDown,
   Images,
+  Info,
   Mail,
   MessageCircleQuestion,
   Moon,
@@ -69,13 +72,14 @@ export function BrandMark({ className }: { className?: string }) {
   );
 }
 
-type GroupKey = "model" | "layanan" | "jelajah";
+type GroupKey = "model" | "layanan" | "wawasan";
 type LeafKey =
   | "harga"
   | "promo"
   | "simulator"
   | "testDrive"
   | "artikel"
+  | "glosarium"
   | "gallery"
   | "faq"
   | "keywords"
@@ -83,28 +87,39 @@ type LeafKey =
   | "contact"
   | "compare";
 
-/** Layanan — 4 tautan konversi utama. */
+/** Layanan — 5 tautan konversi utama. */
 const LAYANAN: ReadonlyArray<{
   href: string;
   key: LeafKey;
-  desc: "hargaDesc" | "promoDesc" | "kreditDesc" | "testDriveDesc";
+  desc: "hargaDesc" | "promoDesc" | "kreditDesc" | "testDriveDesc" | "salesDesc";
   icon: typeof Wallet;
 }> = [
   { href: "/harga-mobil-geely-bogor", key: "harga", desc: "hargaDesc", icon: Wallet },
   { href: "/promo-geely-bogor", key: "promo", desc: "promoDesc", icon: Tag },
   { href: "/kredit-cicilan-geely-bogor", key: "simulator", desc: "kreditDesc", icon: Calculator },
   { href: "/test-drive-geely-bogor", key: "testDrive", desc: "testDriveDesc", icon: CalendarCheck },
+  { href: "/sales-geely-bogor", key: "sales", desc: "salesDesc", icon: UserRound },
 ];
 
-/** Jelajah — konten informasi & halaman pendukung. */
-const JELAJAH: ReadonlyArray<{ href: string; key: LeafKey; icon: typeof BookOpen }> = [
-  { href: "/vs", key: "compare", icon: Swords },
-  { href: "/artikel", key: "artikel", icon: BookOpen },
-  { href: "/#galeri", key: "gallery", icon: Images },
-  { href: "/#faq", key: "faq", icon: MessageCircleQuestion },
-  { href: "/indeks-kata-kunci", key: "keywords", icon: Search },
-  { href: "/sales-geely-bogor", key: "sales", icon: UserRound },
-  { href: "/kontak", key: "contact", icon: Mail },
+/** Wawasan — konten edukasi & eksplorasi (inkl. glosarium & perbandingan). */
+const WAWASAN: ReadonlyArray<{
+  href: string;
+  key: LeafKey;
+  desc:
+    | "artikelDesc"
+    | "glosariumDesc"
+    | "compareDesc"
+    | "keywordsDesc"
+    | "galleryDesc"
+    | "faqDesc";
+  icon: typeof BookOpen;
+}> = [
+  { href: "/artikel", key: "artikel", desc: "artikelDesc", icon: BookOpen },
+  { href: "/glosarium", key: "glosarium", desc: "glosariumDesc", icon: BookMarked },
+  { href: "/vs", key: "compare", desc: "compareDesc", icon: Swords },
+  { href: "/indeks-kata-kunci", key: "keywords", desc: "keywordsDesc", icon: Search },
+  { href: "/#galeri", key: "gallery", desc: "galleryDesc", icon: Images },
+  { href: "/#faq", key: "faq", desc: "faqDesc", icon: MessageCircleQuestion },
 ];
 
 /** Gaya trigger nav desktop — underline gradient muncul saat hover/aktif. */
@@ -177,9 +192,24 @@ export function SiteHeader() {
   const triggerRefs = useRef<Record<GroupKey, HTMLButtonElement | null>>({
     model: null,
     layanan: null,
-    jelajah: null,
+    wawasan: null,
   });
   const reduce = useReducedMotion();
+
+  // ── Indikator halaman aktif (standar situs internasional)
+  const pathname = usePathname();
+  const activeModel = pathname.startsWith("/model");
+  const activeLayanan = [
+    "/harga-mobil-geely-bogor",
+    "/promo-geely-bogor",
+    "/kredit-cicilan-geely-bogor",
+    "/test-drive-geely-bogor",
+    "/sales-geely-bogor",
+  ].some((p) => pathname.startsWith(p));
+  const activeWawasan = ["/artikel", "/glosarium", "/vs", "/indeks-kata-kunci"].some(
+    (p) => pathname.startsWith(p)
+  );
+  const isHere = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   /** Progress baca halaman — spring tipis di tepi bawah header. */
   const { scrollYProgress } = useScroll();
@@ -291,7 +321,7 @@ export function SiteHeader() {
               onClick={() => setOpenMenu(openMenu === "model" ? null : "model")}
               onMouseEnter={() => openNow("model")}
               onMouseLeave={closeSoon}
-              className={triggerCls(openMenu === "model")}
+              className={triggerCls(openMenu === "model" || activeModel)}
             >
               {t.nav.models}
               <ChevronDown
@@ -362,7 +392,7 @@ export function SiteHeader() {
               onClick={() => setOpenMenu(openMenu === "layanan" ? null : "layanan")}
               onMouseEnter={() => openNow("layanan")}
               onMouseLeave={closeSoon}
-              className={triggerCls(openMenu === "layanan")}
+              className={triggerCls(openMenu === "layanan" || activeLayanan)}
             >
               {t.nav.services}
               <ChevronDown
@@ -412,51 +442,58 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* ── JELAJAH ── */}
+          {/* ── WAWASAN ── */}
           <div className="relative">
             <button
               ref={(el) => {
-                triggerRefs.current.jelajah = el;
+                triggerRefs.current.wawasan = el;
               }}
               type="button"
-              aria-expanded={openMenu === "jelajah"}
-              onClick={() => setOpenMenu(openMenu === "jelajah" ? null : "jelajah")}
-              onMouseEnter={() => openNow("jelajah")}
+              aria-expanded={openMenu === "wawasan"}
+              onClick={() => setOpenMenu(openMenu === "wawasan" ? null : "wawasan")}
+              onMouseEnter={() => openNow("wawasan")}
               onMouseLeave={closeSoon}
-              className={triggerCls(openMenu === "jelajah")}
+              className={triggerCls(openMenu === "wawasan" || activeWawasan)}
             >
-              {t.nav.explore}
+              {t.nav.insights}
               <ChevronDown
                 className={cn(
                   "size-3.5 opacity-60 transition-transform duration-200",
-                  openMenu === "jelajah" && "rotate-180"
+                  openMenu === "wawasan" && "rotate-180"
                 )}
                 aria-hidden="true"
               />
             </button>
             <div
               className="absolute right-0 top-full z-50 pt-2"
-              onMouseEnter={() => openNow("jelajah")}
+              onMouseEnter={() => openNow("wawasan")}
               onMouseLeave={closeSoon}
             >
               <AnimatePresence>
-                {openMenu === "jelajah" && (
+                {openMenu === "wawasan" && (
                   <motion.div
                     initial={{ opacity: 0, y: 8, scale: 0.985 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 6, scale: 0.985 }}
                     transition={{ duration: 0.18, ease: "easeOut" }}
-                    className="flex w-[250px] flex-col gap-0.5 rounded-2xl border bg-popover/95 p-2 shadow-xl shadow-black/10 backdrop-blur-xl"
+                    className="flex w-[340px] flex-col gap-0.5 rounded-2xl border bg-popover/95 p-2 shadow-xl shadow-black/10 backdrop-blur-xl"
                   >
-                    {JELAJAH.map((s, i) => (
+                    {WAWASAN.map((s, i) => (
                       <PanelItem key={s.key} index={i} reduce={!!reduce}>
                         <Link
                           href={s.href}
                           onClick={() => setOpenMenu(null)}
-                          className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:bg-accent focus-visible:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+                          className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
                         >
-                          <s.icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
-                          {t.nav[s.key]}
+                          <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                            <s.icon className="size-4" aria-hidden="true" />
+                          </span>
+                          <span className="flex flex-col">
+                            <span className="text-sm font-medium text-foreground">
+                              {t.nav[s.key]}
+                            </span>
+                            <span className="text-xs text-muted-foreground">{t.nav[s.desc]}</span>
+                          </span>
                         </Link>
                       </PanelItem>
                     ))}
@@ -465,6 +502,14 @@ export function SiteHeader() {
               </AnimatePresence>
             </div>
           </div>
+
+          {/* ── TENTANG & KONTAK — tautan langsung ── */}
+          <Link href="/tentang" className={triggerCls(isHere("/tentang"))}>
+            {t.nav.about}
+          </Link>
+          <Link href="/kontak" className={triggerCls(isHere("/kontak"))}>
+            {t.nav.contact}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -581,8 +626,8 @@ export function SiteHeader() {
                 </SheetTitle>
                 <SheetDescription className="sr-only">
                   {lang === "id"
-                    ? "Menu navigasi: model, layanan, dan jelajah."
-                    : "Navigation menu: models, services, and explore."}
+                    ? "Menu navigasi: model, layanan, wawasan, dan kontak."
+                    : "Navigation menu: models, services, insights, and contact."}
                 </SheetDescription>
               </SheetHeader>
               <motion.nav
@@ -639,20 +684,48 @@ export function SiteHeader() {
                   </MobileItem>
                 ))}
 
-                {/* JELAJAH */}
-                <MobileSection label={t.nav.explore} />
-                {JELAJAH.map((s) => (
+                {/* WAWASAN */}
+                <MobileSection label={t.nav.insights} />
+                {WAWASAN.map((s) => (
                   <MobileItem key={s.key}>
                     <Link
                       href={s.href}
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-accent"
+                      className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors hover:bg-accent"
                     >
-                      <s.icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
-                      {t.nav[s.key]}
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <s.icon className="size-4" aria-hidden="true" />
+                      </span>
+                      <span className="flex flex-col">
+                        <span className="text-[15px] font-medium">{t.nav[s.key]}</span>
+                        <span className="text-[11px] text-muted-foreground">{t.nav[s.desc]}</span>
+                      </span>
                     </Link>
                   </MobileItem>
                 ))}
+
+                {/* TENTANG & KONTAK */}
+                <MobileSection label={`${t.nav.about} & ${t.nav.contact}`} />
+                <MobileItem>
+                  <Link
+                    href="/tentang"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-accent"
+                  >
+                    <Info className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                    {t.nav.about}
+                  </Link>
+                </MobileItem>
+                <MobileItem>
+                  <Link
+                    href="/kontak"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[15px] font-medium transition-colors hover:bg-accent"
+                  >
+                    <Mail className="size-4 shrink-0 text-primary" aria-hidden="true" />
+                    {t.nav.contact}
+                  </Link>
+                </MobileItem>
 
                 <div className="mt-4 flex items-center gap-1.5 px-1">
                   {SOCIALS.map(({ label, href, Icon }) => (

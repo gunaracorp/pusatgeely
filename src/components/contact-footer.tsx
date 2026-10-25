@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import {
-  ArrowUpRight,
+  ArrowUp,
+  CalendarCheck,
   Clock,
   Instagram,
   Mail,
@@ -14,21 +16,77 @@ import { BrandMark, WhatsAppIcon } from "@/components/site-header";
 import {
   BUSINESS,
   INDEPENDENCE_DISCLAIMER,
+  MODELS,
   POPULAR_SEARCHES,
   PRICE_DISCLAIMER,
   waLink,
 } from "@/lib/site";
-import { CREDIT_LINE, DESIGN_CREDIT, MANAGEMENT_CREDIT, TEAM_CREDIT } from "@/lib/branding";
+import {
+  CREDIT_LINE,
+  DESIGN_CREDIT,
+  MANAGEMENT_CREDIT,
+  TEAM_CREDIT,
+} from "@/lib/branding";
 
-const NAV_LINKS = [
-  { href: "#model", key: "models" },
-  { href: "#layanan", key: "services" },
-  { href: "#galeri", key: "gallery" },
-  { href: "#simulasi", key: "simulator" },
-  { href: "#test-drive", key: "testDrive" },
-  { href: "#faq", key: "faq" },
-  { href: "#wilayah", key: "contact" },
-] as const;
+type LeafKey =
+  | "harga"
+  | "promo"
+  | "simulator"
+  | "testDrive"
+  | "artikel"
+  | "glosarium"
+  | "keywords"
+  | "sales"
+  | "compare"
+  | "about";
+
+/** Tautan internal/external seragam untuk kolom sitemap footer. */
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const external = href.startsWith("http");
+  const cls =
+    "text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring rounded";
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={cls}>
+      {children}
+    </Link>
+  );
+}
+
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: { href: string; label: string }[];
+}) {
+  return (
+    <nav aria-label={title}>
+      <h3 className="font-display text-sm font-bold uppercase tracking-wider">
+        {title}
+      </h3>
+      <ul className="mt-4 space-y-2.5">
+        {links.map(({ href, label }) => (
+          <li key={`${href}-${label}`}>
+            <FooterLink href={href}>{label}</FooterLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
 
 export function ContactFooter() {
   const { t, lang } = useLang();
@@ -57,6 +115,30 @@ export function ContactFooter() {
     },
   ];
 
+  // ── Kolom sitemap footer (standar situs internasional)
+  const modelLinks = [
+    ...MODELS.map((m) => ({ href: `/model/${m.id}`, label: m.name })),
+    { href: "/harga-mobil-geely-bogor", label: `${t.nav.harga} & Varian` },
+  ];
+  const serviceLinks: { href: string; label: string }[] = [
+    { href: "/harga-mobil-geely-bogor", label: t.nav.harga },
+    { href: "/promo-geely-bogor", label: t.nav.promo },
+    { href: "/kredit-cicilan-geely-bogor", label: t.nav.simulator },
+    { href: "/test-drive-geely-bogor", label: t.nav.testDrive },
+    { href: "/sales-geely-bogor", label: t.nav.sales },
+  ];
+  const insightLinks: { href: string; label: string }[] = [
+    { href: "/artikel", label: t.nav.artikel },
+    { href: "/glosarium", label: t.nav.glosarium },
+    { href: "/vs", label: t.nav.compare },
+    { href: "/indeks-kata-kunci", label: t.nav.keywords },
+    { href: "/tentang", label: t.nav.about },
+  ];
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer
       id="kontak"
@@ -69,7 +151,40 @@ export function ContactFooter() {
       />
 
       <div className="mx-auto max-w-7xl px-4 pb-6 pt-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+        {/* ══ CTA BAND — ajakan utama sebelum sitemap ══ */}
+        <div className="overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card to-card p-6 sm:p-8">
+          <div className="flex flex-col items-start justify-between gap-5 lg:flex-row lg:items-center">
+            <div>
+              <h2 className="font-display text-2xl font-bold tracking-tight">
+                {t.cta.title}
+              </h2>
+              <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                {t.cta.subtitle}
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              <a
+                href={waLink("Halo Pusat Geely! Saya siap diskusi soal Geely saya.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-11 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:opacity-95 active:scale-[0.97]"
+              >
+                <WhatsAppIcon className="size-4" aria-hidden="true" />
+                {t.cta.button}
+              </a>
+              <Link
+                href="/test-drive-geely-bogor"
+                className="inline-flex h-11 items-center gap-2 rounded-full border px-6 text-sm font-semibold text-foreground transition-colors hover:border-primary/50 hover:bg-primary/5"
+              >
+                <CalendarCheck className="size-4 text-primary" aria-hidden="true" />
+                {t.hero.ctaPrimary}
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ══ SITEMAP GRID — brand · model · layanan · wawasan · kontak ══ */}
+        <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.1fr_1.1fr_1.2fr]">
           {/* Brand */}
           <div>
             <a
@@ -111,28 +226,10 @@ export function ContactFooter() {
             </div>
           </div>
 
-          {/* Nav */}
-          <nav aria-label="Navigasi footer">
-            <h3 className="font-display text-sm font-bold uppercase tracking-wider">
-              {t.footer.navTitle}
-            </h3>
-            <ul className="mt-4 space-y-2.5">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="group inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {t.nav[link.key]}
-                    <ArrowUpRight
-                      className="size-3.5 -translate-x-1 text-primary opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Sitemap columns */}
+          <FooterColumn title={t.footer.modelsTitle} links={modelLinks} />
+          <FooterColumn title={t.footer.servicesTitle} links={serviceLinks} />
+          <FooterColumn title={t.footer.insightsTitle} links={insightLinks} />
 
           {/* Contact */}
           <div>
@@ -167,27 +264,6 @@ export function ContactFooter() {
                 </span>
               </li>
             </ul>
-          </div>
-
-          {/* WA card */}
-          <div className="flex flex-col justify-between gap-5 rounded-2xl border bg-card p-5">
-            <div>
-              <h3 className="font-display text-sm font-bold uppercase tracking-wider">
-                {t.header.cta}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {t.cta.subtitle}
-              </p>
-            </div>
-            <a
-              href={waLink("Halo Pusat Geely!")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90"
-            >
-              <WhatsAppIcon className="size-4" aria-hidden="true" />
-              {BUSINESS.waDisplay}
-            </a>
           </div>
         </div>
 
@@ -250,54 +326,85 @@ export function ContactFooter() {
         </div>
 
         {/*
-          Personal branding — kredit design & management (permintaan pemilik).
-          Tampak halus: teks kecil, tautan netral, tetap elegan di footer.
+          ══ DIGITAL SUPPORT SYSTEM — kredit branding (permintaan pemilik) ══
+          Blok elegan & terlihat: digiman.id (Design) · topkonsultan.web.id
+          (Management) + tim 4 identitas. Dipasangkan dengan JSON-LD, meta,
+          humans.txt, llms.txt & HTML signature di layout (view-source).
         */}
-        <div className="mt-6 space-y-1.5 border-t pt-4 text-[11px] leading-relaxed text-muted-foreground">
-          <p className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-            <span className="font-bold uppercase tracking-wider">
-              {DESIGN_CREDIT.label}
-            </span>
-            <a
-              href={DESIGN_CREDIT.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-foreground/75 underline-offset-2 transition-colors hover:text-primary hover:underline"
-            >
-              {DESIGN_CREDIT.orgName}
-            </a>
-            <span aria-hidden="true">·</span>
-            <span>
-              {DESIGN_CREDIT.scope} — {DESIGN_CREDIT.domain}
-            </span>
-          </p>
-          <p className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
-            <span className="font-bold uppercase tracking-wider">
-              {MANAGEMENT_CREDIT.label}
-            </span>
-            <a
-              href={MANAGEMENT_CREDIT.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-foreground/75 underline-offset-2 transition-colors hover:text-primary hover:underline"
-            >
-              {MANAGEMENT_CREDIT.orgName}
-            </a>
-            <span aria-hidden="true">·</span>
-            <span>{MANAGEMENT_CREDIT.domain}</span>
-          </p>
-          <p>
-            <span className="font-bold uppercase tracking-wider">Tim </span>
-            {TEAM_CREDIT.line}
-          </p>
+        <div className="mt-10 border-t pt-8">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-muted-foreground/80">
+              {t.footer.supportTitle}
+            </p>
+            <p className="text-xs text-muted-foreground">{t.footer.supportNote}</p>
+            <div className="flex flex-wrap items-stretch justify-center gap-3">
+              <a
+                href={DESIGN_CREDIT.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 rounded-xl border bg-card px-4 py-3 text-left transition-all hover:border-primary/50 hover:shadow-md hover:shadow-primary/10 focus-visible:outline-2 focus-visible:outline-ring"
+              >
+                <span
+                  aria-hidden="true"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 font-display text-sm font-black text-white transition-transform group-hover:scale-105"
+                >
+                  DG
+                </span>
+                <span className="flex flex-col">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {DESIGN_CREDIT.label}
+                  </span>
+                  <span className="text-sm font-semibold">{DESIGN_CREDIT.orgName}</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    {DESIGN_CREDIT.scope} · {DESIGN_CREDIT.domain}
+                  </span>
+                </span>
+              </a>
+              <a
+                href={MANAGEMENT_CREDIT.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3 rounded-xl border bg-card px-4 py-3 text-left transition-all hover:border-primary/50 hover:shadow-md hover:shadow-primary/10 focus-visible:outline-2 focus-visible:outline-ring"
+              >
+                <span
+                  aria-hidden="true"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-teal-600 to-emerald-400 font-display text-sm font-black text-white transition-transform group-hover:scale-105"
+                >
+                  TK
+                </span>
+                <span className="flex flex-col">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {MANAGEMENT_CREDIT.label}
+                  </span>
+                  <span className="text-sm font-semibold">{MANAGEMENT_CREDIT.orgName}</span>
+                  <span className="text-[11px] text-muted-foreground">
+                    {MANAGEMENT_CREDIT.domain}
+                  </span>
+                </span>
+              </a>
+            </div>
+            <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground">
+              {t.footer.teamLabel}:{" "}
+              <span className="font-semibold text-foreground/80">{TEAM_CREDIT.line}</span>
+            </p>
+          </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-6 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs text-muted-foreground sm:flex-row">
           <p>
             © {new Date().getFullYear()} {t.footer.rights}
           </p>
           <p className="font-medium">{t.footer.madeIn}</p>
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label={t.footer.backToTop}
+            className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all hover:border-primary/50 hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+          >
+            {t.footer.backToTop}
+            <ArrowUp className="size-3.5" aria-hidden="true" />
+          </button>
         </div>
 
         {/*
