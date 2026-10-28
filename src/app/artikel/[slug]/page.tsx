@@ -17,6 +17,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = getArticle(slug);
   if (!article) return {};
+  const modified = article.updated ?? article.date;
 
   return {
     title: article.title.id,
@@ -34,14 +35,15 @@ export async function generateMetadata({
       title: article.title.id,
       description: article.excerpt.id,
       publishedTime: article.date,
+      modifiedTime: modified,
       authors: [BUSINESS.pic],
-      images: [{ url: article.image, width: 1200, height: 675, alt: article.title.id }],
+      // openGraph.images sengaja dihapus: kartu dinamis dari
+      // opengraph-image.tsx (1200×630 branded) otomatis dipakai.
     },
     twitter: {
       card: "summary_large_image",
       title: article.title.id,
       description: article.excerpt.id,
-      images: [article.image],
     },
   };
 }
@@ -55,6 +57,16 @@ export default async function ArtikelDetail({
   const article = getArticle(slug);
   if (!article) notFound();
 
+  const wordCount = article.sections.reduce(
+    (sum, s) =>
+      sum +
+      [s.h?.id, ...s.p.map((x) => x.id)]
+        .filter(Boolean)
+        .join(" ")
+        .split(/\s+/).length,
+    0,
+  );
+
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -63,8 +75,14 @@ export default async function ArtikelDetail({
     description: article.excerpt.id,
     image: `${SITE_URL}${article.image}`,
     datePublished: article.date,
-    dateModified: article.date,
+    dateModified: article.updated ?? article.date,
+    wordCount,
     inLanguage: "id-ID",
+    // Speakable — bagian yang layak dibacakan asisten suara / dikutip AI
+    speakable: {
+      "@type": "SpeakableSpecification",
+      cssSelector: [".article-title", ".article-body"],
+    },
     author: {
       "@type": "Person",
       name: BUSINESS.pic,

@@ -19,6 +19,7 @@ import {
   GUGUN,
   LUTFI,
   ORGS,
+  SANTRI_ANGON,
   SOURCE_SIGNATURE,
   BRAND_KEYWORDS,
 } from "@/lib/branding";
@@ -84,6 +85,10 @@ export const metadata: Metadata = {
     languages: {
       "id-ID": SITE_URL,
       "en": SITE_URL,
+    },
+    // Autodiscovery RSS — pembaca feed & crawler freshness signal
+    types: {
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
     },
   },
   openGraph: {
@@ -201,6 +206,19 @@ function StructuredData() {
       areaServed: "ID",
       availableLanguage: ["id", "en"],
     },
+    slogan: BUSINESS.tagline.id,
+    // Sinyal keahlian (E-E-A-T) untuk AI Overviews & mesin pencari AI
+    knowsAbout: [
+      "Geely EX5",
+      "Geely EX2",
+      "Geely Starray EM-i",
+      "Geely Coolray",
+      "mobil listrik Indonesia",
+      "SUV hybrid Indonesia",
+      "kredit mobil Geely",
+      "trade-in mobil Bekasi",
+      "test drive Jabodetabek",
+    ],
   };
 
   const faqItems = [
@@ -373,6 +391,16 @@ function StructuredData() {
         parentOrganization: { "@id": ORGS.digiman["@id"] },
         founder: { "@id": personGugun["@id"] },
       },
+      // Komunitas yang digagas Gugun Gunara — entitas personal branding.
+      // Tanpa URL terverifikasi → tidak ada url yang dikarang (honesty-first).
+      {
+        "@type": "Organization",
+        name: SANTRI_ANGON.name,
+        alternateName: ["santri angon", "Komunitas Santri Angon"],
+        description: SANTRI_ANGON.description,
+        founder: { "@id": personGugun["@id"] },
+        leader: { "@id": personGugun["@id"] },
+      },
       personGugun,
       personLutfi,
     ],
@@ -406,7 +434,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang="id" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${inter.variable} ${grotesk.variable}`}>
         <ThemeProvider
           attribute="class"
@@ -418,6 +446,8 @@ export default function RootLayout({
             {children}
             {/* Geely Bot — asisten AI instan di seluruh halaman */}
             <AiChatWidget />
+            {/* RUM Core Web Vitals → dataLayer + GA4 (nol beban tanpa GA) */}
+            <WebVitals />
             <Toaster position="bottom-center" richColors closeButton />
             <SpeedInsights />
           </LanguageProvider>

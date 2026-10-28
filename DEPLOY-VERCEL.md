@@ -16,6 +16,8 @@
    | Nama                   | Value                       | Environments        |
    | ---------------------- | --------------------------- | ------------------- |
    | `NEXT_PUBLIC_SITE_URL` | `https://pusatgeely.web.id` | Production + Preview |
+   | `REVIEWS_ADMIN_KEY`    | kunci rahasia Anda (min. 8 karakter) | Production |
+   | `DATABASE_URL`         | koneksi database produksi (lihat §6) | Production |
 
 6. **Deploy** → tunggu build selesai ✅
 
@@ -96,3 +98,99 @@ keyword engine, dan checklist GSC 6 langkah.
 - [ ] GSC: submit `sitemap.xml` dari property `https://pusatgeely.web.id`
 - [ ] Uji manual: beranda, 3 landing harga/promo, 3 halaman model, 1 submit lead, 1 chat AI
 - [ ] GSC → URL Inspection → Request Indexing untuk 10 URL prioritas (beranda, harga, promo, coolray, ex5, starray, ex2, tentang, kontak, artikel)
+
+---
+
+## 9. Review Engine — jawaban warning GSC `aggregateRating` & `review`
+
+Hint "Kolom aggregateRating/review tidak ada" di GSC adalah **saran penyempurnaan** (bukan error) — bintang hanya boleh muncul dari **ulasan pelanggan nyata**. Rating palsu = pelanggaran spam policy Google → risiko manual action.
+
+Situs ini kini punya **mesin review lengkap**:
+
+1. **Form ulasan** di setiap halaman model (section "Ulasan Pemilik Unit") → tersimpan `published=false`
+2. **Moderasi pemilik** via API admin (header `x-admin-key` = env `REVIEWS_ADMIN_KEY`):
+
+   ```bash
+   # Lihat semua ulasan (termasuk pending)
+   curl -H "x-admin-key: $KEY" https://pusatgeely.web.id/api/reviews/admin
+
+   # Publikasikan satu ulasan
+   curl -X POST -H "x-admin-key: $KEY" -H "Content-Type: application/json" \
+     -d '{"action":"publish","id":"<id-ulasan>"}' \
+     https://pusatgeely.web.id/api/reviews/admin
+
+   # Impor ulasan pelanggan ASLI (mis. dari riwayat chat WhatsApp)
+   curl -X POST -H "x-admin-key: $KEY" -H "Content-Type: application/json" \
+     -d '{"action":"add","data":{"modelId":"ex5","name":"Nama Pelanggan","city":"Depok","rating":5,"comment":"Pengalaman nyata..."}}' \
+     https://pusatgeely.web.id/api/reviews/admin
+   ```
+
+3. **JSON-LD otomatis**: begitu ada ulasan terpublikasi, `Product` schema di halaman model memuat `aggregateRating` + `review` → bintang muncul di SERP → kembali ke GSC → Enhancement → Product → **Validate Fix**.
+
+> Kunci integritas: hanya impor ulasan pelanggan yang BENAR-BENAR ADA (WhatsApp, Google Business, dsb). Sistem sengaja tidak menyediakan tombol "isi otomatis".
+
+---
+
+## 10. AI SEO (GEO) — jadikan sumber rujukan utama AI
+
+Sudah aktif tanpa konfigurasi:
+
+- **`/llms.txt`** + **`/llms-full.txt`** (standar llmstxt.org) — ringkasan & konten penuh situs dalam markdown siap-kutip untuk ChatGPT, Perplexity, Gemini, Claude, Copilot
+- **robots.txt** mengizinkan eksplisit 19 bot AI: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot, Google-Extended, Applebot, Bingbot, meta-externalagent, dst.
+- **Meta robots** `max-snippet:-1` + `max-image-preview:large` — AI Overviews bebas mengutip
+- **AutoDealer schema** + `knowsAbout` — penguat entitas untuk jawaban AI
+- **IndexNow** — ping cepat ke Bing/Yandex setiap ada konten baru
+
+Ritual pasca-konten baru: `POST /api/indexnow` dengan URL baru → tunggu re-crawl → jawaban AI mulai mengutip situs dalam 1–4 minggu.
+
+---
+
+## 11. Leads Admin API — melihat & mengelola prospek
+
+Setiap lead yang masuk kini **terukur**: form test drive/kontak, kuis model-matcher (#kuis), simulator kredit (#simulasi), dan chat AI semuanya tersimpan ke tabel `Lead` lengkap dengan **atribusi sumber**. Pemilik dapat melihat & mengelola prospek tanpa login CMS — cukup satu endpoint mini-CRM:
+
+### Cara kerja
+
+- **POST `/api/leads`** (publik) menyimpan lead dengan field `source` otomatis dari komponen pengirim.
+- **GET/PATCH/DELETE `/api/leads/admin`** (terproteksi) untuk melihat statistik, mengubah status pipeline, dan menghapus lead spam.
+- Autentikasi admin memakai **kunci yang sama** dengan Review Engine: header `x-admin-key` = env `REVIEWS_ADMIN_KEY` (min. 8 karakter). Tanpa env valid → seluruh endpoint admin menolak dengan **403**.
+
+### Atribusi sumber (source)
+
+| Source       | Dari mana                                     |
+| ------------ | --------------------------------------------- |
+| `website`    | Form test drive & form kontak (default)       |
+| `quiz`       | Kuis "Pilih Geely-mu" di beranda (#kuis)      |
+| `simulator`  | Simulasi kredit di beranda & landing (#simulasi) |
+| `chat`       | Handoff chat AI Geely Bot                     |
+
+### Alur status lead
+
+```
+new → contacted → qualified → won | lost
+```
+
+- `new` — baru masuk, belum dihubungi
+- `contacted` — sudah dihubungi via WhatsApp/telepon
+- `qualified` — serius & punya anggaran/jadwal
+- `won` — closing (SPK/serah terima) · `lost` — tidak jadi
+
+### Contoh curl
+
+```bash
+# Lihat statistik + 100 lead terbaru (bySource, byStatus, byInterest, byModel top-5, last7Days)
+curl -H "x-admin-key: $KEY" https://pusatgeely.web.id/api/leads/admin
+
+# Ubah status satu lead menjadi "contacted"
+curl -X PATCH -H "x-admin-key: $KEY" -H "Content-Type: application/json" \
+  -d '{"id":"<id-lead>","status":"contacted"}' \
+  https://pusatgeely.web.id/api/leads/admin
+
+# Hapus lead spam / data uji
+curl -X DELETE -H "x-admin-key: $KEY" -H "Content-Type: application/json" \
+  -d '{"id":"<id-lead>"}' \
+  https://pusatgeely.web.id/api/leads/admin
+```
+
+> `GET` tanpa key / key salah → `403 {"ok":false,"error":"unauthorized"}`. `PATCH`/`DELETE` dengan id tak dikenal → `404`.
+> Env yang dibutuhkan: `REVIEWS_ADMIN_KEY` (sudah tercantum di tabel §1). Data lead persisten di produksi → ikuti §6 (Postgres/Turso).

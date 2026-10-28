@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Calculator, MessageCircle } from "lucide-react";
 import { useLang } from "@/components/language-provider";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { ModelCompareTable } from "@/components/model-compare-table";
 import {
   MODELS,
   POWERTRAIN_LABEL,
@@ -123,6 +124,8 @@ export function HargaPage({
           </section>
         ))}
       </div>
+
+      <ModelCompareTable />
 
       <p className="mt-6 rounded-xl border bg-card p-4 text-xs leading-relaxed text-muted-foreground">
         {PRICE_DISCLAIMER[lang]}

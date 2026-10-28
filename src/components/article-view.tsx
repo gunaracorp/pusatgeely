@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowRight, CalendarClock, CalendarDays, Clock } from "lucide-react";
 import { useLang } from "@/components/language-provider";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { WhatsAppIcon } from "@/components/site-header";
@@ -20,6 +20,39 @@ export function ArticleView({ slug }: { slug: string }) {
   );
   const others = ARTICLES.filter((a) => a.slug !== slug).slice(0, 2);
 
+  // ── Daftar isi: anchor stabil dari teks heading (snippet & sitelink friendly)
+  const usedIds = new Set<string>();
+  const headings = article.sections
+    .map((sec, i) => {
+      if (!sec.h) return null;
+      const base =
+        sec.h[lang]
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, "")
+          .trim()
+          .replace(/\s+/g, "-")
+          .slice(0, 48)
+          .replace(/^-+|-+$/g, "") || `bagian-${i + 1}`;
+      let id = base;
+      let n = 2;
+      while (usedIds.has(id)) id = `${base}-${n++}`;
+      usedIds.add(id);
+      return { id, text: sec.h[lang], index: i };
+    })
+    .filter((x): x is { id: string; text: string; index: number } => x !== null);
+
+  // ── Estimasi waktu baca (±200 kata/menit)
+  const wordCount = article.sections.reduce(
+    (sum, s) =>
+      sum +
+      [s.h?.[lang], ...s.p.map((x) => x[lang])]
+        .filter(Boolean)
+        .join(" ")
+        .split(/\s+/).length,
+    0,
+  );
+  const readingMinutes = Math.max(1, Math.round(wordCount / 200));
+
   return (
     <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <Breadcrumbs
@@ -35,8 +68,24 @@ export function ArticleView({ slug }: { slug: string }) {
             <CalendarDays className="size-3.5" aria-hidden="true" />
             <time dateTime={article.date}>{dateLabel}</time>
           </span>
+          <span className="inline-flex items-center gap-1">
+            <Clock className="size-3.5" aria-hidden="true" />
+            {lang === "id" ? `±${readingMinutes} menit baca` : `±${readingMinutes} min read`}
+          </span>
+          {article.updated && (
+            <span className="inline-flex items-center gap-1">
+              <CalendarClock className="size-3.5" aria-hidden="true" />
+              <time dateTime={article.updated}>
+                {lang === "id" ? "Diperbarui " : "Updated "}
+                {new Date(article.updated).toLocaleDateString(
+                  lang === "id" ? "id-ID" : "en-US",
+                  { year: "numeric", month: "long", day: "numeric" }
+                )}
+              </time>
+            </span>
+          )}
         </div>
-        <h1 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+        <h1 className="article-title mt-4 font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
           {article.title[lang]}
         </h1>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
@@ -53,12 +102,39 @@ export function ArticleView({ slug }: { slug: string }) {
         className="mt-8 aspect-[16/9] w-full rounded-2xl border object-cover"
       />
 
+      {/* Daftar isi — tampil bila cukup banyak heading */}
+      {headings.length >= 3 && (
+        <nav
+          aria-label={lang === "id" ? "Daftar isi" : "Table of contents"}
+          className="mt-8 rounded-2xl border bg-card p-5"
+        >
+          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            {lang === "id" ? "Daftar Isi" : "Table of Contents"}
+          </p>
+          <ol className="mt-3 space-y-2">
+            {headings.map((h) => (
+              <li key={h.id}>
+                <a
+                  href={`#${h.id}`}
+                  className="text-sm font-medium text-foreground/85 underline-offset-4 transition-colors hover:text-primary hover:underline"
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+
       {/* Isi artikel */}
-      <div className="mt-10 space-y-8">
+      <div className="article-body mt-10 space-y-8">
         {article.sections.map((sec, i) => (
           <section key={i}>
             {sec.h && (
-              <h2 className="font-display text-2xl font-bold tracking-tight">
+              <h2
+                id={headings.find((h) => h.index === i)?.id}
+                className="scroll-mt-24 font-display text-2xl font-bold tracking-tight"
+              >
                 {sec.h[lang]}
               </h2>
             )}

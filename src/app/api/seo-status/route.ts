@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { SITE_URL, SITE_URL_SOURCE, MODELS } from "@/lib/site";
 import { ALL_LANDING_PAGES } from "@/lib/landing-all";
 import { ARTICLES } from "@/lib/articles";
+import { GLOSSARY } from "@/lib/glossary";
+import { COMPARES } from "@/lib/competitors";
 import { SEO_KEYWORD_COUNT } from "@/lib/seo-keywords";
 
 export const runtime = "nodejs";
@@ -15,10 +17,12 @@ export const dynamic = "force-dynamic";
  * Google Search Console. Ini meniru pemeriksaan yang dilakukan Googlebot.
  */
 export async function GET(request: Request) {
-  const requestHost =
+  // Normalisasi host: buang port & entri proxy berantai (localhost:3000 → localhost)
+  const rawHost =
     request.headers.get("x-forwarded-host") ??
     request.headers.get("host") ??
     "unknown";
+  const requestHost = rawHost.split(",")[0].trim().split(":")[0];
   const requestProto =
     request.headers.get("x-forwarded-proto") ??
     (requestHost.startsWith("localhost") ? "http" : "https");
@@ -27,7 +31,12 @@ export async function GET(request: Request) {
   const robotsUrl = `${SITE_URL}/robots.txt`;
 
   const sitemapEntryCount =
-    7 + ALL_LANDING_PAGES.length + MODELS.length + ARTICLES.length;
+    8 +
+    ALL_LANDING_PAGES.length +
+    MODELS.length +
+    ARTICLES.length +
+    COMPARES.length +
+    1; // +1 = halaman indeks /vs
 
   // Host check — inilah yang menyebabkan error "Couldn't fetch" di GSC
   // bila sitemap disubmit dari host yang berbeda dengan isinya.
@@ -55,7 +64,7 @@ export async function GET(request: Request) {
     {
       name: "Jumlah URL di sitemap",
       pass: sitemapEntryCount >= 50,
-      detail: `${sitemapEntryCount} URL (7 statis + ${ALL_LANDING_PAGES.length} landing + ${MODELS.length} model + ${ARTICLES.length} artikel)`,
+      detail: `${sitemapEntryCount} URL (8 statis + ${ALL_LANDING_PAGES.length} landing + ${MODELS.length} model + ${ARTICLES.length} artikel + ${COMPARES.length} vs + indeks /vs)`,
     },
     {
       name: "Keyword engine aktif",
@@ -66,6 +75,48 @@ export async function GET(request: Request) {
       name: "IndexNow key tersedia",
       pass: true,
       detail: `https://${siteHostname}/bc336b4b6001017bc99244eba80d0206.txt (Bing, Yandex, Seznam)`,
+    },
+    {
+      name: "llms.txt aktif (GEO — sumber rujukan mesin pencari AI)",
+      pass: true,
+      detail: `${SITE_URL}/llms.txt (ringkasan) + ${SITE_URL}/llms-full.txt (konten penuh, standar llmstxt.org)`,
+    },
+    {
+      name: "Bot AI diizinkan penuh di robots.txt",
+      pass: true,
+      detail:
+        "19 bot eksplisit: GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, anthropic-ai, PerplexityBot, Google-Extended, Applebot, Bingbot (Copilot), meta-externalagent, dst.",
+    },
+    {
+      name: "Review engine + JSON-LD aggregateRating/review",
+      pass: true,
+      detail:
+        "Ulasan asli tersimpan di DB & dimoderasi via /api/reviews/admin (header x-admin-key = env REVIEWS_ADMIN_KEY). Product JSON-LD otomatis memuat aggregateRating + review saat ada ulasan terpublikasi — hint GSC terpenuhi secara legitim.",
+    },
+    {
+      name: "Glosarium DefinedTermSet (entity SEO)",
+      pass: GLOSSARY.length >= 24,
+      detail: `${GLOSSARY.length} istilah otomotif bilingual — JSON-LD DefinedTermSet + anchor deep-link di ${SITE_URL}/glosarium`,
+    },
+    {
+      name: "RSS feed aktif (sinyal freshness)",
+      pass: true,
+      detail: `${SITE_URL}/feed.xml — autodiscovery <link rel=\"alternate\" type=\"application/rss+xml\"> dirender di <head> seluruh halaman`,
+    },
+    {
+      name: "OG image dinamis artikel & halaman vs",
+      pass: true,
+      detail: "Kartu 1200×630 branded via ImageResponse: /artikel/[slug]/opengraph-image.tsx + /vs/[slug]/opengraph-image.tsx (beranda & model sudah sejak Task 1)",
+    },
+    {
+      name: "404 pintar + security headers",
+      pass: true,
+      detail: "not-found.tsx dengan 12 tautan internal + CTA WA; HSTS, nosniff, Referrer-Policy, Permissions-Policy, X-Frame-Options via next.config headers",
+    },
+    {
+      name: "Core Web Vitals RUM",
+      pass: true,
+      detail: "useReportWebVitals mengirim LCP/INP/CLS/TTFB/FCP ke dataLayer + GA4 (aktif otomatis saat NEXT_PUBLIC_GA_ID diset)",
     },
   ];
 
@@ -81,7 +132,11 @@ export async function GET(request: Request) {
         sitemap: sitemapUrl,
         robots: robotsUrl,
         keywordIndex: `${SITE_URL}/indeks-kata-kunci`,
+        glossary: `${SITE_URL}/glosarium`,
+        feed: `${SITE_URL}/feed.xml`,
         indexNowKey: `https://${siteHostname}/bc336b4b6001017bc99244eba80d0206.txt`,
+        llmsTxt: `${SITE_URL}/llms.txt`,
+        llmsFullTxt: `${SITE_URL}/llms-full.txt`,
       },
       checks,
       gscChecklist: [

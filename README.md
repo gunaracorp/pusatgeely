@@ -129,6 +129,37 @@ NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX                   # Google Analytics 4
 
 Tanpa env apa pun → website tetap berjalan penuh, **nol script analitik, nol beban**.
 
+### 📊 Analytics & Event Konversi (GA4-ready)
+
+Semua interaksi konversi dilacak via lapisan analitik ringan **`src/lib/analytics.ts`** —
+push ke `window.dataLayer`, **tanpa dependensi & tanpa script pihak ketiga tambahan**.
+Kompatibel GA4 (`gtag`) maupun Google Tag Manager.
+
+**Cara mengaktifkan GA4:**
+
+1. Buat property GA4 → salin **Measurement ID** (format `G-XXXXXXXXXX`).
+2. Vercel → `Settings → Environment Variables` → set `NEXT_PUBLIC_GA_ID` → **Redeploy**
+   (env terbaca saat build).
+3. Script `gtag.js` hanya dimuat bila env diset (env-gated di `layout.tsx`).
+
+**Verifikasi realtime:** buka GA4 → **Reports → Realtime**, lalu klik tombol WhatsApp
+atau kirim form test drive di website — event muncul dalam ±30 detik.
+
+**Event konversi yang terlacak:**
+
+| Event | Parameter | Pemicu |
+|---|---|---|
+| `wa_click` | `location` (`floating_cta`, `ai_chat`) | Klik tombol / handoff WhatsApp |
+| `generate_lead` | `form` (`test_drive`), `model` (id model atau `any`) | Form test drive terkirim sukses |
+| `chat_open` | — | Panel Geely Bot (AI chat) dibuka pertama kali |
+| `quiz_complete` | `model` | Kuis Model Matcher selesai (homepage `#kuis`) |
+| `calculate_credit` | `model` | Simulasi kredit dijalankan |
+| `ev_cost_calc` | `model` | Kalkulator hemat EV vs bensin dipakai (halaman model listrik) |
+
+> 📌 Event masuk ke `dataLayer` → otomatis tampil di GA4 sebagai **event custom**
+> (Reports → Events). Untuk menghitungnya sebagai konversi:
+> **Admin → Events → pilih event → toggle "Mark as key event"**.
+
 ---
 
 ## 🚨 TROUBLESHOOTING: Error Sitemap di Google Search Console

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Bot, RotateCcw, SendHorizonal, Sparkles, X } from "lucide-react";
 import { useLang } from "@/components/language-provider";
+import { trackEvent } from "@/lib/analytics";
 import { WhatsAppIcon } from "@/components/site-header";
 
 interface ChatMessage {
@@ -66,6 +67,8 @@ export function AiChatWidget() {
     if (open && !openedOnce.current) {
       openedOnce.current = true;
       setMessages([{ role: "assistant", content: GREETING[lang] }]);
+      // Analytics — panel chat dibuka PERTAMA kali (sekali per sesi).
+      trackEvent("chat_open");
     }
   }, [open, lang]);
 
@@ -326,6 +329,7 @@ export function AiChatWidget() {
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("wa_click", { location: "ai_chat" })}
                   className="mb-2.5 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-[#25D366] text-sm font-bold text-white shadow-lg shadow-[#25D366]/25 transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-ring"
                 >
                   <WhatsAppIcon className="size-4" aria-hidden="true" />

@@ -2,9 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/page-shell";
 import { ModelDetail } from "@/components/model-detail";
+import { ReviewSection } from "@/components/review-section";
+import { db } from "@/lib/db";
 import { getModelBundle } from "@/lib/model-details";
 import { MODELS, POWERTRAIN_LABEL, SITE_URL, formatIDR, waLink } from "@/lib/site";
 import { keywordsForPage } from "@/lib/seo-keywords";
+
+/** ISR: halaman model di-cache 1 jam — review baru tampil maks. 1 jam kemudian. */
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return MODELS.map((m) => ({ slug: m.id }));
@@ -71,6 +76,24 @@ export default async function ModelPage({
   const priceMin = Math.min(...model.variants.map((v) => v.price));
   const priceMax = Math.max(...model.variants.map((v) => v.price));
 
+  // Ulasan pelanggan TERPUBLIKASI untuk model ini (anti-fabrication:
+  // aggregateRating/review HANYA dari data nyata; tanpa data → properti
+  // tidak dirender, bukan dipalsukan). Degrade aman bila DB tak tersedia.
+  let reviews: Awaited<ReturnType<typeof db.review.findMany>> = [];
+  try {
+    reviews = await db.review.findMany({
+      where: { modelId: model.id, published: true },
+      orderBy: { createdAt: "desc" },
+      take: 20,
+    });
+  } catch {
+    reviews = [];
+  }
+  const reviewCount = reviews.length;
+  const ratingAvg = reviewCount
+    ? Math.round((reviews.reduce((s, r) => s + r.rating, 0) / reviewCount) * 10) / 10
+    : 0;
+
   // JSON-LD: Product + penawaran per varian.
   const product = {
     "@context": "https://schema.org",
@@ -97,6 +120,29 @@ export default async function ModelPage({
         url: `${SITE_URL}/model/${model.id}`,
       })),
     },
+    // Rating & ulasan nyata — memenuhi hint GSC "aggregateRating"/"review"
+    // secara LEGITIM (muncul otomatis setelah ulasan pelanggan dipublikasikan).
+    ...(reviewCount > 0 && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: ratingAvg,
+        reviewCount,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      review: reviews.slice(0, 10).map((r) => ({
+        "@type": "Review",
+        author: { "@type": "Person", name: r.name },
+        datePublished: new Date(r.createdAt).toISOString().slice(0, 10),
+        reviewBody: r.comment,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: r.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+      })),
+    }),
   };
 
   // JSON-LD: BreadcrumbList.
@@ -142,6 +188,9 @@ export default async function ModelPage({
           `Halo Pusat Geely, saya tertarik dengan ${model.name}. Mohon info harga & promo terbaru.`
         )}
       />
+      <div className="mx-auto max-w-6xl px-4 pb-8 sm:px-6 lg:px-8">
+        <ReviewSection modelId={model.id} modelName={model.name} />
+      </div>
     </PageShell>
   );
 }

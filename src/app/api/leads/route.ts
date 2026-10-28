@@ -40,6 +40,11 @@ const leadSchema = z.object({
   area: z.string().max(60).optional().default(""),
   preferredDate: z.string().max(20).optional().default(""),
   message: z.string().max(1000).optional().default(""),
+  // Sumber lead: form situs, kuis model-matcher, simulator kredit, atau chat AI.
+  source: z
+    .enum(["website", "quiz", "simulator", "chat"])
+    .optional()
+    .default("website"),
   lang: z.enum(["id", "en"]).optional().default("id"),
   // honeypot must be empty
   website: z.string().max(0).optional().default(""),
@@ -101,7 +106,7 @@ export async function POST(request: Request) {
         preferredDate: data.preferredDate || null,
         message: data.message || null,
         lang: data.lang,
-        source: "website",
+        source: data.source,
       },
     });
 

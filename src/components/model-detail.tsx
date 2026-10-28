@@ -8,6 +8,9 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { WhatsAppIcon } from "@/components/site-header";
 import { MODELS, POWERTRAIN_LABEL, PRICE_DISCLAIMER, INDEPENDENCE_DISCLAIMER, formatIDR, type CarModel } from "@/lib/site";
 import type { ModelDetail as ModelDetailType } from "@/lib/model-details";
+import { comparesForModel } from "@/lib/competitors";
+import { EvCostCalculator } from "@/components/ev-cost-calculator";
+import { Swords } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /** Kartu model lain (internal linking bawah halaman). */
@@ -216,6 +219,14 @@ export function ModelDetail({
         </div>
       </section>
 
+      {/* Kalkulator hemat — khusus model listrik */}
+      {model.powertrain === "ev" && (
+        <EvCostCalculator
+          modelName={model.name}
+          kwhPer100={model.id === "ex5" ? 15 : 11}
+        />
+      )}
+
       {/* FAQ model */}
       <section className="mt-12" aria-labelledby="faq-h">
         <h2 id="faq-h" className="font-display text-2xl font-bold tracking-tight">
@@ -249,6 +260,31 @@ export function ModelDetail({
           ))}
         </div>
       </section>
+
+      {/* Bandingkan dengan pesaing */}
+      {comparesForModel(model.id).length > 0 && (
+        <section className="mt-12" aria-labelledby="vs-h">
+          <h2 id="vs-h" className="inline-flex items-center gap-2 font-display text-2xl font-bold tracking-tight">
+            <Swords className="size-5 text-primary" aria-hidden="true" />
+            {lang === "id" ? "Bandingkan dengan Pesaing" : "Compare with Rivals"}
+          </h2>
+          <div className="mt-4 flex flex-wrap gap-2.5">
+            {comparesForModel(model.id).map((c) => (
+              <Link
+                key={c.slug}
+                href={`/vs/${c.slug}`}
+                className="group inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm font-semibold transition-colors hover:border-primary/50 hover:bg-primary/5"
+              >
+                {model.name} <span className="font-black text-muted-foreground">vs</span> {c.rivalName}
+                <ChevronRight
+                  className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                  aria-hidden="true"
+                />
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Disclaimer */}
       <footer className="mt-12 space-y-3 rounded-2xl border bg-card p-5 text-xs leading-relaxed text-muted-foreground">

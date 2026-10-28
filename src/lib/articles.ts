@@ -14,6 +14,8 @@ export interface Article {
   image: string;
   /** Tanggal publikasi (ISO) — dipakai JSON-LD & metadata. */
   date: string;
+  /** Tanggal revisi terakhir (ISO) — opsional; isi HANYA saat artikel benar-benar diperbarui. */
+  updated?: string;
   title: { id: string; en: string };
   excerpt: { id: string; en: string };
   tag: { id: string; en: string };
