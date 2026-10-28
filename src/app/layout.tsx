@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/components/language-provider";
 import { AiChatWidget } from "@/components/ai-chat-widget";
-import { WebVitals } from "@/components/web-vitals";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import {
   BUSINESS,
   INDEPENDENCE_DISCLAIMER,
@@ -449,6 +449,7 @@ export default function RootLayout({
             {/* RUM Core Web Vitals → dataLayer + GA4 (nol beban tanpa GA) */}
             <WebVitals />
             <Toaster position="bottom-center" richColors closeButton />
+            <SpeedInsights />
           </LanguageProvider>
         </ThemeProvider>
         <StructuredData />
